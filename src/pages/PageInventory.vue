@@ -1,5 +1,5 @@
 <template>
-  <AppLayout>
+  <InventoryLayout>
     <!-- Loading State -->
     <div v-if="inventoryStore.loading && inventoryStore.data === null">
       <div>Loading inventory...</div>
@@ -8,7 +8,7 @@
     <!-- Error State -->
     <div v-else-if="inventoryStore.error">
       <div>{{ inventoryStore.error }}</div>
-      <button @click="inventoryStore.loadData()">Retry</button>
+      <button @click="inventoryStore.loadData()" class="btn btn-sm">Retry</button>
     </div>
 
     <!-- Inventory Table -->
@@ -51,15 +51,24 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- Pagination -->
+        <div class="mt-8">
+          <PaginationClassic
+            :total="inventoryStore.data.meta.total"
+            :count="inventoryStore.data.products.length"
+          />
+        </div>
       </div>
     </div>
-  </AppLayout>
+  </InventoryLayout>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useInventoryStore } from '@/stores/inventory'
-import AppLayout from '@/components/AppLayout.vue'
+import InventoryLayout from '@/components/LayoutInventory.vue'
+import PaginationClassic from '@/components/vendor/PaginationClassic.vue'
 
 const inventoryStore = computed(() => useInventoryStore())
 

@@ -1,7 +1,15 @@
 <template>
-  <p>Please sign in to access your hospital inventory</p>
+  <LayoutLogin
+    :username="authStore.account.username"
+    :password="authStore.account.password"
+    :error="authStore.error"
+    hint="admin"
+    @update:username="(value) => (authStore.account.username = value)"
+    @update:password="(value) => (authStore.account.password = value)"
+    @submit="authStore.login"
+  />
 
-  <form @submit.prevent="authStore.login">
+  <form v-if="false" @submit.prevent="authStore.login">
     <div>
       <div>
         <label for="username" class="sr-only">Username</label>
@@ -45,6 +53,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import LayoutLogin from '@/components/LayoutLogin.vue'
 
 const authStore = useAuthStore()
 const showPassword = ref(false)

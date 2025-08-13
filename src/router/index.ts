@@ -1,26 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
-import LoginPage from '@/pages/LoginPage.vue'
-import InventoryPage from '@/pages/InventoryPage.vue'
+import PageLogin from '@/pages/PageLogin.vue'
+import PageInventory from '@/pages/PageInventory.vue'
 
 const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginPage,
+    component: PageLogin,
     meta: { requiresGuest: true },
   },
   {
     path: '/',
     name: 'inventory',
-    component: InventoryPage,
+    component: PageInventory,
     meta: { requiresAuth: true },
   },
   {
     path: '/404',
     name: 'not-found',
-    component: async () => await import('@/pages/NotFoundPage.vue'),
+    component: async () => await import('@/pages/PageNotFound.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
