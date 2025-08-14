@@ -6,14 +6,14 @@ export const users: User[] = [
     hospitalId: 'hosp-001',
   },
   {
-    username: 'user-two',
+    username: 'username',
     hospitalId: 'hosp-002',
   },
 ]
 
 export const userCredentials: Record<string, string> = {
-  admin: 'password-one',
-  'user-two': 'password-two',
+  admin: 'password123',
+  username: 'password456',
 }
 
 // Mock products data
@@ -21,6 +21,8 @@ export const userCredentials: Record<string, string> = {
 export const mockProducts: Product[] = Array.from({ length: 5000 }, (_, index) => ({
   id: `prod-${index + 1}`,
   name: `Product ${index + 1}`,
+  price: 10,
+  expiresAt: new Date('2025-12-31').valueOf(),
   manufacturer: ['Medtronic', 'Johnson & Johnson', 'Abbott', 'Boston Scientific', 'Stryker'][
     index % 5
   ],

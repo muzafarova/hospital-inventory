@@ -11,7 +11,6 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   // Check session on first navigation
-  console.log(to, authStore.user)
   if (authStore.user === null && !authStore.loading) {
     await authStore.checkAuth()
   }
