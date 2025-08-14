@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 import PageLogin from '@/pages/PageLogin.vue'
-import PageInventory from '@/pages/PageInventory.vue'
+import PageInventory from '@/pages/inventory/PageInventory.vue'
 
 const routes = [
   {

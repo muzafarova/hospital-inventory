@@ -1,8 +1,9 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import type { User, Account } from '@/types'
 import { useInventoryStore } from '@/stores/inventory'
+import { useINotificationStore } from '@/stores/notification'
 
 // TODO temp logic to be mocked properly with MSW
 const mockUser = { username: 'admin', hospitalId: 'hopc-001' }
@@ -12,6 +13,7 @@ let loginThrows = true
 export const useAuthStore = defineStore('auth', () => {
   const router = useRouter()
   const inventorystore = useInventoryStore()
+  const notificationStore = useINotificationStore()
 
   // State
   const account = ref<Account>({
@@ -34,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
       )
       await router.push({ name: 'inventory' })
     } catch (err) {
-      error.value = 'Failed to login'
+      error.value = 'Failed to login. Try again'
       console.error('Login error:', err instanceof Error ? err.message : err)
     } finally {
       loading.value = false
@@ -50,6 +52,10 @@ export const useAuthStore = defineStore('auth', () => {
   async function checkAuth() {
     user.value = hasSession ? mockUser : null
   }
+
+  watchEffect(() =>
+    error.value ? notificationStore.add(error.value, 'error') : notificationStore.clear(),
+  )
 
   // Public interface
   return { account, user, loading, error, isAuthenticated, login, logout, checkAuth }

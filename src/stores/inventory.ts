@@ -1,7 +1,8 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { defineStore } from 'pinia'
-import type { Product } from '@/types'
+import type { Product, ProductColumnKey } from '@/types'
 import { useAuthStore } from '@/stores/auth'
+import { useINotificationStore } from '@/stores/notification'
 
 // TODO temp solution
 let loadingThrows = true
@@ -17,20 +18,21 @@ const mockInventory = {
   ],
   meta: {
     limit: 100,
-    skip: 0,
+    offset: 0,
     total: 1,
   },
 }
 
 export const useInventoryStore = defineStore('inventory', () => {
   const authStore = useAuthStore()
+  const notificationStore = useINotificationStore()
 
   // State
   const data = ref<{
     products: Product[]
     meta: {
       total: number
-      skip: number
+      offset: number
       limit: number
     }
   } | null>(null)
@@ -38,6 +40,16 @@ export const useInventoryStore = defineStore('inventory', () => {
   const error = ref<string>('')
   const loading = ref(false)
   const hospitalId = computed(() => authStore.user?.hospitalId)
+
+  // TODO extract to a sepatate store
+  const tableColumns = ref<[ProductColumnKey, string][]>([
+    ['name', 'Product Name'],
+    ['manufacturer', 'Manufacturer'],
+    ['category', 'Canufacturer'],
+    ['quantity', 'Quantity'],
+    ['price', 'Price'],
+    ['expiresAt', 'Expiry Date'],
+  ])
 
   // Actions
   async function loadData() {
@@ -67,6 +79,10 @@ export const useInventoryStore = defineStore('inventory', () => {
     error.value = ''
   }
 
+  watchEffect(() =>
+    error.value ? notificationStore.add(error.value, 'error') : notificationStore.clear(),
+  )
+
   // Public interface
-  return { data, loading, error, loadData, reset }
+  return { data, loading, error, tableColumns, loadData, reset }
 })

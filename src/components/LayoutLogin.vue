@@ -38,7 +38,9 @@
           </div>
 
           <div class="max-w-sm mx-auto w-full px-4 py-8">
-            <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">HOPCo Hospital</h1>
+            <h1 class="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-8">
+              Hospital Inventory
+            </h1>
 
             <!-- Form -->
             <form @submit.prevent="$emit('submit')">
@@ -127,12 +129,11 @@
             </form>
             <!-- Footer -->
             <div class="pt-5 mt-6 border-t border-gray-200 dark:border-gray-700">
-              <div v-if="error" class="text-sm text-pink-500">
-                {{ error }}
-              </div>
               <!-- Hint -->
               <div v-if="hint" class="mt-5">
-                <div class="bg-blue-500/20 text-blue-700 px-3 py-2 rounded-lg">
+                <div
+                  class="bg-blue-500/20 dark:text-blue-200 dark:bg-blue-500/30 text-blue-700 px-3 py-2 rounded-lg"
+                >
                   <svg class="inline w-3 h-3 shrink-0 fill-current mr-2" viewBox="0 0 12 12">
                     <path
                       d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
@@ -165,6 +166,7 @@
       </div>
     </div>
   </main>
+  <slot />
 </template>
 
 <script setup lang="ts">
@@ -180,6 +182,7 @@ defineProps<{
 defineEmits<{
   'update:username': [value: string]
   'update:password': [value: string]
+  close: []
   submit: []
 }>()
 

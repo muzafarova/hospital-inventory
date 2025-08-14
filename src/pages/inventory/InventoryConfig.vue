@@ -7,9 +7,13 @@
       @click.prevent="dropdownOpen = !dropdownOpen"
       :aria-expanded="dropdownOpen"
     >
-      <span class="sr-only">Filter</span><wbr />
-      <svg class="fill-current" width="16" height="16" viewBox="0 0 16 16">
-        <path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM3 8a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1ZM7 12a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H7Z" />
+      <span class="sr-only">Table configuration</span><wbr />
+      <svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16">
+        <path
+          fill-rule="evenodd"
+          d="M6.455 1.45A.5.5 0 0 1 6.952 1h2.096a.5.5 0 0 1 .497.45l.186 1.858a4.996 4.996 0 0 1 1.466.848l1.703-.769a.5.5 0 0 1 .639.206l1.047 1.814a.5.5 0 0 1-.14.656l-1.517 1.09a5.026 5.026 0 0 1 0 1.694l1.516 1.09a.5.5 0 0 1 .141.656l-1.047 1.814a.5.5 0 0 1-.639.206l-1.703-.768c-.433.36-.928.649-1.466.847l-.186 1.858a.5.5 0 0 1-.497.45H6.952a.5.5 0 0 1-.497-.45l-.186-1.858a4.993 4.993 0 0 1-1.466-.848l-1.703.769a.5.5 0 0 1-.639-.206l-1.047-1.814a.5.5 0 0 1 .14-.656l1.517-1.09a5.033 5.033 0 0 1 0-1.694l-1.516-1.09a.5.5 0 0 1-.141-.656L2.46 3.593a.5.5 0 0 1 .639-.206l1.703.769c.433-.36.928-.65 1.466-.848l.186-1.858Zm-.177 7.567-.022-.037a2 2 0 0 1 3.466-1.997l.022.037a2 2 0 0 1-3.466 1.997Z"
+          clip-rule="evenodd"
+        />
       </svg>
     </button>
     <transition
@@ -20,57 +24,43 @@
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div v-show="dropdownOpen" class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1" :class="align === 'right' ? 'md:left-auto md:right-0' : 'md:left-0 md:right-auto'">
+      <div
+        v-show="dropdownOpen"
+        class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
+        :class="align === 'right' ? 'md:left-auto md:right-0' : 'md:left-0 md:right-auto'"
+      >
         <div ref="dropdown">
-          <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-3">Filters</div>
+          <div
+            class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-3"
+          >
+            Table Columns
+          </div>
           <ul class="mb-4">
             <li class="py-1 px-3">
               <label class="flex items-center">
                 <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Direct VS Indirect</span>
+                <span class="text-sm font-medium ml-2">Product Name</span>
               </label>
             </li>
             <li class="py-1 px-3">
               <label class="flex items-center">
                 <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Real Time Value</span>
+                <span class="text-sm font-medium ml-2">Manufacturer</span>
               </label>
             </li>
             <li class="py-1 px-3">
               <label class="flex items-center">
                 <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Top Channels</span>
+                <span class="text-sm font-medium ml-2">Category</span>
               </label>
             </li>
             <li class="py-1 px-3">
               <label class="flex items-center">
                 <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Sales VS Refunds</span>
-              </label>
-            </li>
-            <li class="py-1 px-3">
-              <label class="flex items-center">
-                <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Last Order</span>
-              </label>
-            </li>
-            <li class="py-1 px-3">
-              <label class="flex items-center">
-                <input type="checkbox" class="form-checkbox" />
-                <span class="text-sm font-medium ml-2">Total Spent</span>
+                <span class="text-sm font-medium ml-2">Quantity</span>
               </label>
             </li>
           </ul>
-          <div class="py-2 px-3 border-t border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-700/20">
-            <ul class="flex items-center justify-between">
-              <li>
-                <button class="btn-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-red-500">Clear</button>
-              </li>
-              <li>
-                <button class="btn-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300" @click="dropdownOpen = false" @focusout="dropdownOpen = false">Apply</button>
-              </li>
-            </ul>
-          </div>          
         </div>
       </div>
     </transition>
@@ -84,14 +74,14 @@ export default {
   name: 'DropdownFilter',
   props: ['align'],
   setup() {
-
     const dropdownOpen = ref(false)
     const trigger = ref(null)
     const dropdown = ref(null)
 
     // close on click outside
     const clickHandler = ({ target }) => {
-      if (!dropdownOpen.value || dropdown.value.contains(target) || trigger.value.contains(target)) return
+      if (!dropdownOpen.value || dropdown.value.contains(target) || trigger.value.contains(target))
+        return
       dropdownOpen.value = false
     }
 
@@ -116,6 +106,6 @@ export default {
       trigger,
       dropdown,
     }
-  }
+  },
 }
 </script>

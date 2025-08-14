@@ -63,12 +63,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppHeader from '@/components/app-topbar/Topbar.vue'
+import AppHeader from '@/components/app-topbar/AppTopbar.vue'
 // import InvoicesTable from '@/partials/invoices/InvoicesTable.vue'
 import DeleteButton from '@/partials/actions/DeleteButton.vue'
 
-import SearchForm from '@/components/vendor/SearchForm.vue'
-import FilterButton from '@/components/vendor/DropdownFilter.vue'
+import SearchForm from '@/components/library/SearchForm.vue'
+import FilterButton from '@/pages/inventory/InventoryConfig.vue'
 
 import AppTopbar from '@/components/app-topbar/AppTopbar.vue'
 

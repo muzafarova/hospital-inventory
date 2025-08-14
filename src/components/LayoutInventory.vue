@@ -15,46 +15,20 @@
             <div class="mb-4 sm:mb-0">
               <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
                 Inventory
+                <slot name="title" />
               </h1>
             </div>
 
             <!-- Right: Actions  -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-              <!-- Delete button -->
-              <DeleteButton :selectedItems="selectedItems" />
-
-              <!-- Search form -->
-              <SearchForm placeholder="Search by item name" />
-
-              <!-- Filter button -->
-              <FilterButton align="right" />
-
-              <!-- Divider -->
-              <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none self-center" />
-
-              <!-- Add item button -->
-              <button
-                class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
-              >
-                <svg
-                  class="fill-current shrink-0 sm:hidden"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"
-                  />
-                </svg>
-                <span class="max-sm:sr-only">Add item</span>
-              </button>
+            <div
+              class="sm:flex-1 w-full grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2"
+            >
+              <slot name="actions" />
             </div>
           </div>
 
+          <!-- Main content-->
           <slot />
-
-          <!-- Table -->
-          <!-- <InvoicesTable @change-selection="updateSelectedItems($event)" /> -->
         </div>
       </main>
     </div>
@@ -62,19 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import AppHeader from '@/components/app-topbar/Topbar.vue'
-// import InvoicesTable from '@/partials/invoices/InvoicesTable.vue'
-import DeleteButton from '@/partials/actions/DeleteButton.vue'
-
-import SearchForm from '@/components/vendor/SearchForm.vue'
-import FilterButton from '@/components/vendor/DropdownFilter.vue'
-
+import AppHeader from '@/components/app-topbar/AppTopbar.vue'
 import AppTopbar from '@/components/app-topbar/AppTopbar.vue'
-
-const selectedItems = ref([])
-
-// const updateSelectedItems = (selected) => {
-//   selectedItems.value = selected
-// }
 </script>

@@ -14,4 +14,16 @@ export interface Product {
   manufacturer: string
   category: string
   quantity: number
+  price: number
+  expires: number
 }
+
+export type ProductColumnKey =
+  | 'name'
+  | 'manufacturer'
+  | 'category'
+  | 'quantity'
+  | 'price'
+  | 'expires'
+
+export type NotificationType = 'warning' | 'error' | 'success' | 'info'
