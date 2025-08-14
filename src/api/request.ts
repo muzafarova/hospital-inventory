@@ -11,7 +11,6 @@ export async function request<T>(
     for (const param in options?.query) {
       url.searchParams.set(param, String(options?.query[param]))
     }
-    console.log(url)
   }
 
   const body = options?.data ? JSON.stringify(options.data) : undefined

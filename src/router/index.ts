@@ -1,32 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-
-import PageLogin from '@/pages/PageLogin.vue'
-import PageInventory from '@/pages/inventory/PageInventory.vue'
-
-const routes = [
-  {
-    path: '/login',
-    name: 'login',
-    component: PageLogin,
-    meta: { requiresGuest: true },
-  },
-  {
-    path: '/',
-    name: 'inventory',
-    component: PageInventory,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/404',
-    name: 'not-found',
-    component: async () => await import('@/pages/PageNotFound.vue'),
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-  },
-]
+import { routes } from './routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,8 +10,8 @@ const router = createRouter({
 // Navigation guard for authentication
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
-
   // Check session on first navigation
+  console.log(to, authStore.user)
   if (authStore.user === null && !authStore.loading) {
     await authStore.checkAuth()
   }

@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Reactive state variables
   const account = ref<Account>({
-    username: 'username',
+    username: 'admin',
     password: 'password',
   })
   const user = ref<User | null>(null)
@@ -26,19 +26,20 @@ export const useAuthStore = defineStore('auth', () => {
   // Actions
   async function login() {
     console.info('🗃️ Login as', account.value.username, account.value.password)
+
     loading.value = true
     error.value = ''
-
     try {
       const response = await loginUser(account.value)
 
       if (response.success) {
         user.value = response.user
+        await router.push({ name: 'inventory' })
       } else {
         throw new Error(response.error || 'Login failed')
       }
     } catch (err) {
-      error.value = 'Failed to login. Try again'
+      error.value = `Failed to login. ${err instanceof Error ? err.message : 'Try again'}`
       console.error('Login error:', err instanceof Error ? err.message : err)
     } finally {
       loading.value = false
@@ -50,18 +51,23 @@ export const useAuthStore = defineStore('auth', () => {
       return
     }
 
+    loading.value = true
     try {
       await logoutUser(user.value)
+      user.value = null
+
       await inventorystore.reset()
       await router.push({ name: 'login' })
-      user.value = null
     } catch (err) {
       error.value = 'Failed to logout. Try again'
       console.error('Logout error:', err instanceof Error ? err.message : err)
+    } finally {
+      loading.value = true
     }
   }
 
   async function checkAuth() {
+    loading.value = true
     try {
       const response = await checkSession()
 
@@ -73,6 +79,8 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (err: unknown) {
       console.warn(err)
       user.value = null
+    } finally {
+      loading.value = true
     }
   }
 
