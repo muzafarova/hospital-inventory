@@ -15,7 +15,7 @@ export interface Product {
   category: string
   quantity: number
   price: number
-  expires: number
+  expiresAt: number
 }
 
 export type ProductColumnKey =
@@ -24,6 +24,15 @@ export type ProductColumnKey =
   | 'category'
   | 'quantity'
   | 'price'
-  | 'expires'
+  | 'expiresAt'
 
 export type NotificationType = 'warning' | 'error' | 'success' | 'info'
+
+export type InventoryData = {
+  products: Product[]
+  meta: {
+    total: number
+    offset: number
+    limit: number
+  }
+}

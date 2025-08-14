@@ -4,18 +4,16 @@ import { defineStore } from 'pinia'
 import type { User, Account } from '@/types'
 import { useInventoryStore } from '@/stores/inventory'
 import { useINotificationStore } from '@/stores/notification'
-
-// TODO temp logic to be mocked properly with MSW
-const mockUser = { username: 'admin', hospitalId: 'hopc-001' }
-let hasSession = true
-let loginThrows = true
+import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
+  // Store dependencies
+  // TODO decouple
   const router = useRouter()
   const inventorystore = useInventoryStore()
   const notificationStore = useINotificationStore()
 
-  // State
+  // Reactive state variables
   const account = ref<Account>({
     username: 'username',
     password: 'password',
@@ -30,33 +28,59 @@ export const useAuthStore = defineStore('auth', () => {
     console.info('🗃️ Login as', account.value.username, account.value.password)
     loading.value = true
     error.value = ''
+
     try {
-      user.value = await new Promise((resolve, reject) =>
-        setTimeout(() => (loginThrows ? reject('Hiccup') : resolve(mockUser)), 300),
-      )
-      await router.push({ name: 'inventory' })
+      const response = await loginUser(account.value)
+
+      if (response.success) {
+        user.value = response.user
+      } else {
+        throw new Error(response.error || 'Login failed')
+      }
     } catch (err) {
       error.value = 'Failed to login. Try again'
       console.error('Login error:', err instanceof Error ? err.message : err)
     } finally {
       loading.value = false
-      loginThrows = false
     }
   }
+
   async function logout() {
-    inventorystore.reset()
-    user.value = null
-    hasSession = false
-    await router.push({ name: 'login' })
-  }
-  async function checkAuth() {
-    user.value = hasSession ? mockUser : null
+    if (!user.value) {
+      return
+    }
+
+    try {
+      await logoutUser(user.value)
+      await inventorystore.reset()
+      await router.push({ name: 'login' })
+      user.value = null
+    } catch (err) {
+      error.value = 'Failed to logout. Try again'
+      console.error('Logout error:', err instanceof Error ? err.message : err)
+    }
   }
 
+  async function checkAuth() {
+    try {
+      const response = await checkSession()
+
+      if (response.success) {
+        user.value = response.user
+      } else {
+        user.value = null
+      }
+    } catch (err: unknown) {
+      console.warn(err)
+      user.value = null
+    }
+  }
+
+  // Notifies user on error
   watchEffect(() =>
     error.value ? notificationStore.add(error.value, 'error') : notificationStore.clear(),
   )
 
-  // Public interface
+  // Public surface
   return { account, user, loading, error, isAuthenticated, login, logout, checkAuth }
 })

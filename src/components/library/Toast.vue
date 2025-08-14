@@ -63,7 +63,7 @@ const typeColor = (type: NotificationType) => {
     case 'warning':
       return 'bg-yellow-500'
     case 'error':
-      return 'bg-pink-500/75'
+      return 'bg-pink-500 dark:bg-pink-500/75'
     case 'success':
       return 'bg-green-500'
     default:
