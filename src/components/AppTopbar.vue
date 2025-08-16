@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import UserMenu from './DropdownProfile.vue'
+import UserMenu from './AppUserMenu.vue'
 import { useAuthStore } from '@/stores/auth'
 
 withDefaults(defineProps<{ variant?: 'v1' | 'v2' | 'v3' }>(), { variant: 'v1' })

@@ -63,14 +63,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppHeader from '@/components/app-topbar/AppTopbar.vue'
+import AppHeader from '@/components/AppTopbar.vue'
 // import InvoicesTable from '@/partials/invoices/InvoicesTable.vue'
-import DeleteButton from '@/partials/actions/DeleteButton.vue'
+import DeleteButton from '@/pages/inventory/BulkDeleteButton.vue'
 
 import SearchForm from '@/components/library/SearchForm.vue'
 import FilterButton from '@/pages/inventory/InventoryConfig.vue'
 
-import AppTopbar from '@/components/app-topbar/AppTopbar.vue'
+import AppTopbar from '@/components/AppTopbar.vue'
 
 const selectedItems = ref([])
 

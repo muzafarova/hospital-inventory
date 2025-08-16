@@ -3,20 +3,22 @@ import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import type { User, Account } from '@/types'
 import { useInventoryStore } from '@/stores/inventory'
-import { useINotificationStore } from '@/stores/notification'
+import { useNotificationStore } from '@/stores/notification'
 import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
   // TODO decouple
   const router = useRouter()
+
+  // TODO use OOP?
   const inventorystore = useInventoryStore()
-  const notificationStore = useINotificationStore()
+  const notificationStore = useNotificationStore()
 
   // Reactive state variables
   const account = ref<Account>({
-    username: 'admin',
-    password: 'password',
+    username: '',
+    password: '',
   })
   const user = ref<User | null>(null)
   const error = ref<string>('')
@@ -30,17 +32,11 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     error.value = ''
     try {
-      const response = await loginUser(account.value)
-
-      if (response.success) {
-        user.value = response.user
-        await router.push({ name: 'inventory' })
-      } else {
-        throw new Error(response.error || 'Login failed')
-      }
+      user.value = await loginUser(account.value)
+      await router.push({ name: 'inventory' })
     } catch (err) {
-      error.value = `Failed to login. ${err instanceof Error ? err.message : 'Try again'}`
-      console.error('Login error:', err instanceof Error ? err.message : err)
+      error.value = 'Failed to login.'
+      console.error('Login error', err)
     } finally {
       loading.value = false
     }
@@ -53,14 +49,14 @@ export const useAuthStore = defineStore('auth', () => {
 
     loading.value = true
     try {
-      await logoutUser(user.value)
+      await logoutUser()
       user.value = null
 
       await inventorystore.reset()
       await router.push({ name: 'login' })
     } catch (err) {
-      error.value = 'Failed to logout. Try again'
-      console.error('Logout error:', err instanceof Error ? err.message : err)
+      error.value = 'Failed to logout'
+      console.error('Logout error:', err)
     } finally {
       loading.value = true
     }
@@ -69,15 +65,9 @@ export const useAuthStore = defineStore('auth', () => {
   async function checkAuth() {
     loading.value = true
     try {
-      const response = await checkSession()
-
-      if (response.success) {
-        user.value = response.user
-      } else {
-        user.value = null
-      }
-    } catch (err: unknown) {
-      console.warn(err)
+      user.value = await checkSession()
+    } catch {
+      console.warn('Session not found')
       user.value = null
     } finally {
       loading.value = true

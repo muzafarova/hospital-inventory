@@ -9,7 +9,10 @@ const router = createRouter({
 
 // Navigation guard for authentication
 router.beforeEach(async (to) => {
+  // This will work because the router starts its navigation after
+  // the router is installed and pinia will be installed too
   const authStore = useAuthStore()
+
   // Check session on first navigation
   if (authStore.user === null && !authStore.loading) {
     await authStore.checkAuth()

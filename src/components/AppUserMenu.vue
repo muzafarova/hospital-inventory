@@ -7,14 +7,14 @@
       @click.prevent="dropdownOpen = !dropdownOpen"
       :aria-expanded="dropdownOpen"
     >
-      <span class="w-8 h-8 rounded-full bg-gray-500" />
+      <span class="size-8 rounded-full bg-gray-500" />
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"
           >{{ hospital }}</span
         >
         <svg
-          class="w-3 h-3 shrink-0 ml-2 fill-current text-gray-400 dark:text-gray-500"
+          class="size-3 shrink-0 ml-2 fill-current text-gray-400 dark:text-gray-500"
           viewBox="0 0 12 12"
         >
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -61,19 +61,24 @@ defineProps<{ align: string; username?: string; hospital?: string }>()
 const emits = defineEmits<{ logout: [] }>()
 
 const dropdownOpen = ref(false)
-const trigger = ref(null)
-const dropdown = ref(null)
+
+const trigger = ref<HTMLElement | null>(null)
+const dropdown = ref<HTMLElement | null>(null)
 
 // close on click outside
-const clickHandler = ({ target }) => {
-  if (!dropdownOpen.value || dropdown.value.contains(target) || trigger.value.contains(target))
+const clickHandler = ({ target }: MouseEvent) => {
+  if (
+    !dropdownOpen.value ||
+    (dropdown.value && dropdown.value.contains(target as Node)) ||
+    (trigger.value && trigger.value.contains(target as Node))
+  )
     return
   dropdownOpen.value = false
 }
 
 // close if the esc key is pressed
-const keyHandler = ({ keyCode }) => {
-  if (!dropdownOpen.value || keyCode !== 27) return
+const keyHandler = ({ code }: KeyboardEvent) => {
+  if (!dropdownOpen.value || code !== 'Escape') return
   dropdownOpen.value = false
 }
 

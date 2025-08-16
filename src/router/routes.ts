@@ -1,23 +1,23 @@
-import PageLogin from '@/pages/PageLogin.vue'
-import PageInventory from '@/pages/inventory/PageInventory.vue'
+import LoginPage from '@/pages/login/LoginPage.vue'
+import InventoryPage from '@/pages/inventory/InventoryPage.vue'
 
 export const routes = [
   {
     path: '/login',
     name: 'login',
-    component: PageLogin,
+    component: LoginPage,
     meta: { requiresGuest: true },
   },
   {
     path: '/',
     name: 'inventory',
-    component: PageInventory,
+    component: InventoryPage,
     meta: { requiresAuth: true },
   },
   {
     path: '/404',
     name: 'not-found',
-    component: async () => await import('@/pages/PageNotFound.vue'),
+    component: async () => await import('@/pages/NotFoundPage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

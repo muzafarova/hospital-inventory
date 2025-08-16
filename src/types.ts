@@ -3,22 +3,19 @@ export type Account = {
   password: string
 }
 
-export interface User {
-  username: string
-  hospitalId: string
-}
-
 export interface Product {
   id: string
+  hospitalId: string
   name: string
   manufacturer: string
   category: string
   quantity: number
-  price: number
+  price: string
   expiresAt: number
 }
 
 export type ProductColumnKey =
+  | 'hospitalId'
   | 'name'
   | 'manufacturer'
   | 'category'
@@ -35,4 +32,11 @@ export type InventoryData = {
     offset: number
     limit: number
   }
+}
+
+export type InventoryConfig = {
+  hospitalId: string
+  manufacturers: string[]
+  categories: string[]
+  tableColumns: [ProductColumnKey, string][]
 }

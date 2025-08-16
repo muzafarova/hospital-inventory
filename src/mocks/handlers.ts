@@ -1,10 +1,15 @@
 import { http, HttpResponse } from 'msw'
-import { users, userCredentials, mockProducts } from './data'
-import type { User, InventoryData } from '@/types'
+import { users, userCredentials, products, configs } from './data'
+import type { InventoryData, Product, InventoryConfig } from '@/types'
+import type { UserJsonValue } from '@/entities/user'
 
-// Mock session storage for user authentication
-const userSession = localStorage.getItem('userSession')
-let currentUser: User | null = typeof userSession === 'string' ? JSON.parse(userSession) : null
+// https://mswjs.io/docs/api/http/
+
+// In-memory state
+const userSession = sessionStorage.getItem('userSession')
+let currentUser: UserJsonValue | null =
+  typeof userSession === 'string' ? JSON.parse(userSession) : null
+let hospitalProducts: Product[] = []
 
 export const handlers = [
   // Login endpoint
@@ -20,8 +25,9 @@ export const handlers = [
     const isValid = userCredentials[username] === password
     if (isValid) {
       currentUser = user
-      localStorage.setItem('userSession', JSON.stringify(currentUser))
-      return HttpResponse.json({ success: true, user: currentUser })
+      sessionStorage.setItem('userSession', JSON.stringify(currentUser))
+      hospitalProducts = products.filter((p) => p.hospitalId === user.hospitalId)
+      return HttpResponse.json({ success: true, data: currentUser })
     }
 
     return HttpResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 })
@@ -29,28 +35,31 @@ export const handlers = [
 
   // Session endpoint - get current user
   http.get('/api/auth/session', () => {
-    if (currentUser) {
-      return HttpResponse.json({ success: true, user: currentUser }, { status: 200 })
+    if (!currentUser) {
+      return HttpResponse.json({ success: false, error: 'Not authenticated' }, { status: 401 })
     }
-    return HttpResponse.json({ success: false, error: 'Not authenticated' }, { status: 401 })
+
+    hospitalProducts = products.filter((p) => p.hospitalId === currentUser!.hospitalId)
+
+    return HttpResponse.json({ success: true, data: currentUser }, { status: 200 })
   }),
 
   // Logout endpoint
-  http.post<{ username: string }>('/api/auth/logout', async ({ request }) => {
+  http.post<{ username: string }>('/api/auth/logout', () => {
     if (!currentUser) {
       return
     }
-    const { username } = await request.clone().json()
-    if (currentUser?.username === username) {
+    if (currentUser) {
       currentUser = null
-      localStorage.setItem('userSession', JSON.stringify(null))
+      hospitalProducts = []
+      sessionStorage.setItem('userSession', JSON.stringify(null))
       return HttpResponse.json({ success: true }, { status: 200 })
     }
     return HttpResponse.json({ success: false }, { status: 400 })
   }),
 
   // Inventory endpoint
-  http.get('/api/inventory', ({ request }) => {
+  http.get('/api/inventory', async ({ request }) => {
     const url = new URL(request.url)
     const hospitalId = url.searchParams.get('hospitalId')
     const limit = parseInt(url.searchParams.get('limit') || '100')
@@ -60,21 +69,54 @@ export const handlers = [
       return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
     }
 
-    // Filter products for the hospital (in real app, this would be database filtered)
-    const hospitalProducts = mockProducts.slice(offset, offset + limit)
-
     const response: { success: true; data: InventoryData } = {
       success: true,
       data: {
-        products: hospitalProducts,
+        products: hospitalProducts.slice(offset, offset + limit),
         meta: {
-          total: mockProducts.length,
+          total: hospitalProducts.length,
           offset,
           limit,
         },
       },
     }
 
+    await new Promise((resolve) => setTimeout(resolve, 300))
     return HttpResponse.json(response)
+  }),
+
+  // Inventory remove
+  http.delete('/api/inventory', async ({ request }) => {
+    const { hospitalId, ids = [] } = await request.clone().json()
+
+    if (!hospitalId) {
+      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
+    }
+
+    // Filter products for the hospital (in real app, this would be database filtered)
+    hospitalProducts = hospitalProducts.filter((product) => !ids.includes(product.id))
+
+    return HttpResponse.json(ids, { status: 200 })
+  }),
+
+  // Inventory config endpoint
+  http.get('/api/inventory-spec', ({ request }) => {
+    const url = new URL(request.url)
+    const hospitalId = url.searchParams.get('hospitalId')
+
+    if (!hospitalId) {
+      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
+    }
+
+    const config = configs.find((c) => c.hospitalId === hospitalId)
+    if (config) {
+      const response: { success: true; data: InventoryConfig } = {
+        success: true,
+        data: config,
+      }
+      return HttpResponse.json(response, { status: 200 })
+    }
+
+    return HttpResponse.json({ error: 'Hospital config not found' }, { status: 404 })
   }),
 ]

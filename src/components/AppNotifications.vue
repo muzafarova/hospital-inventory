@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import Toast from '@/components/library/Toast.vue'
-import { useINotificationStore } from '@/stores/notification'
+import BaseToast from '@/components/library/BaseToast.vue'
+import { useNotificationStore } from '@/stores/notification'
 
-const notificationStore = useINotificationStore()
+const notificationStore = useNotificationStore()
 </script>
 
 <template>
   <footer class="fixed bottom-0 right-0 m-2">
-    <Toast
+    <BaseToast
       v-for="notification of notificationStore.notifications"
       :key="notification[0] + notification[1]"
       :open="true"
@@ -15,6 +15,6 @@ const notificationStore = useINotificationStore()
       @close="notificationStore.clear()"
     >
       {{ notification[0] }}
-    </Toast>
+    </BaseToast>
   </footer>
 </template>
