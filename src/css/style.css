@@ -2,7 +2,7 @@
 @import 'tailwindcss';
 
 /* Additional styles */
-@import './additional-styles/utility-patterns.css';
+@import './patterns.css';
 
 @theme {
   --font-inter: "Inter", sans-serif;

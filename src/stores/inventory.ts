@@ -28,7 +28,7 @@ export const useInventoryStore = defineStore('inventory', () => {
       const response = await getInventory({
         hospitalId: hospitalId.value,
         offset: data.value?.meta.offset || 0,
-        limit: data.value?.meta.limit || 10,
+        limit: data.value?.meta.limit || 100,
       })
 
       if (response.success) {

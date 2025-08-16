@@ -33,7 +33,7 @@ export const useInventorySpecStore = defineStore('inventory-spec', () => {
       }
     } catch (err) {
       error.value = 'Failed to fetch inventory configuration'
-      console.error('Inventory config fetch error: ', err instanceof Error ? err.message : err)
+      console.error('Inventory config fetch error: ', err)
     } finally {
       loading.value = false
     }

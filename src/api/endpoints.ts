@@ -1,10 +1,10 @@
-import type { Account, InventoryData, InventoryConfig } from '@/types'
+import type { UserCredentials, InventoryData, InventoryConfig } from '@/types'
 import User, { type UserJsonValue } from '@/entities/user'
 
 import { request, request1 } from './request'
 
 // Auth
-export async function loginUser({ username, password }: Account) {
+export async function loginUser({ username, password }: UserCredentials) {
   return await request1<UserJsonValue, User>('/api/auth/login', User.fromJson, {
     method: 'POST',
     data: { username, password },

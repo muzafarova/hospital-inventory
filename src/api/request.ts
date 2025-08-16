@@ -54,20 +54,14 @@ export async function request1<T, U>(
     body,
     credentials: 'include', // Include cookies for session
   })
-  // if (!response.ok) {
-  //   if (response.headers.get('Content-type') === 'application/json') {
-  //     throw await response.json()
-  //   }
-  //   throw await response.text()
-  // }
-
-  const result = (await response.json()) as
-    | { success: true; data: T }
-    | { success: false; error: string }
-
-  if (result.success) {
-    return decoder(result.data)
-  } else {
-    throw result.error
+  if (!response.ok) {
+    if (response.headers.get('Content-type') === 'application/json') {
+      const { error: errorMessage } = (await response.json()) as { error: string }
+      throw new Error(errorMessage)
+    }
   }
+
+  const result = (await response.json()) as { data: T }
+
+  return decoder(result.data)
 }

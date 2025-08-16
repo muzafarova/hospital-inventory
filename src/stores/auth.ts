@@ -1,7 +1,9 @@
 import { ref, computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import type { User, Account } from '@/types'
+import type { UserCredentials } from '@/types'
+import User from '@/entities/user'
+
 import { useInventoryStore } from '@/stores/inventory'
 import { useNotificationStore } from '@/stores/notification'
 import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
@@ -10,13 +12,11 @@ export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
   // TODO decouple
   const router = useRouter()
-
-  // TODO use OOP?
   const inventorystore = useInventoryStore()
   const notificationStore = useNotificationStore()
 
   // Reactive state variables
-  const account = ref<Account>({
+  const account = ref<UserCredentials>({
     username: '',
     password: '',
   })

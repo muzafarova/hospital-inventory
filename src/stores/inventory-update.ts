@@ -1,6 +1,5 @@
 import { ref, computed, watchEffect } from 'vue'
 import { defineStore } from 'pinia'
-// import type { InventoryData } from '@/types'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationStore } from '@/stores/notification'
 import { useInventoryStore } from '@/stores/inventory'

@@ -6,7 +6,7 @@ import type { UserJsonValue } from '@/entities/user'
 // https://mswjs.io/docs/api/http/
 
 // In-memory state
-const userSession = sessionStorage.getItem('userSession')
+const userSession = localStorage.getItem('userSession')
 let currentUser: UserJsonValue | null =
   typeof userSession === 'string' ? JSON.parse(userSession) : null
 let hospitalProducts: Product[] = []
@@ -19,29 +19,29 @@ export const handlers = [
     const user = users.find((u) => u.username === username)
 
     if (!user) {
-      return HttpResponse.json({ success: false, error: 'Invalid username' }, { status: 401 })
+      return HttpResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
     const isValid = userCredentials[username] === password
     if (isValid) {
       currentUser = user
-      sessionStorage.setItem('userSession', JSON.stringify(currentUser))
+      localStorage.setItem('userSession', JSON.stringify(currentUser))
       hospitalProducts = products.filter((p) => p.hospitalId === user.hospitalId)
-      return HttpResponse.json({ success: true, data: currentUser })
+      return HttpResponse.json({ data: currentUser })
     }
 
-    return HttpResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 })
+    return HttpResponse.json({ error: 'Invalid credentials' }, { status: 401 })
   }),
 
   // Session endpoint - get current user
   http.get('/api/auth/session', () => {
     if (!currentUser) {
-      return HttpResponse.json({ success: false, error: 'Not authenticated' }, { status: 401 })
+      return HttpResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
     hospitalProducts = products.filter((p) => p.hospitalId === currentUser!.hospitalId)
 
-    return HttpResponse.json({ success: true, data: currentUser }, { status: 200 })
+    return HttpResponse.json({ data: currentUser }, { status: 200 })
   }),
 
   // Logout endpoint
@@ -52,7 +52,7 @@ export const handlers = [
     if (currentUser) {
       currentUser = null
       hospitalProducts = []
-      sessionStorage.setItem('userSession', JSON.stringify(null))
+      localStorage.setItem('userSession', JSON.stringify(null))
       return HttpResponse.json({ success: true }, { status: 200 })
     }
     return HttpResponse.json({ success: false }, { status: 400 })
