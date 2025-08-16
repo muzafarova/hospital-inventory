@@ -1,7 +1,7 @@
 export async function request<T>(
   path: string,
   options?: {
-    method?: 'GET' | 'POST'
+    method?: 'GET' | 'POST' | 'DELETE'
     data?: object
     query?: Record<string, string | number>
   },
