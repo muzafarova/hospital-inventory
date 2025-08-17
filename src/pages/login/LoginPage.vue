@@ -2,9 +2,14 @@
   <LayoutLogin title="Hospital Inventory" :hint="hint">
     <form @submit.prevent="authStore.login">
       <div class="space-y-4">
-        <BaseInput v-model="authStore.account.username" label="Username" id="username" required />
         <BaseInput
-          v-model="authStore.account.password"
+          v-model="authStore.credentials.username"
+          label="Username"
+          id="username"
+          required
+        />
+        <BaseInput
+          v-model="authStore.credentials.password"
           label="Password"
           id="password"
           required

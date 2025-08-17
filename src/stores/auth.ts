@@ -1,42 +1,37 @@
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import type { UserCredentials } from '@/types'
 import User from '@/entities/user'
 
-import { useInventoryStore } from '@/stores/inventory'
-import { useNotificationStore } from '@/stores/notification'
+import { useErrorStore } from '@/stores/error'
+
 import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
-  // TODO decouple
   const router = useRouter()
-  const inventorystore = useInventoryStore()
-  const notificationStore = useNotificationStore()
+  const errorStore = useErrorStore()
 
-  // Reactive state variables
-  const account = ref<UserCredentials>({
+  // State
+  const credentials = ref<UserCredentials>({
     username: '',
     password: '',
   })
   const user = ref<User | null>(null)
-  const error = ref<string>('')
   const loading = ref(false)
   const isAuthenticated = computed(() => user.value !== null)
 
   // Actions
   async function login() {
-    console.info('🗃️ Login as', account.value.username, account.value.password)
-
+    console.info('🗃️ Login as', credentials.value.username)
     loading.value = true
-    error.value = ''
+    errorStore.clear()
     try {
-      user.value = await loginUser(account.value)
+      user.value = await loginUser(credentials.value)
       await router.push({ name: 'inventory' })
     } catch (err) {
-      error.value = 'Failed to login.'
-      console.error('Login error', err)
+      errorStore.report(err, 'Failed to login')
     } finally {
       loading.value = false
     }
@@ -51,12 +46,9 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await logoutUser()
       user.value = null
-
-      await inventorystore.reset()
       await router.push({ name: 'login' })
     } catch (err) {
-      error.value = 'Failed to logout'
-      console.error('Logout error:', err)
+      errorStore.report(err, 'Failed to logout')
     } finally {
       loading.value = true
     }
@@ -74,11 +66,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Notifies user on error
-  watchEffect(() =>
-    error.value ? notificationStore.add(error.value, 'error') : notificationStore.clear(),
-  )
-
   // Public surface
-  return { account, user, loading, error, isAuthenticated, login, logout, checkAuth }
+  return { credentials, user, loading, isAuthenticated, login, logout, checkAuth }
 })

@@ -1,17 +1,17 @@
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { InventoryData } from '@/types'
 import { useAuthStore } from '@/stores/auth'
-import { useNotificationStore } from '@/stores/notification'
 import { getInventory } from '@/api/endpoints'
+import { useErrorStore } from '@/stores/error'
+import type { InventoryData } from '@/types'
 
 export const useInventoryStore = defineStore('inventory', () => {
   const authStore = useAuthStore()
-  const notificationStore = useNotificationStore()
+  const errorStore = useErrorStore()
 
   // State
   const data = ref<InventoryData | null>(null)
-  const error = ref<string>('')
+  // const error = ref<string>('')
   const loading = ref(false)
   const hospitalId = computed(() => authStore.user?.hospitalId)
 
@@ -23,7 +23,7 @@ export const useInventoryStore = defineStore('inventory', () => {
 
     console.log('🚚 fetch inventory for', hospitalId.value)
     loading.value = true
-    error.value = ''
+    errorStore.clear()
     try {
       const response = await getInventory({
         hospitalId: hospitalId.value,
@@ -37,22 +37,16 @@ export const useInventoryStore = defineStore('inventory', () => {
         throw new Error(response.error || 'Failed to fetch inventory')
       }
     } catch (err) {
-      error.value = 'Failed to fetch inventory'
-      console.error('Inventory fetch error', err)
+      errorStore.report(err, 'Failed to fetch inventory')
     } finally {
       loading.value = false
     }
   }
 
-  async function reset() {
+  function clear() {
     data.value = null
-    error.value = ''
   }
 
-  watchEffect(() =>
-    error.value ? notificationStore.add(error.value, 'error') : notificationStore.clear(),
-  )
-
   // Public interface
-  return { data, loading, error, loadData, reset }
+  return { data, loading, loadData, clear }
 })

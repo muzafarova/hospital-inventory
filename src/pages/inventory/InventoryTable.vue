@@ -12,7 +12,7 @@
     <!-- <div class="overflow-x-auto"> -->
     <table width="100%" class="table-auto w-full dark:text-gray-300">
       <thead
-        class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/80 border-t border-b border-gray-100 dark:border-gray-700/60 sticky top-15 z-20"
+        class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/85 border-t border-b border-gray-100 dark:border-gray-700/85 sticky top-15 z-20"
       >
         <tr class="">
           <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

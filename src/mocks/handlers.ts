@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { http, delay, HttpResponse } from 'msw'
 import { users, userCredentials, products, configs } from './data'
 import type { InventoryData, Product, InventoryConfig } from '@/types'
 import type { UserJsonValue } from '@/entities/user'
@@ -81,7 +81,7 @@ export const handlers = [
       },
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 300))
+    await delay(1000)
     return HttpResponse.json(response)
   }),
 

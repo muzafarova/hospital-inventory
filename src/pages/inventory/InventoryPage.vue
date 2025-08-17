@@ -10,16 +10,6 @@
           ></path>
         </svg>
       </span>
-
-      <!-- Error Recovery -->
-      <BaseButton
-        v-if="inventoryStore.error"
-        @click="inventoryStore.loadData()"
-        size="small"
-        variant="accent"
-      >
-        Retry
-      </BaseButton>
     </template>
 
     <!-- Page level actions -->
@@ -86,13 +76,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { useInventoryStore } from '@/stores/inventory'
 import { useInventorySpecStore } from '@/stores/inventory-spec'
 import { useInventoryUpdateStore } from '@/stores/inventory-update'
 
 import InventoryLayout from '@/components/LayoutInventory.vue'
-import BaseButton from '@/components/library/BaseButton.vue'
 import InventoryTable from './InventoryTable.vue'
 import BulkDeleteButton from '@/pages/inventory/BulkDeleteButton.vue'
 import AppModal from '@/components/AppModal.vue'
@@ -101,6 +90,8 @@ import InventoryForm from './InventoryForm.vue'
 const inventoryStore = useInventoryStore()
 const inventoryConfigStore = useInventorySpecStore()
 const inventoryUpdateStore = useInventoryUpdateStore()
+
+onBeforeMount(() => inventoryStore.clear())
 
 onMounted(async () => {
   await inventoryStore.loadData()

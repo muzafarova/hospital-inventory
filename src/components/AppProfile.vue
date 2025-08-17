@@ -61,7 +61,6 @@ defineProps<{ align: string; username?: string; hospital?: string }>()
 const emits = defineEmits<{ logout: [] }>()
 
 const dropdownOpen = ref(false)
-
 const trigger = ref<HTMLElement | null>(null)
 const dropdown = ref<HTMLElement | null>(null)
 
