@@ -12,18 +12,18 @@
 
       <!-- Add button & modal -->
       <ProductCreate
-        v-if="inventoryConfigStore.data"
-        :manufacturers="inventoryConfigStore.data.manufacturers"
-        :categories="inventoryConfigStore.data.categories"
+        v-if="hospitalStore.data"
+        :manufacturers="hospitalStore.data.spec.manufacturers"
+        :categories="hospitalStore.data.spec.categories"
       />
     </template>
 
     <!-- List view -->
     <InventoryTable
       v-if="inventoryStore.productsList"
-      :products="inventoryStore.productsList.products"
+      :products="inventoryStore.productsList.items"
       :total="inventoryStore.productsList.meta.total"
-      :columns="inventoryConfigStore.data?.tableColumns || []"
+      :columns="hospitalStore.data?.spec.tableColumns || []"
       @selection="inventoryStore.updateSelection"
       @remove="inventoryStore.removeProduct"
     >
@@ -39,7 +39,7 @@
 import { onMounted, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { useInventoryStore } from '@/stores/inventory'
-import { useInventorySpecStore } from '@/stores/inventory-spec'
+import { useHospitalStore } from '@/stores/hospital'
 
 import InventoryLayout from '@/components/LayoutInventory.vue'
 import ProductCreate from './ProductCreate.vue'
@@ -47,13 +47,14 @@ import InventoryTable from './InventoryTable.vue'
 import ProductRemoveBulk from './ProductRemoveBulk.vue'
 
 const inventoryStore = useInventoryStore()
-const inventoryConfigStore = useInventorySpecStore()
+const hospitalStore = useHospitalStore()
 const route = useRoute()
 
-onBeforeMount(() => inventoryStore.clear())
-
-onMounted(async () => {
-  await inventoryStore.loadProducts({ ...route.query })
-  await inventoryConfigStore.loadData()
+onBeforeMount(async () => {
+  inventoryStore.clear()
+  if (hospitalStore.data === null) {
+    await hospitalStore.loadData()
+  }
 })
+onMounted(async () => await inventoryStore.loadProducts({ ...route.query }))
 </script>

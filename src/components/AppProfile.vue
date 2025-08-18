@@ -11,7 +11,7 @@
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"
-          >{{ hospital }}</span
+          >{{ username }}</span
         >
         <svg
           class="size-3 shrink-0 ml-2 fill-current text-gray-400 dark:text-gray-500"
@@ -35,8 +35,8 @@
         :class="align === 'right' ? 'right-0' : 'left-0'"
       >
         <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200 dark:border-gray-700/60">
-          <div class="font-medium text-gray-800 dark:text-gray-100">{{ hospital }}</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400 italic">{{ username }}</div>
+          <div class="font-medium text-gray-800 dark:text-gray-100 leading-6">{{ name }}</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 italic leading-5">{{ email }}</div>
         </div>
         <ul ref="dropdown" @focusin="dropdownOpen = true" @focusout="dropdownOpen = false">
           <li>
@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
-defineProps<{ align: string; username?: string; hospital?: string }>()
+defineProps<{ align: string; username: string; name: string; email: string }>()
 const emits = defineEmits<{ logout: [] }>()
 
 const dropdownOpen = ref(false)

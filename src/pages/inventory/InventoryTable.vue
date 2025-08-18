@@ -118,7 +118,8 @@
 
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import type { Product, ProductColumnKey } from '@/types'
+import Product from '@/entities/product'
+import type { ProductColumnKey } from '@/entities/hospital'
 
 const porps = defineProps<{
   total: number

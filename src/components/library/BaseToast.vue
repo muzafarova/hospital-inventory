@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NotificationType } from '@/types'
+type NotificationType = 'warning' | 'error' | 'success' | 'info'
 
 withDefaults(
   defineProps<{
@@ -56,6 +56,7 @@ withDefaults(
   }>(),
   { type: 'info' },
 )
+
 defineEmits(['close'])
 
 const typeColor = (type: NotificationType) => {

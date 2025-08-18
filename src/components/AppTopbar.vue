@@ -9,17 +9,18 @@
       >
         <!-- Header: Left side -->
         <div class="flex">
-          <h1 class="font-semibold">Hospital Inventory</h1>
+          <h1 class="font-semibold">{{ hospitalStore.data?.name || 'Hospital Inventory' }}</h1>
         </div>
 
         <!-- Header: Right side -->
-        <div class="flex items-center space-x-3">
+        <div v-if="authStore.user" class="flex items-center space-x-3">
           <!-- Divider -->
           <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
           <AppProfile
             align="right"
-            :hospital="authStore.user?.hospitalId"
-            :username="authStore.user?.username"
+            :username="authStore.user.username"
+            :name="authStore.user.name"
+            :email="authStore.user.email"
             @logout="authStore.logout"
           />
         </div>
@@ -31,8 +32,7 @@
 <script setup lang="ts">
 import AppProfile from './AppProfile.vue'
 import { useAuthStore } from '@/stores/auth'
-
-withDefaults(defineProps<{ variant?: 'v1' | 'v2' | 'v3' }>(), { variant: 'v1' })
-
+import { useHospitalStore } from '@/stores/hospital'
+const hospitalStore = useHospitalStore()
 const authStore = useAuthStore()
 </script>

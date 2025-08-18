@@ -11,15 +11,6 @@ export type ProductJsonValue = {
   expiresAt: number
 }
 
-export type ListJsonValue = {
-  products: ProductJsonValue[]
-  meta: {
-    total: number
-    offset: number
-    limit: number
-  }
-}
-
 export default class Product {
   static readonly schema = z.object({
     id: z.uuid(),
@@ -59,10 +50,5 @@ export default class Product {
       data.price,
       data.expiresAt,
     )
-  }
-
-  static fromListJson(data: ListJsonValue) {
-    const products = data.products.map(Product.fromJson)
-    return { products, meta: data.meta }
   }
 }

@@ -4,7 +4,6 @@ import AppNotifications from './components/AppNotifications.vue'
 
 <template>
   <router-view />
-
   <AppNotifications />
 </template>
 

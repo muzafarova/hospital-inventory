@@ -1,6 +1,6 @@
-import type { InventoryConfig } from '@/types'
 import type { UserJsonValue } from '@/entities/user'
 import type { ProductJsonValue } from '@/entities/product'
+import type { HospitalJsonValue } from '@/entities/hospital'
 
 import { faker } from '@faker-js/faker'
 
@@ -9,18 +9,28 @@ enum HospitalId {
   Hosp2 = 'hosp-002',
 }
 
+const admin = {
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+}
+const username456 = {
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+}
 export const users: UserJsonValue[] = [
   {
     id: faker.string.uuid(),
     username: 'admin',
     hospitalId: 'hosp-001',
-    email: faker.internet.email(),
+    email: faker.internet.email(admin),
+    name: faker.person.fullName(admin),
   },
   {
     id: faker.string.uuid(),
     username: 'username456',
     hospitalId: 'hosp-002',
-    email: faker.internet.email(),
+    email: faker.internet.email(username456),
+    name: faker.person.fullName(username456),
   },
 ]
 
@@ -50,29 +60,35 @@ export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, ind
   quantity: faker.number.int({ max: 150 }),
 }))
 
-export const configs: InventoryConfig[] = [
+export const hospitals: HospitalJsonValue[] = [
   {
-    hospitalId: 'hosp-001',
-    manufacturers,
-    categories,
-    tableColumns: [
-      ['name', 'Product Name'],
-      ['manufacturer', 'Manufacturer'],
-      ['category', 'Category'],
-      ['quantity', 'Quantity'],
-      ['price', 'Price'],
-      ['expiresAt', 'Expiry Date'],
-    ],
+    id: 'hosp-001',
+    name: 'St. Gabriel Medical Center',
+    spec: {
+      manufacturers,
+      categories,
+      tableColumns: [
+        ['name', 'Product Name'],
+        ['manufacturer', 'Manufacturer'],
+        ['category', 'Category'],
+        ['quantity', 'Quantity'],
+        ['price', 'Price'],
+        ['expiresAt', 'Expiry Date'],
+      ],
+    },
   },
   {
-    hospitalId: 'hosp-002',
-    manufacturers,
-    categories,
-    tableColumns: [
-      ['name', 'Product Name'],
-      ['manufacturer', 'Manufacturer'],
-      ['category', 'Category'],
-      ['quantity', 'Quantity'],
-    ],
+    id: 'hosp-002',
+    name: 'Riverside General Hospital',
+    spec: {
+      manufacturers,
+      categories,
+      tableColumns: [
+        ['name', 'Product Name'],
+        ['manufacturer', 'Manufacturer'],
+        ['category', 'Category'],
+        ['quantity', 'Quantity'],
+      ],
+    },
   },
 ]

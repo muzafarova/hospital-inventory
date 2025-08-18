@@ -1,7 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
-// Reactive async state composable https://vueuse.org/core/useAsyncState/
 import { useAsyncState } from '@vueuse/core'
 
 import { useAuthStore } from '@/stores/auth'
@@ -21,7 +19,7 @@ export const useInventoryStore = defineStore('inventory', () => {
     executeImmediate: listProducts,
   } = useAsyncState(
     async () => {
-      const hospitalId = authStore.getHospitalId
+      const hospitalId = authStore.hospitalId
       if (!hospitalId) {
         return null
       }
@@ -38,19 +36,19 @@ export const useInventoryStore = defineStore('inventory', () => {
     {
       immediate: false,
       resetOnExecute: false,
-      onError: (err: unknown) => errorStore.report(err, 'Failed to remove inventory'),
+      onError: (err: unknown) => errorStore.report(err, 'Failed to load inventory'),
     },
   )
   const productStats = computed(() =>
     productsList.value
       ? `${productsList.value.meta.limit * productsList.value.meta.offset + 1} -
-          ${productsList.value.products.length} of
+          ${productsList.value.items.length} of
           ${productsList.value.meta.total.toLocaleString()}`
       : '',
   )
   const { isLoading: removing, executeImmediate: deleteProducts } = useAsyncState(
     async (ids: string[]) => {
-      const hospitalId = authStore.getHospitalId
+      const hospitalId = authStore.hospitalId
       if (!hospitalId) {
         return
       }
@@ -85,6 +83,10 @@ export const useInventoryStore = defineStore('inventory', () => {
     console.log('🚚 mass-removing inventory', [...ids])
     await deleteProducts(ids)
   }
+
+  // TODO add
+
+  // TODO update
 
   function clear() {
     productsList.value = null

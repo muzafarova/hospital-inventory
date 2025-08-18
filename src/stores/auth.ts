@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const loading = ref(false)
   const isAuthenticated = computed(() => user.value !== null)
-  const getHospitalId = computed(() => user.value?.hospitalId)
+  const hospitalId = computed(() => user.value?.hospitalId)
 
   // Actions
   async function login() {
@@ -67,5 +67,5 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   // Interface
-  return { credentials, user, loading, isAuthenticated, getHospitalId, login, logout, checkAuth }
+  return { credentials, user, loading, isAuthenticated, hospitalId, login, logout, checkAuth }
 })

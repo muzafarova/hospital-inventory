@@ -4,6 +4,7 @@ export type UserJsonValue = {
   id: string
   hospitalId: string
   username: string
+  name: string
   email: string
 }
 
@@ -13,11 +14,13 @@ export default class User {
     hospitalId: z.string(),
     username: z.string(),
     email: z.email(),
+    name: z.string(),
   })
 
   constructor(
     readonly id: string,
     readonly username: string,
+    readonly name: string,
     readonly email: string,
     readonly hospitalId: string,
   ) {}
@@ -28,6 +31,6 @@ export default class User {
 
   static fromJson(data: UserJsonValue) {
     User.validate(data)
-    return new User(data.id, data.username, data.email, data.hospitalId)
+    return new User(data.id, data.username, data.name, data.email, data.hospitalId)
   }
 }

@@ -1,22 +1,24 @@
 import { http, delay, HttpResponse } from 'msw'
-import { users, userCredentials, products, configs } from './data'
-import type { InventoryConfig } from '@/types'
+import { users, userCredentials, products, hospitals } from './data'
 import type { UserJsonValue } from '@/entities/user'
+import { type HospitalJsonValue } from '@/entities/hospital'
 import type { ProductJsonValue } from '@/entities/product'
 
 // https://mswjs.io/docs/api/http/
 
-// In-memory state
+// Persistent state (imitates user session on the backend)
 const userSession = localStorage.getItem('userSession')
+
+// In-memory state (imitates state on the backend)
 let currentUser: UserJsonValue | null =
   typeof userSession === 'string' ? JSON.parse(userSession) : null
-let hospitalProducts: ProductJsonValue[] = []
+let currentHospitalProducts: ProductJsonValue[] = []
+let currentHospital: HospitalJsonValue | null = null
 
 export const handlers = [
   // Login endpoint
   http.post('/api/auth/login', async ({ request }) => {
     const { username, password } = (await request.json()) as { username: string; password: string }
-
     const user = users.find((u) => u.username === username)
 
     if (!user) {
@@ -27,7 +29,7 @@ export const handlers = [
     if (isValid) {
       currentUser = user
       localStorage.setItem('userSession', JSON.stringify(currentUser))
-      hospitalProducts = products.filter((p) => p.hospitalId === user.hospitalId)
+      currentHospitalProducts = products.filter((p) => p.hospitalId === user.hospitalId)
       return HttpResponse.json({ data: currentUser })
     }
 
@@ -40,7 +42,7 @@ export const handlers = [
       return HttpResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    hospitalProducts = products.filter((p) => p.hospitalId === currentUser!.hospitalId)
+    currentHospitalProducts = products.filter((p) => p.hospitalId === currentUser!.hospitalId)
 
     return HttpResponse.json({ data: currentUser }, { status: 200 })
   }),
@@ -52,11 +54,27 @@ export const handlers = [
     }
     if (currentUser) {
       currentUser = null
-      hospitalProducts = []
+      currentHospitalProducts = []
       localStorage.setItem('userSession', JSON.stringify(null))
       return HttpResponse.json({ data: null }, { status: 200 })
     }
     return HttpResponse.json({ error: 'Failed to togout' }, { status: 400 })
+  }),
+
+  // Hospital endpoint
+  http.get<{ hospitalId: string }>('/api/hospital/:hospitalId', ({ params }) => {
+    const { hospitalId } = params
+
+    if (!hospitalId) {
+      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
+    }
+
+    currentHospital = hospitals.find((c) => c.id === hospitalId) || null
+    if (currentHospital) {
+      return HttpResponse.json({ data: currentHospital }, { status: 200 })
+    }
+
+    return HttpResponse.json({ error: 'Hospital not found' }, { status: 404 })
   }),
 
   // Inventory endpoint
@@ -74,9 +92,9 @@ export const handlers = [
     return HttpResponse.json(
       {
         data: {
-          products: hospitalProducts.slice(offset, offset + limit),
+          items: currentHospitalProducts.slice(offset, offset + limit),
           meta: {
-            total: hospitalProducts.length,
+            total: currentHospitalProducts.length,
             offset,
             limit,
           },
@@ -95,29 +113,9 @@ export const handlers = [
     }
 
     // Filter products for the hospital (in real app, this would be database filtered)
-    hospitalProducts = hospitalProducts.filter((product) => !ids.includes(product.id))
+    currentHospitalProducts = currentHospitalProducts.filter((product) => !ids.includes(product.id))
 
+    await delay(300)
     return HttpResponse.json(ids, { status: 200 })
-  }),
-
-  // Inventory config endpoint
-  http.get('/api/inventory-spec', ({ request }) => {
-    const url = new URL(request.url)
-    const hospitalId = url.searchParams.get('hospitalId')
-
-    if (!hospitalId) {
-      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
-    }
-
-    const config = configs.find((c) => c.hospitalId === hospitalId)
-    if (config) {
-      const response: { success: true; data: InventoryConfig } = {
-        success: true,
-        data: config,
-      }
-      return HttpResponse.json(response, { status: 200 })
-    }
-
-    return HttpResponse.json({ error: 'Hospital config not found' }, { status: 404 })
   }),
 ]
