@@ -1,6 +1,6 @@
 import { http, delay, HttpResponse } from 'msw'
 import { users, userCredentials, products, configs } from './data'
-import type { InventoryData, Product, InventoryConfig } from '@/types'
+import type { Product, InventoryConfig } from '@/types'
 import type { UserJsonValue } from '@/entities/user'
 
 // https://mswjs.io/docs/api/http/
@@ -53,9 +53,11 @@ export const handlers = [
       currentUser = null
       hospitalProducts = []
       localStorage.setItem('userSession', JSON.stringify(null))
-      return HttpResponse.json({ success: true }, { status: 200 })
+
+      // TODO cleanup
+      return HttpResponse.json({ data: null }, { status: 200 })
     }
-    return HttpResponse.json({ success: false }, { status: 400 })
+    return HttpResponse.json({ error: 'Failed to togout' }, { status: 400 })
   }),
 
   // Inventory endpoint
@@ -69,20 +71,20 @@ export const handlers = [
       return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
     }
 
-    const response: { success: true; data: InventoryData } = {
-      success: true,
-      data: {
-        products: hospitalProducts.slice(offset, offset + limit),
-        meta: {
-          total: hospitalProducts.length,
-          offset,
-          limit,
+    await delay(1000)
+    return HttpResponse.json(
+      {
+        data: {
+          products: hospitalProducts.slice(offset, offset + limit),
+          meta: {
+            total: hospitalProducts.length,
+            offset,
+            limit,
+          },
         },
       },
-    }
-
-    await delay(1000)
-    return HttpResponse.json(response)
+      { status: 200 },
+    )
   }),
 
   // Inventory remove

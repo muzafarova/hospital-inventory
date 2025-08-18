@@ -21,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const loading = ref(false)
   const isAuthenticated = computed(() => user.value !== null)
+  const getHospitalId = computed(() => user.value?.hospitalId)
 
   // Actions
   async function login() {
@@ -66,6 +67,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Public surface
-  return { credentials, user, loading, isAuthenticated, login, logout, checkAuth }
+  // Interface
+  return { credentials, user, loading, isAuthenticated, getHospitalId, login, logout, checkAuth }
 })

@@ -28,7 +28,7 @@
       @remove="inventoryStore.removeProduct"
     >
       <template v-slot:pagination>
-        <span> {{ inventoryStore.stats }} </span>
+        <span> {{ inventoryStore.productStats }} </span>
         <!-- TODO implenment back/forward pagination  -->
       </template>
     </InventoryTable>
@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
 import { useInventoryStore } from '@/stores/inventory'
 import { useInventorySpecStore } from '@/stores/inventory-spec'
 
@@ -47,11 +48,12 @@ import ProductRemoveBulk from './ProductRemoveBulk.vue'
 
 const inventoryStore = useInventoryStore()
 const inventoryConfigStore = useInventorySpecStore()
+const route = useRoute()
 
 onBeforeMount(() => inventoryStore.clear())
 
 onMounted(async () => {
-  await inventoryStore.loadProducts()
+  await inventoryStore.loadProducts({ ...route.query })
   await inventoryConfigStore.loadData()
 })
 </script>

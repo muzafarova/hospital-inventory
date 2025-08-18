@@ -1,4 +1,4 @@
-import type { UserCredentials, InventoryData, InventoryConfig } from '@/types'
+import type { UserCredentials, InventoryQueryParams, InventoryConfig, Product } from '@/types'
 import User, { type UserJsonValue } from '@/entities/user'
 
 import { request, request1 } from './request'
@@ -19,19 +19,21 @@ export async function checkSession() {
   return await request1<UserJsonValue, User>('/api/auth/session', User.fromJson)
 }
 
-type InventoryQueryParams = {
+export type InventoryData = {
+  products: Product[]
+  meta: {
+    total: number
+    offset: number
+    limit: number
+  }
+}
+export type InventoryQueryParams = {
   hospitalId: string
   limit: number
   offset: number
 }
 export async function getInventory(query: InventoryQueryParams) {
-  return await request<
-    | {
-        success: true
-        data: InventoryData
-      }
-    | { success: false; error: string }
-  >('/api/inventory', { query })
+  return await request1<InventoryData, InventoryData>('/api/inventory', (x) => x, { query })
 }
 
 export async function getInventoryConfig(hospitalId: string) {

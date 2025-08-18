@@ -23,17 +23,6 @@ export type ProductColumnKey =
   | 'price'
   | 'expiresAt'
 
-export type NotificationType = 'warning' | 'error' | 'success' | 'info'
-
-export type InventoryData = {
-  products: Product[]
-  meta: {
-    total: number
-    offset: number
-    limit: number
-  }
-}
-
 export type InventoryConfig = {
   hospitalId: string
   manufacturers: string[]

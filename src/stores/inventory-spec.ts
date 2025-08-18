@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { InventoryConfig } from '@/types'
 import { useAuthStore } from '@/stores/auth'
@@ -12,18 +12,19 @@ export const useInventorySpecStore = defineStore('inventory-spec', () => {
   // State
   const data = ref<InventoryConfig | null>(null)
   const loading = ref(false)
-  const hospitalId = computed(() => authStore.user?.hospitalId)
 
   // Actions
   async function loadData() {
-    if (!hospitalId.value) {
+    const hospitalId = authStore.getHospitalId
+    if (!hospitalId) {
       return
     }
-    console.log('🚚 fetch inventory configuration for', hospitalId.value)
+
+    console.log('🚚 fetch inventory configuration for', hospitalId)
     loading.value = true
     errorStore.clear()
     try {
-      const response = await getInventoryConfig(hospitalId.value)
+      const response = await getInventoryConfig(hospitalId)
 
       if (response.success) {
         data.value = response.data
@@ -37,6 +38,6 @@ export const useInventorySpecStore = defineStore('inventory-spec', () => {
     }
   }
 
-  // Public interface
+  // Interface
   return { data, loading, loadData }
 })
