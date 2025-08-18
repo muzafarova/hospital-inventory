@@ -1,5 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+
+// Reactive async state composable https://vueuse.org/core/useAsyncState/
 import { useAsyncState } from '@vueuse/core'
 
 import { useAuthStore } from '@/stores/auth'
@@ -11,37 +13,39 @@ export const useInventoryStore = defineStore('inventory', () => {
   const errorStore = useErrorStore()
 
   // State
-  const selectedProducts = ref<string[]>([])
+  const productsQuery = ref<{ limit: number; offset: number }>({ limit: 100, offset: 0 })
+  const productsSelection = ref<string[]>([])
   const {
-    state: data,
+    state: productsList,
     isLoading: loading,
-    executeImmediate: loadProducts,
+    executeImmediate: listProducts,
   } = useAsyncState(
-    async (query: { limit?: number; offset?: number }) => {
+    async () => {
       const hospitalId = authStore.getHospitalId
       if (!hospitalId) {
         return null
       }
 
       errorStore.clear()
-      console.log('🚚 fetch inventory for', hospitalId)
+      console.log('🚚 fetching inventory', { ...productsQuery.value })
       return await getInventory({
         hospitalId,
-        offset: query.offset || 0,
-        limit: query.limit || 100,
+        offset: productsQuery.value.offset,
+        limit: productsQuery.value.limit,
       })
     },
     null,
     {
       immediate: false,
+      resetOnExecute: false,
       onError: (err: unknown) => errorStore.report(err, 'Failed to remove inventory'),
     },
   )
   const productStats = computed(() =>
-    data.value
-      ? `${data.value.meta.limit * data.value.meta.offset + 1} -
-          ${data.value.products.length} of
-          ${data.value.meta.total.toLocaleString()}`
+    productsList.value
+      ? `${productsList.value.meta.limit * productsList.value.meta.offset + 1} -
+          ${productsList.value.products.length} of
+          ${productsList.value.meta.total.toLocaleString()}`
       : '',
   )
   const { isLoading: removing, executeImmediate: deleteProducts } = useAsyncState(
@@ -56,11 +60,16 @@ export const useInventoryStore = defineStore('inventory', () => {
     {
       immediate: false,
       onError: (err: unknown) => errorStore.report(err, 'Failed to remove inventory'),
-      onSuccess: async () => await loadProducts(),
+      onSuccess: async () => await listProducts(),
     },
   )
 
   // Actions
+  async function loadProducts({ limit = 100, offset = 0 }: { limit?: number; offset?: number }) {
+    productsQuery.value = { limit, offset }
+    await listProducts()
+  }
+
   async function removeProduct(id: string) {
     if (!id) {
       return
@@ -78,20 +87,20 @@ export const useInventoryStore = defineStore('inventory', () => {
   }
 
   function clear() {
-    data.value = null
+    productsList.value = null
   }
 
   function updateSelection(selected: string[]) {
-    selectedProducts.value = selected
+    productsSelection.value = selected
   }
 
   // Interface
   return {
-    data,
     loading,
     removing,
+    productsList,
     productStats,
-    selectedProducts,
+    productsSelection,
     loadProducts,
     removeProduct,
     bulkRemoveProducts,

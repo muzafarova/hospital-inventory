@@ -1,5 +1,6 @@
-import type { Product, InventoryConfig } from '@/types'
+import type { InventoryConfig } from '@/types'
 import type { UserJsonValue } from '@/entities/user'
+import type { ProductJsonValue } from '@/entities/product'
 
 import { faker } from '@faker-js/faker'
 
@@ -38,7 +39,7 @@ export const manufacturers = [
 
 export const categories = ['Surgical', 'Diagnostic', 'Therapeutic', 'Emergency', 'Laboratory']
 
-export const products: Product[] = Array.from({ length: 5000 }, (_, index) => ({
+export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, index) => ({
   hospitalId: faker.helpers.enumValue(HospitalId),
   id: faker.string.uuid(),
   name: `Product ${faker.word.noun()}`,

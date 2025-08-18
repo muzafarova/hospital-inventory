@@ -3,17 +3,6 @@ export type UserCredentials = {
   password: string
 }
 
-export interface Product {
-  id: string
-  hospitalId: string
-  name: string
-  manufacturer: string
-  category: string
-  quantity: number
-  price: string
-  expiresAt: number
-}
-
 export type ProductColumnKey =
   | 'hospitalId'
   | 'name'

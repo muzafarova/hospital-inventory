@@ -6,7 +6,8 @@
       ' bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white':
         variant === 'accent',
       ' bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-500 border-gray-200 hover:border-gray-300 dark:border-gray-700/60 dark:hover:border-gray-600':
-        variant === 'default',
+        ['default', 'danger'].includes(variant),
+      'text-red-500': variant === 'danger',
     }"
   >
     <slot><span v-text="type" class="capitalized" /></slot>
@@ -15,7 +16,11 @@
 
 <script setup lang="ts">
 withDefaults(
-  defineProps<{ type?: string; size?: 'small' | 'base'; variant?: 'accent' | 'default' }>(),
+  defineProps<{
+    type?: string
+    size?: 'small' | 'base'
+    variant?: 'accent' | 'default' | 'danger'
+  }>(),
   {
     type: 'button',
     size: 'base',

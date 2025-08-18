@@ -1,7 +1,8 @@
 import { http, delay, HttpResponse } from 'msw'
 import { users, userCredentials, products, configs } from './data'
-import type { Product, InventoryConfig } from '@/types'
+import type { InventoryConfig } from '@/types'
 import type { UserJsonValue } from '@/entities/user'
+import type { ProductJsonValue } from '@/entities/product'
 
 // https://mswjs.io/docs/api/http/
 
@@ -9,7 +10,7 @@ import type { UserJsonValue } from '@/entities/user'
 const userSession = localStorage.getItem('userSession')
 let currentUser: UserJsonValue | null =
   typeof userSession === 'string' ? JSON.parse(userSession) : null
-let hospitalProducts: Product[] = []
+let hospitalProducts: ProductJsonValue[] = []
 
 export const handlers = [
   // Login endpoint

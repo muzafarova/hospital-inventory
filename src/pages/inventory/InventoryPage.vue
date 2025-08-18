@@ -4,9 +4,9 @@
     <template v-slot:actions>
       <!-- Bulk-delete button -->
       <ProductRemoveBulk
-        v-if="inventoryStore.selectedProducts.length > 0"
+        v-if="inventoryStore.productsSelection.length > 0"
         :loading="inventoryStore.removing"
-        :selected="inventoryStore.selectedProducts"
+        :selected="inventoryStore.productsSelection"
         @delete="(ids: string[]) => inventoryStore.bulkRemoveProducts(ids)"
       />
 
@@ -20,9 +20,9 @@
 
     <!-- List view -->
     <InventoryTable
-      v-if="inventoryStore.data"
-      :products="inventoryStore.data.products"
-      :total="inventoryStore.data.meta.total"
+      v-if="inventoryStore.productsList"
+      :products="inventoryStore.productsList.products"
+      :total="inventoryStore.productsList.meta.total"
       :columns="inventoryConfigStore.data?.tableColumns || []"
       @selection="inventoryStore.updateSelection"
       @remove="inventoryStore.removeProduct"
