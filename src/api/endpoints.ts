@@ -13,7 +13,7 @@ export async function loginUser({ username, password }: { username: string; pass
 }
 
 export async function logoutUser() {
-  return await request(`/api/auth/logout`, { method: 'POST' })
+  return await request1(`/api/auth/logout`, () => null, { method: 'POST' })
 }
 
 export async function checkSession() {

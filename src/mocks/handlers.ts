@@ -54,8 +54,6 @@ export const handlers = [
       currentUser = null
       hospitalProducts = []
       localStorage.setItem('userSession', JSON.stringify(null))
-
-      // TODO cleanup
       return HttpResponse.json({ data: null }, { status: 200 })
     }
     return HttpResponse.json({ error: 'Failed to togout' }, { status: 400 })

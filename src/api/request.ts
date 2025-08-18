@@ -62,6 +62,5 @@ export async function request1<T, U>(
   }
 
   const result = (await response.json()) as { data: T }
-
   return decoder(result.data)
 }
