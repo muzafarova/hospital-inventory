@@ -1,7 +1,6 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import type { UserCredentials } from '@/types'
 import User from '@/entities/user'
 
 import { useErrorStore } from '@/stores/error'
@@ -14,7 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
   const errorStore = useErrorStore()
 
   // State
-  const credentials = ref<UserCredentials>({
+  const credentials = ref({
     username: '',
     password: '',
   })

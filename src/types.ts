@@ -1,8 +1,3 @@
-export type UserCredentials = {
-  username: string
-  password: string
-}
-
 export type ProductColumnKey =
   | 'hospitalId'
   | 'name'
