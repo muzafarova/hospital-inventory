@@ -22,16 +22,10 @@
         </BaseInput>
       </div>
       <div class="flex items-center justify-between mt-6">
-        <div class="mr-1">
-          <router-link class="text-sm underline hover:no-underline" to="/reset-password">
-            Forgot Password?
-          </router-link>
-        </div>
+        <router-link class="mr-1 text-sm underline hover:no-underline" to="/reset-password">
+          Forgot Password?
+        </router-link>
         <BaseButton type="submit" variant="accent">Sign In</BaseButton>
-        <!-- class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white whitespace-nowrap ml-3" -->
-        <!-- to="/"
-        >
-          Sign In -->
       </div>
     </form>
   </LayoutLogin>
