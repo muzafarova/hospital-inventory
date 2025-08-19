@@ -1,18 +1,10 @@
-# hopco-test-task
+# Hospital Inventory
 
-This template should help get you started developing with Vue 3 in Vite.
+This is an SPA app build with [Vue3](https://vuejs.org/) (composition API), [Pinia](https://pinia.vuejs.org/), [Vue Router](https://router.vuejs.org/), and [Vite.js](https://vite.dev/).
+Backend is mocked with [MSW](https://mswjs.io/)
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+For simplicity, no UI libriaries used in this iteration.
+UI is styled with [Tailwind 4](https://tailwindcss.com/blog/tailwindcss-v4)
 
 ## Project Setup
 
@@ -37,6 +29,8 @@ npm run build
 ```sh
 npm run test:unit
 ```
+
+Note: planned to use Storybook and convert stories into unit tests, but run out of time due to the amount of features to implement
 
 ### Run End-to-End Tests with [Playwright](https://playwright.dev)
 
