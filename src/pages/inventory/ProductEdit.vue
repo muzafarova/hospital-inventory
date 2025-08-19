@@ -14,7 +14,12 @@
     </svg>
   </button>
 
-  <AppModal id="add-product" :modal-open="modalOpen" title="New product" @close="modalOpen = false">
+  <AppModal
+    id="add-product"
+    :modal-open="modalOpen"
+    title="Edit product"
+    @close="modalOpen = false"
+  >
     <div class="p-5">
       <InventoryForm
         v-model="localValue"
