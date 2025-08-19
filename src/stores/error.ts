@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-// TODO test this store
 export const useErrorStore = defineStore('error', () => {
   // State
   const notifications = ref<string[]>([])
