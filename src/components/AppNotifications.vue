@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseToast from '@/components/library/BaseToast.vue'
+import BaseToast from '@/components/ui/BaseToast.vue'
 import { useErrorStore } from '@/stores/error'
 const errorStore = useErrorStore()
 </script>

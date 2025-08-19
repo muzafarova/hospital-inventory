@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import AppTopbar from '@/components/AppTopbar.vue'
-import BaseSpinner from './library/BaseSpinner.vue'
+import BaseSpinner from './ui/BaseSpinner.vue'
 
 defineProps<{ loading: boolean }>()
 </script>

@@ -36,8 +36,8 @@ import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 import LayoutLogin from '@/components/LayoutLogin.vue'
-import BaseInput from '@/components/library/BaseInput.vue'
-import BaseButton from '@/components/library/BaseButton.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
 import ShowPasswordToggle from './ShowPasswordToggle.vue'
 
 import { userCredentials } from '@/mocks/data.ts'

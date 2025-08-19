@@ -85,9 +85,9 @@ import { useHospitalStore } from '@/stores/hospital'
 
 import { type NewProductSpec } from '@/api/endpoints'
 
-import BaseInput from '@/components/library/BaseInput.vue'
-import BaseSelect from '@/components/library/BaseSelect.vue'
-import BaseButton from '@/components/library/BaseButton.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
+import BaseSelect from '@/components/ui/BaseSelect.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
 
 withDefaults(
   defineProps<{
