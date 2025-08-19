@@ -10,7 +10,10 @@ export async function request<T, U>(
   const url = new URL(path, window.location.origin)
   if (options?.query) {
     for (const param in options?.query) {
-      url.searchParams.set(param, String(options?.query[param]))
+      const value = String(options?.query[param])
+      if (value !== '') {
+        url.searchParams.set(param, value)
+      }
     }
   }
 

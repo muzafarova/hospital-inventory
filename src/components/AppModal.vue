@@ -71,7 +71,6 @@ const modalContent = ref<HTMLElement | null>(null)
 // close on click outside
 const clickHandler = (event: MouseEvent) => {
   const target = event.target as Node
-  console.log(modalContent.value, target)
   if (!props.modalOpen || !modalContent.value || modalContent.value.contains(target)) {
     return
   }

@@ -14,8 +14,11 @@
 
   <AppModal id="add-product" :modal-open="modalOpen" title="New product" @close="modalOpen = false">
     <div class="p-5">
-      <InventoryForm v-model="newProduct" />
-      {{ newProduct }}
+      <InventoryForm
+        v-model="newProduct"
+        :submit-label="inventoryStore.adding ? 'Submitting...' : 'Submit'"
+        @submit="handleCreate"
+      />
     </div>
   </AppModal>
 </template>
@@ -23,17 +26,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { useInventoryStore } from '@/stores/inventory'
+
 import AppModal from '@/components/AppModal.vue'
 import InventoryForm from './InventoryForm.vue'
 
+const inventoryStore = useInventoryStore()
 const modalOpen = ref(false)
-
 const newProduct = ref({
   name: '',
   manufacturer: '',
   category: '',
   quantity: 10,
   price: '',
-  expiresAt: '',
+  expiresAt: null,
 })
+
+async function handleCreate() {
+  await inventoryStore.addProduct(newProduct.value)
+  modalOpen.value = false
+}
 </script>

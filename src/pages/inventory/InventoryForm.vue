@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent="$emit('submit')">
     <div class="px-5 py-4">
       <div class="space-y-3">
         <BaseInput
@@ -62,14 +62,21 @@
             required
             :model-value="modelValue.expiresAt"
             @update:model-value="
-              (expiresAt) => $emit('update:modelValue', { ...modelValue, expiresAt })
+              (expiresAt) =>
+                !expiresAt
+                  ? $emit('update:modelValue', { ...modelValue, expiresAt: null })
+                  : $emit('update:modelValue', { ...modelValue, expiresAt })
             "
           />
         </div>
       </div>
     </div>
 
-    <BaseButton type="submit">Submit</BaseButton>
+    <div class="flex flex-col px-6 py-5 border-t border-gray-200 dark:border-gray-700/60">
+      <div class="flex self-end">
+        <BaseButton type="submit" variant="accent">{{ submitLabel }}</BaseButton>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -84,8 +91,17 @@ import BaseInput from '@/components/library/BaseInput.vue'
 import BaseSelect from '@/components/library/BaseSelect.vue'
 import BaseButton from '@/components/library/BaseButton.vue'
 
-defineProps<{
-  modelValue: Omit<Product, 'hospitalId' | 'id'>
+withDefaults(
+  defineProps<{
+    submitLabel: string
+    modelValue: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>
+  }>(),
+  { submitLabel: 'Submit' },
+)
+
+defineEmits<{
+  submit: []
+  'update:modelValue': [value: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>]
 }>()
 
 const hospitalStore = useHospitalStore()

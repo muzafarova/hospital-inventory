@@ -3,6 +3,8 @@ import * as z from 'zod'
 export type ProductJsonValue = {
   id: string
   hospitalId: string
+  createdAt: string
+  updatedAt: string
   name: string
   manufacturer: string
   category: string
@@ -15,23 +17,27 @@ export default class Product {
   static readonly schema = z.object({
     id: z.uuid(),
     hospitalId: z.string(),
+    createdAt: z.iso.date(),
+    updatedAt: z.iso.date(),
     name: z.string(),
     manufacturer: z.string(),
     category: z.string(),
     quantity: z.number(),
     price: z.string(),
-    expiresAt: z.iso.date(),
+    expiresAt: z.iso.date().nullish(),
   })
 
   constructor(
     readonly id: string,
     readonly hospitalId: string,
+    readonly createdAt: string,
+    readonly updatedAt: string,
     readonly name: string,
     readonly manufacturer: string,
     readonly category: string,
     readonly quantity: number,
     readonly price: string,
-    readonly expiresAt: string,
+    readonly expiresAt: string | null,
   ) {}
 
   static validate(data: ProductJsonValue) {
@@ -43,6 +49,8 @@ export default class Product {
     return new Product(
       data.id,
       data.hospitalId,
+      data.createdAt,
+      data.updatedAt,
       data.name,
       data.manufacturer,
       data.category,

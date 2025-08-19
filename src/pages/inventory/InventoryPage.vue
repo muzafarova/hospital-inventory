@@ -53,5 +53,6 @@ onBeforeMount(async () => {
   }
 })
 
+// URL search params serve as source of the initial state for loadProducts' query
 onMounted(async () => await inventoryStore.loadProducts({ ...route.query }))
 </script>

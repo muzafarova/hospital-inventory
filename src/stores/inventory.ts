@@ -3,15 +3,21 @@ import { defineStore } from 'pinia'
 import { useAsyncState } from '@vueuse/core'
 
 import { useAuthStore } from '@/stores/auth'
-import { getInventory, deleteInventory } from '@/api/endpoints'
+import { getProducts, deleteProducts, createProduct } from '@/api/endpoints'
 import { useErrorStore } from '@/stores/error'
+
+// TODO move to entity class?
+import Product from '@/entities/product'
 
 export const useInventoryStore = defineStore('inventory', () => {
   const authStore = useAuthStore()
   const errorStore = useErrorStore()
 
   // State
-  const productsQuery = ref<{ limit: number; offset: number }>({ limit: 100, offset: 0 })
+  const productsQuery = ref<{ limit: number; offset: number; name?: string }>({
+    limit: 100,
+    offset: 0,
+  })
   const productsSelection = ref<string[]>([])
   const {
     state: productsList,
@@ -26,10 +32,10 @@ export const useInventoryStore = defineStore('inventory', () => {
 
       errorStore.clear()
       console.log('🚚 fetching inventory', { ...productsQuery.value })
-      return await getInventory({
-        hospitalId,
+      return await getProducts(hospitalId, {
         offset: productsQuery.value.offset,
         limit: productsQuery.value.limit,
+        name: productsQuery.value.name,
       })
     },
     null,
@@ -46,13 +52,13 @@ export const useInventoryStore = defineStore('inventory', () => {
           ${productsList.value.meta.total.toLocaleString()}`
       : '',
   )
-  const { isLoading: removing, executeImmediate: deleteProducts } = useAsyncState(
+  const { isLoading: removing, executeImmediate: remove } = useAsyncState(
     async (ids: string[]) => {
       const hospitalId = authStore.hospitalId
       if (!hospitalId) {
         return
       }
-      await deleteInventory(hospitalId, ids)
+      await deleteProducts(hospitalId, ids)
     },
     null,
     {
@@ -61,10 +67,33 @@ export const useInventoryStore = defineStore('inventory', () => {
       onSuccess: async () => await listProducts(),
     },
   )
+  const { isLoading: adding, executeImmediate: addProduct } = useAsyncState(
+    async (data: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>) => {
+      const hospitalId = authStore.hospitalId
+      if (!hospitalId) {
+        return
+      }
+      await createProduct(hospitalId, data)
+    },
+    null,
+    {
+      immediate: false,
+      onError: (err: unknown) => errorStore.report(err, 'Failed to add inventory item'),
+      onSuccess: async () => await listProducts(),
+    },
+  )
 
   // Actions
-  async function loadProducts({ limit = 100, offset = 0 }: { limit?: number; offset?: number }) {
-    productsQuery.value = { limit, offset }
+  async function loadProducts({
+    limit = 100,
+    offset = 0,
+    name = '',
+  }: {
+    limit?: number
+    offset?: number
+    name?: string
+  }) {
+    productsQuery.value = { limit, offset, name }
     await listProducts()
   }
 
@@ -73,7 +102,7 @@ export const useInventoryStore = defineStore('inventory', () => {
       return
     }
     console.log('🚚 removing inventory item', id)
-    await deleteProducts([id])
+    await remove([id])
   }
 
   async function bulkRemoveProducts(ids: string[]) {
@@ -81,7 +110,7 @@ export const useInventoryStore = defineStore('inventory', () => {
       return
     }
     console.log('🚚 mass-removing inventory', [...ids])
-    await deleteProducts(ids)
+    await remove(ids)
   }
 
   // TODO add
@@ -100,10 +129,12 @@ export const useInventoryStore = defineStore('inventory', () => {
   return {
     loading,
     removing,
+    adding,
     productsList,
     productStats,
     productsSelection,
     loadProducts,
+    addProduct,
     removeProduct,
     bulkRemoveProducts,
     updateSelection,

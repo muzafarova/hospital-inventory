@@ -1,8 +1,11 @@
 import { http, delay, HttpResponse } from 'msw'
+import * as z from 'zod'
+
 import { users, userCredentials, products, hospitals } from './data'
 import type { UserJsonValue } from '@/entities/user'
 import { type HospitalJsonValue } from '@/entities/hospital'
 import type { ProductJsonValue } from '@/entities/product'
+import { generateUuid } from './data'
 
 // https://mswjs.io/docs/api/http/
 
@@ -49,52 +52,53 @@ export const handlers = [
 
   // Logout endpoint
   http.post<{ username: string }>('/api/auth/logout', () => {
-    if (!currentUser) {
-      return
-    }
-    if (currentUser) {
-      currentUser = null
-      currentHospitalProducts = []
-      localStorage.setItem('userSession', JSON.stringify(null))
-      return HttpResponse.json({ data: null }, { status: 200 })
-    }
-    return HttpResponse.json({ error: 'Failed to togout' }, { status: 400 })
+    currentUser = null
+    currentHospitalProducts = []
+    localStorage.setItem('userSession', JSON.stringify(null))
+    return HttpResponse.json({ data: null }, { status: 200 })
   }),
 
   // Hospital endpoint
-  http.get<{ hospitalId: string }>('/api/hospital/:hospitalId', ({ params }) => {
-    const { hospitalId } = params
+  http.get<{ id: string }>('/api/hospital/:id', async ({ params }) => {
+    const { id } = params
 
-    if (!hospitalId) {
+    if (!id) {
       return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
     }
 
-    currentHospital = hospitals.find((c) => c.id === hospitalId) || null
+    currentHospital = hospitals.find((c) => c.id === id) || null
+    await delay(300)
+
     if (currentHospital) {
       return HttpResponse.json({ data: currentHospital }, { status: 200 })
     }
-
     return HttpResponse.json({ error: 'Hospital not found' }, { status: 404 })
   }),
 
-  // Inventory endpoint
-  http.get('/api/inventory', async ({ request }) => {
+  // Products endpoint
+  http.get('/api/hospital/:hospitalId/products', async ({ request, params }) => {
+    const { hospitalId } = params
+
     const url = new URL(request.url)
-    const hospitalId = url.searchParams.get('hospitalId')
     const limit = parseInt(url.searchParams.get('limit') || '100')
     const offset = parseInt(url.searchParams.get('offset') || '0')
+    const name = url.searchParams.get('name')
 
     if (!hospitalId) {
       return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
     }
 
     await delay(1000)
+    let results = currentHospitalProducts.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+    if (name) {
+      results = results.filter((p) => p.name.toLowerCase().includes(name.toLowerCase()))
+    }
     return HttpResponse.json(
       {
         data: {
-          items: currentHospitalProducts.slice(offset, offset + limit),
+          items: results.slice(offset, offset + limit),
           meta: {
-            total: currentHospitalProducts.length,
+            total: results.length,
             offset,
             limit,
           },
@@ -104,15 +108,52 @@ export const handlers = [
     )
   }),
 
-  // Inventory remove
-  http.delete('/api/inventory', async ({ request }) => {
-    const { hospitalId, ids = [] } = await request.clone().json()
+  // Product create
+  http.post('/api/hospital/:hospitalId/products', async ({ request, params }) => {
+    const { hospitalId } = params
+    const { product } = await request.clone().json()
 
     if (!hospitalId) {
       return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
     }
 
-    // Filter products for the hospital (in real app, this would be database filtered)
+    const schema = z.object({
+      name: z.string(),
+      manufacturer: z.string(),
+      category: z.string(),
+      quantity: z.number(),
+      price: z.string(),
+      expiresAt: z.iso.date().nullish(),
+    })
+
+    const validate = schema.safeParse(product)
+    if (validate.success) {
+      const newProduct = {
+        hospitalId,
+        id: generateUuid(),
+        createdAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString().split('T')[0],
+        ...product,
+      }
+      currentHospitalProducts.push(newProduct)
+
+      await delay(300)
+      return HttpResponse.json(newProduct, { status: 201 })
+    }
+
+    console.warn(validate.error)
+    return HttpResponse.json({ error: 'Invalid input' }, { status: 400 })
+  }),
+
+  // Products remove
+  http.delete('/api/hospital/:hospitalId/products', async ({ request, params }) => {
+    const { hospitalId } = params
+    const { ids = [] } = await request.clone().json()
+
+    if (!hospitalId) {
+      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
+    }
+
     currentHospitalProducts = currentHospitalProducts.filter((product) => !ids.includes(product.id))
 
     await delay(300)
