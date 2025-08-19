@@ -2,7 +2,6 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useAsyncState } from '@vueuse/core'
 
-import { useAuthStore } from '@/stores/auth'
 import {
   getProducts,
   deleteProducts,
@@ -10,10 +9,10 @@ import {
   updateProduct,
   type NewProductSpec,
 } from '@/api/endpoints'
-import { useErrorStore } from '@/stores/error'
-
-// TODO move to entity class?
 import Product from '@/entities/product'
+
+import { useErrorStore } from '@/stores/error'
+import { useAuthStore } from '@/stores/auth'
 
 export const useInventoryStore = defineStore('inventory', () => {
   const authStore = useAuthStore()
@@ -134,10 +133,6 @@ export const useInventoryStore = defineStore('inventory', () => {
     console.log('🚚 mass-removing inventory', [...ids])
     await remove(ids)
   }
-
-  // TODO add
-
-  // TODO update
 
   function clear() {
     productsList.value = null

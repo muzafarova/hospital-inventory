@@ -4,13 +4,14 @@ import { defineStore } from 'pinia'
 import User from '@/entities/user'
 
 import { useErrorStore } from '@/stores/error'
-
+import { useHospitalStore } from './hospital'
 import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
   const router = useRouter()
   const errorStore = useErrorStore()
+  const hospitalStore = useHospitalStore()
 
   // State
   const credentials = ref({
@@ -29,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
     errorStore.clear()
     try {
       user.value = await loginUser(credentials.value)
+      await hospitalStore.loadData()
       await router.push({ name: 'inventory' })
     } catch (err) {
       errorStore.report(err, 'Failed to login')
@@ -42,7 +44,7 @@ export const useAuthStore = defineStore('auth', () => {
       return
     }
 
-    loading.value = true
+    // loading.value = true
     try {
       await logoutUser()
       user.value = null
@@ -50,7 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (err) {
       errorStore.report(err, 'Failed to logout')
     } finally {
-      loading.value = true
+      // loading.value = true
     }
   }
 
@@ -58,6 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     try {
       user.value = await checkSession()
+      await hospitalStore.loadData()
     } catch {
       console.warn('Session not found')
       user.value = null

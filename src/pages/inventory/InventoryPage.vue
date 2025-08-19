@@ -46,12 +46,7 @@ const inventoryStore = useInventoryStore()
 const hospitalStore = useHospitalStore()
 const route = useRoute()
 
-onBeforeMount(async () => {
-  inventoryStore.clear()
-  if (hospitalStore.data === null) {
-    await hospitalStore.loadData()
-  }
-})
+onBeforeMount(async () => inventoryStore.clear())
 
 // URL search params serve as source of the initial state for loadProducts' query
 onMounted(async () => await inventoryStore.loadProducts({ ...route.query }))

@@ -89,7 +89,7 @@ export const handlers = [
     }
 
     await delay(1000)
-    let results = [...currentHospitalProducts].sort((a, b) => (a.name > b.name ? 1 : -1))
+    let results = [...currentHospitalProducts].sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
     if (name) {
       results = results.filter((p) => p.name.toLowerCase().includes(name.toLowerCase()))
     }

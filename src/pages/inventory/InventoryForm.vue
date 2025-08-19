@@ -31,29 +31,27 @@
             (category) => $emit('update:modelValue', { ...modelValue, category })
           "
         />
-        <div class="grid md:grid-cols-2">
-          <div class="grid md:grid-cols-2">
-            <BaseInput
-              label="Quantity"
-              id="quantity"
-              required
-              type="number"
-              min="0"
-              :model-value="modelValue.quantity"
-              @update:model-value="
-                (quantity) => $emit('update:modelValue', { ...modelValue, quantity })
-              "
-            />
-            <BaseInput
-              v-if="fields.includes('price')"
-              label="Price"
-              id="price"
-              min="0"
-              required
-              :model-value="modelValue.price"
-              @update:model-value="(price) => $emit('update:modelValue', { ...modelValue, price })"
-            />
-          </div>
+        <div class="grid md:grid-cols-3 gap-2">
+          <BaseInput
+            label="Quantity"
+            id="quantity"
+            required
+            type="number"
+            min="0"
+            :model-value="modelValue.quantity"
+            @update:model-value="
+              (quantity) => $emit('update:modelValue', { ...modelValue, quantity })
+            "
+          />
+          <BaseInput
+            v-if="fields.includes('price')"
+            label="Price"
+            id="price"
+            min="0"
+            required
+            :model-value="modelValue.price"
+            @update:model-value="(price) => $emit('update:modelValue', { ...modelValue, price })"
+          />
           <BaseInput
             v-if="fields.includes('expiresAt')"
             label="Expiry date"
