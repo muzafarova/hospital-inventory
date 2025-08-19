@@ -3,7 +3,7 @@ import * as z from 'zod'
 
 import { users, userCredentials, products, hospitals } from './data'
 import type { UserJsonValue } from '@/entities/user'
-import { type HospitalJsonValue } from '@/entities/hospital'
+import type { HospitalJsonValue } from '@/entities/hospital'
 import type { ProductJsonValue } from '@/entities/product'
 import { generateUuid } from './data'
 
@@ -142,6 +142,43 @@ export const handlers = [
     }
 
     console.warn(validate.error)
+    return HttpResponse.json({ error: 'Invalid input' }, { status: 400 })
+  }),
+
+  // Product Update
+  http.put('/api/hospital/:hospitalId/products/:id', async ({ request, params }) => {
+    const { hospitalId, id } = params
+    const { product } = await request.clone().json()
+
+    if (!hospitalId) {
+      return HttpResponse.json({ error: 'hospitalId is required' }, { status: 400 })
+    }
+
+    const schema = z.object({
+      createdAt: z.iso.date(),
+      name: z.string(),
+      manufacturer: z.string(),
+      category: z.string(),
+      quantity: z.number(),
+      price: z.string(),
+      expiresAt: z.iso.date().nullish(),
+    })
+
+    const validate = schema.safeParse(product)
+    if (validate.success) {
+      const updatedProduct = {
+        updatedAt: new Date().toISOString().split('T')[0],
+        ...product,
+      }
+      const index = currentHospitalProducts.findIndex((p) => p.id === id)
+      if (index === -1) {
+        return HttpResponse.json({ error: `Product with id ${id} not found` }, { status: 404 })
+      }
+      currentHospitalProducts[index] = updatedProduct
+      await delay(300)
+      return HttpResponse.json(updatedProduct, { status: 200 })
+    }
+
     return HttpResponse.json({ error: 'Invalid input' }, { status: 400 })
   }),
 

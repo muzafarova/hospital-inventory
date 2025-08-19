@@ -2,7 +2,7 @@ export async function request<T, U>(
   path: string,
   decoder: (data: T) => U,
   options?: {
-    method?: 'GET' | 'POST' | 'DELETE'
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
     data?: object
     query?: Record<string, string | number>
   },

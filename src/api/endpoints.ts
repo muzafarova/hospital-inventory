@@ -53,6 +53,13 @@ export async function createProduct(hospitalId: string, newProduct: NewProduct) 
   })
 }
 
+export async function updateProduct(hospitalId: string, product: Product) {
+  return await request(`/api/hospital/${hospitalId}/products/${product.id}`, () => null, {
+    method: 'PUT',
+    data: { product },
+  })
+}
+
 export async function deleteProducts(hospitalId: string, ids: string[]) {
   return await request(`/api/hospital/${hospitalId}/products`, () => null, {
     method: 'DELETE',

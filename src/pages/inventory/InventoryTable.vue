@@ -71,28 +71,15 @@
             v-for="column of columns"
             :key="column[0]"
           >
-            <span v-if="column[0] === 'price'">£{{ product[column[0]] }}</span>
-            <span v-else-if="column[0] === 'expiresAt'">{{
-              new Date(product[column[0]]).toLocaleDateString()
-            }}</span>
+            <span v-if="column[0] === 'price'">£{{ product['price'] }}</span>
+            <span v-else-if="column[0] === 'expiresAt'">{{ product['expiresAt'] }}</span>
             <span v-else>
               {{ product[column[0]] }}
             </span>
           </td>
           <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
             <div class="space-x-3">
-              <button
-                class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 rounded-full"
-              >
-                <span class="sr-only">Edit</span>
-                <svg viewBox="0 0 16 16" fill="currentColor" class="size-5">
-                  <path
-                    fill-rule="evenodd"
-                    d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
+              <ProductEdit :product="product" />
 
               <button
                 class="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 rounded-full"
@@ -119,6 +106,7 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import Product from '@/entities/product'
+import ProductEdit from './ProductEdit.vue'
 
 const porps = defineProps<{
   total: number
