@@ -3,7 +3,13 @@ import { defineStore } from 'pinia'
 import { useAsyncState } from '@vueuse/core'
 
 import { useAuthStore } from '@/stores/auth'
-import { getProducts, deleteProducts, createProduct, updateProduct } from '@/api/endpoints'
+import {
+  getProducts,
+  deleteProducts,
+  createProduct,
+  updateProduct,
+  type NewProductSpec,
+} from '@/api/endpoints'
 import { useErrorStore } from '@/stores/error'
 
 // TODO move to entity class?
@@ -69,7 +75,7 @@ export const useInventoryStore = defineStore('inventory', () => {
     },
   )
   const { isLoading: adding, executeImmediate: addProduct } = useAsyncState(
-    async (data: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>) => {
+    async (data: NewProductSpec) => {
       const hospitalId = authStore.hospitalId
       if (!hospitalId) {
         return

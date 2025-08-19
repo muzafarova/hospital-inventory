@@ -85,7 +85,7 @@ import { computed } from 'vue'
 
 import { useHospitalStore } from '@/stores/hospital'
 
-import Product from '@/entities/product'
+import { type NewProductSpec } from '@/api/endpoints'
 
 import BaseInput from '@/components/library/BaseInput.vue'
 import BaseSelect from '@/components/library/BaseSelect.vue'
@@ -94,14 +94,14 @@ import BaseButton from '@/components/library/BaseButton.vue'
 withDefaults(
   defineProps<{
     submitLabel: string
-    modelValue: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>
+    modelValue: NewProductSpec
   }>(),
   { submitLabel: 'Submit' },
 )
 
 defineEmits<{
   submit: []
-  'update:modelValue': [value: Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>]
+  'update:modelValue': [value: NewProductSpec]
 }>()
 
 const hospitalStore = useHospitalStore()

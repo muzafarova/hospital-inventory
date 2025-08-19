@@ -44,9 +44,8 @@ export async function getProducts(
   )
 }
 
-// TODO move to entity class?
-type NewProduct = Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>
-export async function createProduct(hospitalId: string, newProduct: NewProduct) {
+export type NewProductSpec = Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>
+export async function createProduct(hospitalId: string, newProduct: NewProductSpec) {
   return await request(`/api/hospital/${hospitalId}/products`, () => null, {
     method: 'POST',
     data: { product: newProduct },
