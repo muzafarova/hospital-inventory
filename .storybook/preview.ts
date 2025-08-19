@@ -1,6 +1,9 @@
-import type { Preview } from '@storybook/vue3-vite'
+import { type Preview } from '@storybook/vue3-vite'
+import '@/css/style.css'
 
 const preview: Preview = {
+  tags: ['autodocs'],
+
   parameters: {
     controls: {
       matchers: {
@@ -17,5 +20,9 @@ const preview: Preview = {
     },
   },
 }
+
+// setup((app: App) => {
+//   app.use(pinia).use(router)
+// })
 
 export default preview
