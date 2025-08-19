@@ -89,7 +89,7 @@ export const handlers = [
     }
 
     await delay(1000)
-    let results = currentHospitalProducts.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+    let results = [...currentHospitalProducts].sort((a, b) => (a.name > b.name ? 1 : -1))
     if (name) {
       results = results.filter((p) => p.name.toLowerCase().includes(name.toLowerCase()))
     }
@@ -131,8 +131,8 @@ export const handlers = [
       const newProduct = {
         hospitalId,
         id: generateUuid(),
-        createdAt: new Date().toISOString().split('T')[0],
-        updatedAt: new Date().toISOString().split('T')[0],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         ...product,
       }
       currentHospitalProducts.push(newProduct)
@@ -155,7 +155,7 @@ export const handlers = [
     }
 
     const schema = z.object({
-      createdAt: z.iso.date(),
+      createdAt: z.iso.datetime(),
       name: z.string(),
       manufacturer: z.string(),
       category: z.string(),
@@ -167,7 +167,7 @@ export const handlers = [
     const validate = schema.safeParse(product)
     if (validate.success) {
       const updatedProduct = {
-        updatedAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString(),
         ...product,
       }
       const index = currentHospitalProducts.findIndex((p) => p.id === id)

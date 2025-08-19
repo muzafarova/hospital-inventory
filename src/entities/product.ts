@@ -17,8 +17,8 @@ export default class Product {
   static readonly schema = z.object({
     id: z.uuid(),
     hospitalId: z.string(),
-    createdAt: z.iso.date(),
-    updatedAt: z.iso.date(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
     name: z.string(),
     manufacturer: z.string(),
     category: z.string(),
