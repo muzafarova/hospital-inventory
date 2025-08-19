@@ -119,14 +119,13 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import Product from '@/entities/product'
-import type { ProductColumnKey } from '@/entities/hospital'
 
 const porps = defineProps<{
   total: number
   limit?: number
   offset?: number
   products: Product[]
-  columns: [ProductColumnKey, string][]
+  columns: [keyof Product, string][]
 }>()
 
 const emits = defineEmits<{ selection: [value: string[]]; remove: [value: string] }>()

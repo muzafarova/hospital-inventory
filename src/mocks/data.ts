@@ -17,6 +17,7 @@ const username456 = {
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
 }
+
 export const users: UserJsonValue[] = [
   {
     id: faker.string.uuid(),
@@ -54,7 +55,7 @@ export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, ind
   id: faker.string.uuid(),
   name: `Product ${faker.word.noun()}`,
   price: faker.commerce.price(),
-  expiresAt: faker.date.future().valueOf(),
+  expiresAt: faker.date.future().toISOString().split('T')[0],
   manufacturer: manufacturers[index % 5],
   category: categories[index % 5],
   quantity: faker.number.int({ max: 150 }),
@@ -74,7 +75,7 @@ export const hospitals: HospitalJsonValue[] = [
         ['quantity', 'Quantity'],
         ['price', 'Price'],
         ['expiresAt', 'Expiry Date'],
-      ],
+      ] as [string, string][],
     },
   },
   {
@@ -88,7 +89,7 @@ export const hospitals: HospitalJsonValue[] = [
         ['manufacturer', 'Manufacturer'],
         ['category', 'Category'],
         ['quantity', 'Quantity'],
-      ],
+      ] as [string, string][],
     },
   },
 ]

@@ -5,11 +5,12 @@
     </label>
     <select
       v-bind="$attrs"
-      class="form-select"
+      class="form-select w-full"
       :id="id"
-      :modelValue="value"
-      @change="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
+      :required="required"
+      v-model="model"
     >
+      <option value="">{{ placeholder }}</option>
       <option v-for="option of options" :key="option" :value="option">
         {{ option }}
       </option>
@@ -18,15 +19,18 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  id: string
-  label: string
-  options: string[]
-  required?: boolean
-  value?: string | number
-}>()
+const model = defineModel()
 
-defineEmits<{ 'update:modelValue': [value: string | number] }>()
+withDefaults(
+  defineProps<{
+    id: string
+    label: string
+    options: string[]
+    required?: boolean
+    placeholder?: string
+  }>(),
+  { placeholder: '- select -' },
+)
 
 defineOptions({
   inheritAttrs: false,

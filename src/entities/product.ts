@@ -8,7 +8,7 @@ export type ProductJsonValue = {
   category: string
   quantity: number
   price: string
-  expiresAt: number
+  expiresAt: string
 }
 
 export default class Product {
@@ -20,7 +20,7 @@ export default class Product {
     category: z.string(),
     quantity: z.number(),
     price: z.string(),
-    expiresAt: z.number(),
+    expiresAt: z.iso.date(),
   })
 
   constructor(
@@ -31,7 +31,7 @@ export default class Product {
     readonly category: string,
     readonly quantity: number,
     readonly price: string,
-    readonly expiresAt: number,
+    readonly expiresAt: string,
   ) {}
 
   static validate(data: ProductJsonValue) {

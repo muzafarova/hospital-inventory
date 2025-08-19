@@ -14,7 +14,8 @@
 
   <AppModal id="add-product" :modal-open="modalOpen" title="New product" @close="modalOpen = false">
     <div class="p-5">
-      <InventoryForm :manufacturers="manufacturers" :categories="categories" />
+      <InventoryForm v-model="newProduct" />
+      {{ newProduct }}
     </div>
   </AppModal>
 </template>
@@ -25,11 +26,14 @@ import { ref } from 'vue'
 import AppModal from '@/components/AppModal.vue'
 import InventoryForm from './InventoryForm.vue'
 
-defineProps<{
-  manufacturers: string[]
-  categories: string[]
-}>()
-
-// Add & update popup
 const modalOpen = ref(false)
+
+const newProduct = ref({
+  name: '',
+  manufacturer: '',
+  category: '',
+  quantity: 10,
+  price: '',
+  expiresAt: '',
+})
 </script>

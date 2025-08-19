@@ -11,11 +11,7 @@
       />
 
       <!-- Add button & modal -->
-      <ProductCreate
-        v-if="hospitalStore.data"
-        :manufacturers="hospitalStore.data.spec.manufacturers"
-        :categories="hospitalStore.data.spec.categories"
-      />
+      <ProductCreate v-if="hospitalStore.data" />
     </template>
 
     <!-- List view -->
@@ -56,5 +52,6 @@ onBeforeMount(async () => {
     await hospitalStore.loadData()
   }
 })
+
 onMounted(async () => await inventoryStore.loadProducts({ ...route.query }))
 </script>

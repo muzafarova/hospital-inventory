@@ -17,9 +17,9 @@ export default class ProductList {
   static schema = z.object({
     items: z.array(Product.schema),
     meta: z.object({
-      total: z.number(),
-      offset: z.number(),
-      limit: z.number(),
+      total: z.int().gte(0),
+      offset: z.int().gte(0),
+      limit: z.int().gt(0),
     }),
   })
 

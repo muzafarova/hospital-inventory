@@ -9,25 +9,23 @@
       class="form-input w-full"
       :type="type"
       :required="required"
-      :modelValue="value"
-      @change="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
+      v-model="model"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+const model = defineModel()
+
 withDefaults(
   defineProps<{
     id: string
     label: string
     required?: boolean
     type?: string
-    value?: string | number
   }>(),
   { type: 'text' },
 )
-
-defineEmits<{ 'update:modelValue': [value: string | number] }>()
 
 defineOptions({
   inheritAttrs: false,

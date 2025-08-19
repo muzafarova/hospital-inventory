@@ -1,21 +1,5 @@
 import * as z from 'zod'
-
-// TODO check this in vue
-export type ProductColumnKey =
-  | 'hospitalId'
-  | 'name'
-  | 'manufacturer'
-  | 'category'
-  | 'quantity'
-  | 'price'
-  | 'expiresAt'
-
-export type InventoryConfig = {
-  hospitalId: string
-  manufacturers: string[]
-  categories: string[]
-  tableColumns: [ProductColumnKey, string][]
-}
+import Product from './product'
 
 export type HospitalJsonValue = {
   id: string
@@ -26,7 +10,7 @@ export type HospitalJsonValue = {
 type HospitalSpec = {
   manufacturers: string[]
   categories: string[]
-  tableColumns: [ProductColumnKey, string][]
+  tableColumns: [keyof Product, string][]
 }
 
 export default class Hospital {
