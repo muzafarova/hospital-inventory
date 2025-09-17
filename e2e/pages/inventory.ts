@@ -20,6 +20,10 @@ export class InventoryPage {
     await expect(this.page.getByRole('heading', { name: 'Products' })).toBeVisible()
   }
 
+  async expectModalVisible(title: string) {
+    await expect(this.page.getByText(title)).toBeVisible()
+  }
+
   async logout() {
     await this.buttonProfile.click()
     await this.topNav.getByRole('button', { name: 'Sign Out' }).click()
