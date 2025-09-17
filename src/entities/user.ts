@@ -6,6 +6,7 @@ export type UserJsonValue = {
   username: string
   name: string
   email: string
+  image: string
 }
 
 export default class User {
@@ -22,6 +23,7 @@ export default class User {
     readonly username: string,
     readonly name: string,
     readonly email: string,
+    readonly image: string,
     readonly hospitalId: string,
   ) {}
 
@@ -31,6 +33,6 @@ export default class User {
 
   static fromJson(data: UserJsonValue) {
     User.validate(data)
-    return new User(data.id, data.username, data.name, data.email, data.hospitalId)
+    return new User(data.id, data.username, data.name, data.email, data.image, data.hospitalId)
   }
 }

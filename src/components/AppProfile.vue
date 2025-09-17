@@ -7,7 +7,9 @@
       @click.prevent="dropdownOpen = !dropdownOpen"
       :aria-expanded="dropdownOpen"
     >
-      <span class="size-8 rounded-full bg-gray-500" />
+      <span class="size-8 rounded-full bg-gray-500">
+        <img :src="image" class="size-full rounded-full" />
+      </span>
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"
@@ -57,7 +59,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
-defineProps<{ align: string; username: string; name: string; email: string }>()
+defineProps<{ align: string; username: string; name: string; image: string; email: string }>()
 const emits = defineEmits<{ logout: [] }>()
 
 const dropdownOpen = ref(false)

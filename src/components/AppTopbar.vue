@@ -21,6 +21,7 @@
             :username="authStore.user.username"
             :name="authStore.user.name"
             :email="authStore.user.email"
+            :image="authStore.user.image"
             @logout="authStore.logout"
           />
         </div>
