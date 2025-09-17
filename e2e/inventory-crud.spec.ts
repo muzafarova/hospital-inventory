@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures.js'
 
-test.describe('Product Management', () => {
+test.describe('Inventory Operations', () => {
   test.describe('Product Create', () => {
     test('should create a new product successfully', async ({ loggedInPage }) => {
       await loggedInPage.expectInventoryPage()
