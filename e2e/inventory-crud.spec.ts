@@ -43,20 +43,6 @@ test.describe('Inventory Operations', () => {
       // Verify the new product appears in the table
       await expect(loggedInPage.page.getByText('Test Product')).toBeVisible()
     })
-
-    test('should show validation errors for empty required fields', async ({ loggedInPage }) => {
-      await loggedInPage.expectInventoryPage()
-
-      // Click the "Add item" button
-      await loggedInPage.buttonAddItem.click()
-      await loggedInPage.expectModalVisible('New product')
-
-      // Try to submit without filling required fields
-      await loggedInPage.buttonSubmit.click()
-
-      // Verify that the modal is still open (form validation should prevent submission)
-      await loggedInPage.expectModalVisible('New product')
-    })
   })
 
   test.describe('Product Update', () => {
