@@ -13,31 +13,29 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectModalVisible('New product')
 
       // Fill in the product form
-      await loggedInPage.page.getByLabel('Product Name').fill('Test Product')
+      await loggedInPage.inputProductName.fill('Test Product')
       
       // Select manufacturer (assuming first option)
-      await loggedInPage.page.getByLabel('Manufacturer').selectOption({ index: 1 })
+      await loggedInPage.selectManufacturer.selectOption({ index: 1 })
       
       // Select category (assuming first option)
-      await loggedInPage.page.getByLabel('Category').selectOption({ index: 1 })
+      await loggedInPage.selectCategory.selectOption({ index: 1 })
       
       // Fill quantity
-      await loggedInPage.page.getByLabel('Quantity').fill('50')
+      await loggedInPage.inputQuantity.fill('50')
       
       // Fill price if visible
-      const priceField = loggedInPage.page.getByLabel('Price')
-      if (await priceField.isVisible()) {
-        await priceField.fill('29.99')
+      if (await loggedInPage.inputPrice.isVisible()) {
+        await loggedInPage.inputPrice.fill('29.99')
       }
       
       // Fill expiry date if visible
-      const expiryField = loggedInPage.page.getByLabel('Expiry date')
-      if (await expiryField.isVisible()) {
-        await expiryField.fill('2025-12-31')
+      if (await loggedInPage.inputExpiryDate.isVisible()) {
+        await loggedInPage.inputExpiryDate.fill('2025-12-31')
       }
 
       // Submit the form
-      await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
+      await loggedInPage.buttonSubmit.click()
 
       // Wait for modal to close and verify product was created
       await expect(loggedInPage.page.getByText('New product')).not.toBeVisible()
@@ -54,7 +52,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectModalVisible('New product')
 
       // Try to submit without filling required fields
-      await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
+      await loggedInPage.buttonSubmit.click()
 
       // Verify that the modal is still open (form validation should prevent submission)
       await loggedInPage.expectModalVisible('New product')
@@ -74,24 +72,21 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectModalVisible('Edit product')
 
       // Update the product name
-      const nameField = loggedInPage.page.getByLabel('Product Name')
-      await nameField.clear()
-      await nameField.fill('Updated Product Name')
+      await loggedInPage.inputProductName.clear()
+      await loggedInPage.inputProductName.fill('Updated Product Name')
 
       // Update quantity
-      const quantityField = loggedInPage.page.getByLabel('Quantity')
-      await quantityField.clear()
-      await quantityField.fill('75')
+      await loggedInPage.inputQuantity.clear()
+      await loggedInPage.inputQuantity.fill('75')
 
       // Update price if visible
-      const priceField = loggedInPage.page.getByLabel('Price')
-      if (await priceField.isVisible()) {
-        await priceField.clear()
-        await priceField.fill('39.99')
+      if (await loggedInPage.inputPrice.isVisible()) {
+        await loggedInPage.inputPrice.clear()
+        await loggedInPage.inputPrice.fill('39.99')
       }
 
       // Submit the form
-      await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
+      await loggedInPage.buttonSubmit.click()
 
       // Wait for modal to close
       await expect(loggedInPage.page.getByText('Edit product')).not.toBeVisible()
@@ -114,9 +109,8 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectModalVisible('Edit product')
 
       // Make changes to the form
-      const nameField = loggedInPage.page.getByLabel('Product Name')
-      await nameField.clear()
-      await nameField.fill('This Should Not Save')
+      await loggedInPage.inputProductName.clear()
+      await loggedInPage.inputProductName.fill('This Should Not Save')
 
       // Close modal without submitting (click outside or close button)
       await loggedInPage.page.keyboard.press('Escape')
@@ -254,17 +248,16 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.buttonAddItem.click()
       await loggedInPage.expectModalVisible('New product')
 
-      await loggedInPage.page.getByLabel('Product Name').fill('Lifecycle Test Product')
-      await loggedInPage.page.getByLabel('Manufacturer').selectOption({ index: 1 })
-      await loggedInPage.page.getByLabel('Category').selectOption({ index: 1 })
-      await loggedInPage.page.getByLabel('Quantity').fill('100')
+      await loggedInPage.inputProductName.fill('Lifecycle Test Product')
+      await loggedInPage.selectManufacturer.selectOption({ index: 1 })
+      await loggedInPage.selectCategory.selectOption({ index: 1 })
+      await loggedInPage.inputQuantity.fill('100')
 
-      const priceField = loggedInPage.page.getByLabel('Price')
-      if (await priceField.isVisible()) {
-        await priceField.fill('19.99')
+      if (await loggedInPage.inputPrice.isVisible()) {
+        await loggedInPage.inputPrice.fill('19.99')
       }
 
-      await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
+      await loggedInPage.buttonSubmit.click()
       await expect(loggedInPage.page.getByText('New product')).not.toBeVisible()
       
       // Verify product was created
@@ -276,11 +269,10 @@ test.describe('Inventory Operations', () => {
       
       await loggedInPage.expectModalVisible('Edit product')
       
-      const nameField = loggedInPage.page.getByLabel('Product Name')
-      await nameField.clear()
-      await nameField.fill('Updated Lifecycle Product')
+      await loggedInPage.inputProductName.clear()
+      await loggedInPage.inputProductName.fill('Updated Lifecycle Product')
       
-      await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
+      await loggedInPage.buttonSubmit.click()
       await expect(loggedInPage.page.getByText('Edit product')).not.toBeVisible()
       
       // Verify product was updated
