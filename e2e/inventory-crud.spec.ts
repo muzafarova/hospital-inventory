@@ -7,7 +7,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectInventoryTable()
 
       // Click the "Add item" button to open the create modal
-      await loggedInPage.page.getByRole('button', { name: 'Add item' }).click()
+      await loggedInPage.buttonAddItem.click()
 
       // Wait for modal to be visible
       await expect(loggedInPage.page.getByText('New product')).toBeVisible()
@@ -50,7 +50,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectInventoryPage()
 
       // Click the "Add item" button
-      await loggedInPage.page.getByRole('button', { name: 'Add item' }).click()
+      await loggedInPage.buttonAddItem.click()
       await expect(loggedInPage.page.getByText('New product')).toBeVisible()
 
       // Try to submit without filling required fields
@@ -251,7 +251,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.expectInventoryPage()
 
       // Step 1: Create a product
-      await loggedInPage.page.getByRole('button', { name: 'Add item' }).click()
+      await loggedInPage.buttonAddItem.click()
       await expect(loggedInPage.page.getByText('New product')).toBeVisible()
 
       await loggedInPage.page.getByLabel('Product Name').fill('Lifecycle Test Product')

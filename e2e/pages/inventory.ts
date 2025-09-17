@@ -4,10 +4,12 @@ import { expect } from '@playwright/test'
 export class InventoryPage {
   private readonly topNav: Locator
   private readonly buttonProfile: Locator
+  readonly buttonAddItem: Locator
 
   constructor(public readonly page: Page) {
     this.topNav = this.page.getByRole('banner')
     this.buttonProfile = this.topNav.getByRole('button')
+    this.buttonAddItem = this.page.getByRole('button', { name: 'Add item' })
   }
 
   async expectInventoryPage() {
