@@ -202,8 +202,6 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  // Initialize theme on component mount
-  themeStore.initTheme()
 })
 
 onUnmounted(() => {

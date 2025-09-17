@@ -1,19 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
+import { useStorage } from '@vueuse/core'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 
 export const useThemeStore = defineStore('theme', () => {
-  const theme = ref<ThemeMode>('system')
+  const theme = useStorage<ThemeMode>('theme', 'system')
   const isDark = ref(false)
 
-  // Initialize theme from localStorage or default to system
+  // Initialize theme - useStorage handles persistence automatically
   const initTheme = () => {
-    const savedTheme = localStorage.getItem('theme') as ThemeMode
-    const validThemes: ThemeMode[] = ['light', 'dark', 'system']
-    if (savedTheme && validThemes.includes(savedTheme)) {
-      theme.value = savedTheme
-    }
     applyTheme()
   }
 
@@ -33,10 +29,9 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  // Set theme and persist to localStorage
+  // Set theme - useStorage handles persistence automatically
   const setTheme = (newTheme: ThemeMode) => {
     theme.value = newTheme
-    localStorage.setItem('theme', newTheme)
     applyTheme()
   }
 
@@ -51,6 +46,11 @@ export const useThemeStore = defineStore('theme', () => {
 
   // Listen for system theme changes
   mediaQuery.addEventListener('change', handleSystemThemeChange)
+
+  // Watch for theme changes and apply them automatically
+  watch(theme, () => {
+    applyTheme()
+  }, { immediate: true })
 
   // Cleanup listener on store destruction
   const cleanup = () => {
