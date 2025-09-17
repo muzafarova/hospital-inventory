@@ -215,53 +215,6 @@ if (!hospitalId) return // Early return if no context
 await apiCall(hospitalId, data)
 ```
 
-## Testing Strategy
-
-### Unit Testing Approach
-Each store should be tested independently:
-
-```typescript
-// Mock dependencies
-const mockAuthStore = { hospitalId: 'test-hospital' }
-const mockErrorStore = { report: vi.fn(), clear: vi.fn() }
-
-// Test store in isolation
-const store = useInventoryStore()
-// Test store methods and state changes
-```
-
-### Integration Testing
-Test store interactions:
-- Auth flow triggering hospital data loading
-- Error propagation across stores
-- Data consistency after operations
-
-### Mock Strategies
-- Mock API endpoints for consistent testing
-- Mock router for navigation testing
-- Mock VueUse composables for async state testing
-
-## Performance Considerations
-
-### Loading States
-Multiple granular loading states prevent UI blocking:
-- `auth.loading` - Authentication operations
-- `hospital.loading` - Hospital data loading
-- `inventory.loading` - Product listing
-- `inventory.adding` - Product creation
-- `inventory.editing` - Product updates
-- `inventory.removing` - Product deletion
-
-### Data Caching
-- **Auth Store**: User data cached until logout
-- **Hospital Store**: Hospital data cached until session ends
-- **Inventory Store**: No automatic caching, fresh data on each load
-- **Error Store**: Transient data, manually cleared
-
-### Memory Management
-- Stores automatically clean up on user logout
-- Large datasets (inventory) use pagination
-- Error notifications accumulate but can be cleared
 
 ## Security Considerations
 

@@ -181,14 +181,6 @@ const errorStore = useErrorStore()
 - Include context in console logs when helpful
 - Use appropriate log levels (error, warn, info)
 
-## Testing Considerations
-
-- Test error accumulation behavior
-- Verify console logging occurs
-- Test clearing functionality
-- Mock console methods to verify logging
-- Test integration with notification components
-
 ## Potential Enhancements
 
 ### Error Categorization
@@ -208,13 +200,6 @@ report(err: unknown, displayMessage: string, autoClear?: number)
 // Could include additional context
 report(err: unknown, displayMessage: string, context?: Record<string, unknown>)
 ```
-
-## Performance Considerations
-
-- Minimal memory footprint with simple array storage
-- No complex reactive computations
-- Efficient for typical error volumes
-- Consider limiting notification array size for high-error scenarios
 
 ## Security Considerations
 

@@ -154,11 +154,3 @@ await authStore.checkAuth()
 | `loginUser(credentials)` | Authenticate user | Reported to error store |
 | `logoutUser()` | End user session | Reported to error store |
 | `checkSession()` | Validate existing session | Silent failure |
-
-## Testing Considerations
-
-- Mock router navigation for login/logout flows
-- Test error store integration
-- Verify hospital store loading after authentication
-- Test loading states during async operations
-- Validate computed properties behavior

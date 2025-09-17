@@ -196,21 +196,6 @@ type Hospital = {
 - API returns error for non-existent hospital
 - Handled same as API failure
 
-## Testing Considerations
-
-- Mock `useAuthStore` for hospital ID context
-- Mock `getHospital` API endpoint
-- Test loading states during async operations
-- Verify error reporting integration
-- Test early return when no hospital ID
-- Validate data structure matches Hospital entity
-
-## Performance Considerations
-
-- **Lazy Loading**: Data loaded only when needed (`immediate: false`)
-- **Single Request**: No automatic refetching or polling
-- **Memory Efficient**: Simple state management with VueUse
-- **Error Resilient**: Graceful handling of auth/network failures
 
 ## Security Considerations
 

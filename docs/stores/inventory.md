@@ -408,24 +408,6 @@ if (inventoryStore.removing) {
 | `updateProduct(hospitalId, data)` | Update existing product | `hospitalId: string`, `data: Product` | "Failed to update inventory item" |
 | `deleteProducts(hospitalId, ids)` | Delete products | `hospitalId: string`, `ids: string[]` | "Failed to remove inventory" |
 
-## Performance Considerations
-
-### Data Loading Strategy
-- **Lazy Loading**: Products loaded only when needed
-- **Pagination**: Built-in pagination prevents large data loads
-- **Search Filtering**: Server-side filtering reduces data transfer
-- **State Preservation**: `resetOnExecute: false` maintains UI state during refreshes
-
-### Caching Strategy
-- **No Automatic Caching**: Fresh data loaded on each request
-- **Manual Refresh**: List refreshed after mutations
-- **State Persistence**: Query parameters maintained across operations
-
-### Memory Management
-- **Selective Loading**: Only current page data in memory
-- **Clear Function**: Explicit state cleanup available
-- **Garbage Collection**: Old data replaced on new loads
-
 ## Error Scenarios
 
 ### Authentication Issues
@@ -442,28 +424,6 @@ if (inventoryStore.removing) {
 - Server-side validation failures
 - Error messages displayed to user
 - Form state preserved for correction
-
-## Testing Considerations
-
-### Unit Testing
-- Mock `useAuthStore` for hospital ID context
-- Mock all API endpoints
-- Test loading states for each operation
-- Verify error reporting integration
-- Test pagination logic
-- Validate selection management
-
-### Integration Testing
-- Test complete CRUD workflows
-- Verify data consistency after operations
-- Test error recovery scenarios
-- Validate UI state synchronization
-
-### Performance Testing
-- Test with large product datasets
-- Verify pagination performance
-- Test concurrent operations
-- Validate memory usage patterns
 
 ## Security Considerations
 
