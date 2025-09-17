@@ -10,7 +10,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.buttonAddItem.click()
 
       // Wait for modal to be visible
-      await expect(loggedInPage.page.getByText('New product')).toBeVisible()
+      await loggedInPage.expectModalVisible('New product')
 
       // Fill in the product form
       await loggedInPage.page.getByLabel('Product Name').fill('Test Product')
@@ -51,13 +51,13 @@ test.describe('Inventory Operations', () => {
 
       // Click the "Add item" button
       await loggedInPage.buttonAddItem.click()
-      await expect(loggedInPage.page.getByText('New product')).toBeVisible()
+      await loggedInPage.expectModalVisible('New product')
 
       // Try to submit without filling required fields
       await loggedInPage.page.getByRole('button', { name: 'Submit' }).click()
 
       // Verify that the modal is still open (form validation should prevent submission)
-      await expect(loggedInPage.page.getByText('New product')).toBeVisible()
+      await loggedInPage.expectModalVisible('New product')
     })
   })
 
@@ -71,7 +71,7 @@ test.describe('Inventory Operations', () => {
       await firstEditButton.click()
 
       // Wait for edit modal to be visible
-      await expect(loggedInPage.page.getByText('Edit product')).toBeVisible()
+      await loggedInPage.expectModalVisible('Edit product')
 
       // Update the product name
       const nameField = loggedInPage.page.getByLabel('Product Name')
@@ -111,7 +111,7 @@ test.describe('Inventory Operations', () => {
       const firstEditButton = loggedInPage.page.locator('button[aria-label="Edit"], button:has(svg):has-text("Edit")').first()
       await firstEditButton.click()
 
-      await expect(loggedInPage.page.getByText('Edit product')).toBeVisible()
+      await loggedInPage.expectModalVisible('Edit product')
 
       // Make changes to the form
       const nameField = loggedInPage.page.getByLabel('Product Name')
@@ -252,7 +252,7 @@ test.describe('Inventory Operations', () => {
 
       // Step 1: Create a product
       await loggedInPage.buttonAddItem.click()
-      await expect(loggedInPage.page.getByText('New product')).toBeVisible()
+      await loggedInPage.expectModalVisible('New product')
 
       await loggedInPage.page.getByLabel('Product Name').fill('Lifecycle Test Product')
       await loggedInPage.page.getByLabel('Manufacturer').selectOption({ index: 1 })
@@ -274,7 +274,7 @@ test.describe('Inventory Operations', () => {
       const productRow = loggedInPage.page.locator('tr:has-text("Lifecycle Test Product")')
       await productRow.locator('button[aria-label="Edit"], button:has(svg):has-text("Edit")').click()
       
-      await expect(loggedInPage.page.getByText('Edit product')).toBeVisible()
+      await loggedInPage.expectModalVisible('Edit product')
       
       const nameField = loggedInPage.page.getByLabel('Product Name')
       await nameField.clear()
