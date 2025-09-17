@@ -11,11 +11,6 @@ export const useThemeStore = defineStore('theme', () => {
   // Use VueUse's useMediaQuery for system theme detection
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
 
-  // Initialize theme - useStorage handles persistence automatically
-  const initTheme = () => {
-    applyTheme()
-  }
-
   // Apply theme based on current mode
   const applyTheme = () => {
     const root = document.documentElement
