@@ -50,11 +50,6 @@ export const useThemeStore = defineStore('theme', () => {
     }
   })
 
-  // Cleanup function (no longer needed for manual event listeners)
-  const cleanup = () => {
-    // useMediaQuery handles cleanup automatically
-  }
-
   return {
     theme,
     setTheme
