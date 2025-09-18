@@ -44,7 +44,8 @@ export async function getProducts(
   )
 }
 
-export type NewProductSpec = Omit<Product, 'hospitalId' | 'id' | 'createdAt' | 'updatedAt'>
+export type NewProductSpec = Omit<Product, 'hospitalId' | 'id' | 'code' | 'createdAt' | 'updatedAt'>
+
 export async function createProduct(hospitalId: string, newProduct: NewProductSpec) {
   return await request(`/api/hospital/${hospitalId}/products`, () => null, {
     method: 'POST',

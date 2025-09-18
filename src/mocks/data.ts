@@ -5,6 +5,7 @@ import type { HospitalJsonValue } from '@/entities/hospital'
 import { faker } from '@faker-js/faker'
 
 export const generateUuid = () => faker.string.uuid()
+export const generateProductCode = () => faker.string.alphanumeric(6)
 
 enum HospitalId {
   Hosp1 = 'hosp-001',
@@ -22,7 +23,7 @@ const username456 = {
 
 export const users: UserJsonValue[] = [
   {
-    id: faker.string.uuid(),
+    id: generateUuid(),
     username: 'admin',
     hospitalId: 'hosp-001',
     email: faker.internet.email(admin),
@@ -30,7 +31,7 @@ export const users: UserJsonValue[] = [
     image: faker.image.avatar(),
   },
   {
-    id: faker.string.uuid(),
+    id: generateUuid(),
     username: 'username456',
     hospitalId: 'hosp-002',
     email: faker.internet.email(username456),
@@ -55,7 +56,8 @@ export const manufacturers = [
 export const categories = ['Surgical', 'Diagnostic', 'Therapeutic', 'Emergency', 'Laboratory']
 
 export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, index) => ({
-  id: faker.string.uuid(),
+  id: generateUuid(),
+  code: generateProductCode(),
   hospitalId: faker.helpers.enumValue(HospitalId),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
@@ -75,6 +77,7 @@ export const hospitals: HospitalJsonValue[] = [
       manufacturers,
       categories,
       tableColumns: [
+        ['code', 'Code'],
         ['name', 'Product Name'],
         ['manufacturer', 'Manufacturer'],
         ['category', 'Category'],
