@@ -8,7 +8,7 @@ import '@/css/style.css'
 const pinia = createPinia()
 
 const preview: Preview = {
-  tags: ['autodocs'],
+  tags: ['!autodocs'],
 
   parameters: {
     controls: {
@@ -36,7 +36,7 @@ const preview: Preview = {
         items: [
           { value: 'light', title: 'Light', icon: 'sun' },
           { value: 'dark', title: 'Dark', icon: 'moon' },
-          { value: 'system', title: 'System', icon: 'desktop' },
+          { value: 'system', title: 'System', icon: 'browser' },
         ],
         dynamicTitle: true,
         onChange: (value: string) => {
