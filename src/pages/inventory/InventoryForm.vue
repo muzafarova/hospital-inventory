@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="$emit('submit')">
-    <div class="px-5 py-4">
+    <div class="p-5">
       <div class="space-y-3">
         <BaseInput
           label="Product Name"

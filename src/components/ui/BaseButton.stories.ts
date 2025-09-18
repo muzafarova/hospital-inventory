@@ -7,14 +7,16 @@ const meta = {
   component: BaseButton,
   argTypes: {
     size: { control: 'select', options: ['small', 'base'] },
-    variant: { control: 'select', options: ['accent', 'default', 'danger', 'table'] },
+    variant: { control: 'select', options: ['accent', 'default', 'danger', 'inline'] },
+    type: { control: 'select', options: ['button', 'submit', 'reset'] },
     default: {
       control: 'text',
       description: 'Slot content',
-      defaultValue: 'Submit',
     },
   },
-  args: {},
+  args: {
+    default: 'Submit',
+  },
   parameters: {
     a11y: {
       test: 'error',
@@ -47,9 +49,6 @@ export const Danger: Story = {
   },
 }
 
-// export const Table: Story = {
-// }
-
 export const Table: Story = {
   render: (args) => ({
     components: { BaseButton, BaseIcon },
@@ -57,14 +56,7 @@ export const Table: Story = {
     template: `<BaseButton v-bind="args"><BaseIcon name="edit" /></BaseButton>`,
   }),
   args: {
-    variant: 'table',
+    variant: 'inline',
     default: '<BaseIcon name="edit" />',
-  },
-}
-
-export const CustomLabel: Story = {
-  args: {
-    type: 'button',
-    label: 'Create',
   },
 }

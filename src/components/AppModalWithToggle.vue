@@ -24,7 +24,7 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 withDefaults(
   defineProps<{
     toggleTitle: string
-    toggleVariant: 'accent' | 'default' | 'danger' | 'table'
+    toggleVariant: 'accent' | 'default' | 'danger' | 'inline'
     modalId: string
     modalTitle: string
   }>(),

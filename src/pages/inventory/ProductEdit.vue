@@ -4,7 +4,7 @@
     modal-id="add-product"
     modal-title="Edit product"
     toggle-title="Edit"
-    toggle-variant="table"
+    toggle-variant="inline"
   >
     <template v-slot:button><BaseIcon name="edit" /></template>
     <template v-slot:default="slotProps">

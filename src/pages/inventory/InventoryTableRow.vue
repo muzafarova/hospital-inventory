@@ -26,7 +26,7 @@
 
         <BaseButton
           label="Delete"
-          variant="table"
+          variant="inline"
           class="hover:text-red-500 dark:hover:text-red-500"
           @click="
             () => {
