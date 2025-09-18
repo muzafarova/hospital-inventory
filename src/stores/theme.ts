@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useStorage, useMediaQuery } from '@vueuse/core'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
@@ -23,10 +23,9 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  function setTheme(newTheme: ThemeMode) {
-    theme.value = newTheme
-    applyTheme()
-  }
+  const setTheme = (newTheme: ThemeMode) => (theme.value = newTheme)
+
+  watch(theme, () => applyTheme(), { immediate: true })
 
   return {
     theme,

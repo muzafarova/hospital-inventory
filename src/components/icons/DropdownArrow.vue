@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="w-3 h-3 transition-transform"
+    class="size-3 transition-transform"
     :class="{ 'rotate-180': isOpen }"
     fill="none"
     stroke="currentColor"

@@ -1,6 +1,11 @@
-import { type Preview } from '@storybook/vue3-vite'
+import { type Preview, setup } from '@storybook/vue3-vite'
 import { withTheme, setTheme } from './theme-decorator'
+import { App } from 'vue'
+import { createPinia } from 'pinia'
+
 import '@/css/style.css'
+
+const pinia = createPinia()
 
 const preview: Preview = {
   tags: ['autodocs'],
@@ -43,5 +48,9 @@ const preview: Preview = {
 
   decorators: [withTheme],
 }
+
+setup((app: App) => {
+  app.use(pinia)
+})
 
 export default preview

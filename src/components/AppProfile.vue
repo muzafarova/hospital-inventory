@@ -1,13 +1,7 @@
 <template>
-  <div class="relative inline-flex">
-    <button
-      ref="trigger"
-      class="inline-flex justify-center items-center group"
-      aria-haspopup="true"
-      @click.prevent="dropdownOpen = !dropdownOpen"
-      :aria-expanded="dropdownOpen"
-    >
-      <span class="size-8 rounded-full bg-gray-500">
+  <AppDropdown label="Profile" class="flex">
+    <template #button="{ dropdownOpen }">
+      <span class="size-6 rounded-full bg-gray-500">
         <img :src="image" class="size-full rounded-full" />
       </span>
       <div class="flex items-center truncate">
@@ -15,75 +9,39 @@
           class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"
           >{{ username }}</span
         >
-        <svg
-          class="size-3 shrink-0 ml-2 fill-current text-gray-400 dark:text-gray-500"
-          viewBox="0 0 12 12"
-        >
-          <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-        </svg>
+        <DropdownArrow :isOpen="dropdownOpen" class="size-3 ml-2" />
       </div>
-    </button>
-    <transition
-      enter-active-class="transition ease-out duration-200 transform"
-      enter-from-class="opacity-0 -translate-y-2"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition ease-out duration-200"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-show="dropdownOpen"
-        class="origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
-        :class="align === 'right' ? 'right-0' : 'left-0'"
-      >
-        <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200 dark:border-gray-700/60">
-          <div class="font-medium text-gray-800 dark:text-gray-100 leading-6">{{ name }}</div>
-          <div class="text-xs text-gray-500 dark:text-gray-400 italic leading-5">{{ email }}</div>
-        </div>
-        <ul ref="dropdown" @focusin="dropdownOpen = true" @focusout="dropdownOpen = false">
-          <li>
-            <button
-              class="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3"
-              to="/signin"
-              @click="
-                () => {
-                  dropdownOpen = false
-                  $emit('logout')
-                }
-              "
-            >
-              Sign Out
-            </button>
-          </li>
-        </ul>
+    </template>
+
+    <template #default="{ close }">
+      <div class="py-2 px-4 border-b border-gray-200 dark:border-gray-700/60">
+        <div class="font-medium text-gray-800 dark:text-gray-100 leading-6">{{ name }}</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400 italic leading-5">{{ email }}</div>
       </div>
-    </transition>
-  </div>
+      <ul>
+        <li>
+          <button
+            class="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-2 px-4"
+            to="/signin"
+            @click="
+              () => {
+                close()
+                $emit('logout')
+              }
+            "
+          >
+            Sign Out
+          </button>
+        </li>
+      </ul>
+    </template>
+  </AppDropdown>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import DropdownArrow from '@/components/icons/DropdownArrow.vue'
+import AppDropdown from '@/components/AppDropdown.vue'
 
-defineProps<{ align: string; username: string; name: string; image: string; email: string }>()
+defineProps<{ username: string; name: string; image: string; email: string }>()
 defineEmits<{ logout: [] }>()
-
-const dropdownOpen = ref(false)
-const trigger = ref<HTMLElement | null>(null)
-const dropdown = ref<HTMLElement | null>(null)
-
-useEventListener(document, 'click', ({ target }: MouseEvent) => {
-  if (
-    !dropdownOpen.value ||
-    (dropdown.value && dropdown.value.contains(target as Node)) ||
-    (trigger.value && trigger.value.contains(target as Node))
-  )
-    return
-  dropdownOpen.value = false
-})
-
-useEventListener(document, 'keydown', ({ code }: KeyboardEvent) => {
-  if (!dropdownOpen.value || code !== 'Escape') return
-  dropdownOpen.value = false
-})
 </script>
