@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useStorage, useMediaQuery } from '@vueuse/core'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
@@ -7,14 +7,11 @@ export type ThemeMode = 'light' | 'dark' | 'system'
 export const useThemeStore = defineStore('theme', () => {
   const theme = useStorage<ThemeMode>('theme', 'system')
   const isDark = ref(false)
-  
-  // Use VueUse's useMediaQuery for system theme detection
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
 
-  // Apply theme based on current mode
-  const applyTheme = () => {
+  function applyTheme() {
     const root = document.documentElement
-    
+
     if (theme.value === 'system') {
       // Use system preference from useMediaQuery
       isDark.value = prefersDark.value
@@ -26,27 +23,13 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  // Set theme - useStorage handles persistence automatically
-  const setTheme = (newTheme: ThemeMode) => {
+  function setTheme(newTheme: ThemeMode) {
     theme.value = newTheme
     applyTheme()
   }
 
-  // Watch for theme changes and apply them automatically
-  watch(theme, () => {
-    applyTheme()
-  }, { immediate: true })
-
-  // Watch for system theme changes when in system mode
-  watch(prefersDark, () => {
-    if (theme.value === 'system') {
-      isDark.value = prefersDark.value
-      document.documentElement.classList.toggle('dark', prefersDark.value)
-    }
-  })
-
   return {
     theme,
-    setTheme
+    setTheme,
   }
 })
