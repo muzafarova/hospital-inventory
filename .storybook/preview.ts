@@ -1,8 +1,14 @@
-import { type Preview } from '@storybook/vue3-vite'
+import { type Preview, setup } from '@storybook/vue3-vite'
+import { withTheme, setTheme } from './theme-decorator'
+import { App } from 'vue'
+import { createPinia } from 'pinia'
+
 import '@/css/style.css'
 
+const pinia = createPinia()
+
 const preview: Preview = {
-  tags: ['autodocs'],
+  tags: ['!autodocs'],
 
   parameters: {
     controls: {
@@ -19,10 +25,32 @@ const preview: Preview = {
       test: 'todo',
     },
   },
+
+  globalTypes: {
+    theme: {
+      description: 'Global theme for components',
+      defaultValue: 'system',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+          { value: 'system', title: 'System', icon: 'browser' },
+        ],
+        dynamicTitle: true,
+        onChange: (value: string) => {
+          setTheme(value)
+        },
+      },
+    },
+  },
+
+  decorators: [withTheme],
 }
 
-// setup((app: App) => {
-//   app.use(pinia).use(router)
-// })
+setup((app: App) => {
+  app.use(pinia)
+})
 
 export default preview
