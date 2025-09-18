@@ -10,7 +10,7 @@
     </header>
 
     <!-- <div class="overflow-x-auto"> -->
-    <table width="100%" class="table-auto w-full dark:text-gray-300">
+    <table v-if="total > 0" width="100%" class="table-auto w-full dark:text-gray-300">
       <thead
         class="text-sm font-semibold text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/85 border-t border-b border-gray-100 dark:border-gray-700/85 sticky top-15 z-20"
       >
@@ -46,12 +46,14 @@
         </tr>
       </thead>
       <tbody class="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
-        <tr
+        <InventoryTableRow
           v-for="product in products"
           :key="product.id"
+          :product="product"
+          :columns="columns"
           class="hover:bg-gray-50 dark:hover:bg-gray-50/5"
-        >
-          <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+          @remove="emits('remove', $event)"
+          ><template v-slot:select>
             <div class="flex items-center">
               <label class="inline-flex">
                 <span class="sr-only">Select</span>
@@ -64,39 +66,8 @@
                 />
               </label>
             </div>
-          </td>
-          <td
-            class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap"
-            :class="{ 'text-right': ['price', 'quantity'].includes(column[0]) }"
-            v-for="column of columns"
-            :key="column[0]"
-          >
-            <span v-if="column[0] === 'price'">£{{ product['price'] }}</span>
-            <span v-else-if="column[0] === 'expiresAt'">{{ product['expiresAt'] }}</span>
-            <span v-else>
-              {{ product[column[0]] }}
-            </span>
-          </td>
-          <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-            <div class="space-x-3">
-              <ProductEdit :product="product" />
-
-              <button
-                class="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-500 rounded-full"
-                @click="$emit('remove', product.id)"
-              >
-                <span class="sr-only">Delete</span>
-                <svg viewBox="0 0 16 16" fill="currentColor" class="size-5 p-[1.5px]">
-                  <path
-                    fill-rule="evenodd"
-                    d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
-          </td>
-        </tr>
+          </template>
+        </InventoryTableRow>
       </tbody>
     </table>
   </div>
@@ -106,7 +77,7 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import Product from '@/entities/product'
-import ProductEdit from './ProductEdit.vue'
+import InventoryTableRow from './InventoryTableRow.vue'
 
 const porps = defineProps<{
   total: number

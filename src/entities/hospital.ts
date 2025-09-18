@@ -23,6 +23,7 @@ export default class Hospital {
       tableColumns: z.array(
         z.tuple([
           z.enum([
+            'code',
             'hospitalId',
             'name',
             'manufacturer',

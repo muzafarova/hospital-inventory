@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="$emit('submit')">
-    <div class="px-5 py-4">
+    <div class="p-5">
       <div class="space-y-3">
         <BaseInput
           label="Product Name"
@@ -10,22 +10,20 @@
           @update:model-value="(name) => $emit('update:modelValue', { ...modelValue, name })"
         />
         <BaseSelect
-          v-if="hospitalStore.data"
           label="Manufacturer"
           id="manufacturer"
           required
-          :options="hospitalStore.data.spec.manufacturers"
+          :options="manufacturers"
           :model-value="modelValue.manufacturer"
           @update:model-value="
             (manufacturer) => $emit('update:modelValue', { ...modelValue, manufacturer })
           "
         />
         <BaseSelect
-          v-if="hospitalStore.data"
           label="Category"
           id="category"
           required
-          :options="hospitalStore.data.spec.categories"
+          :options="categories"
           :model-value="modelValue.category"
           @update:model-value="
             (category) => $emit('update:modelValue', { ...modelValue, category })
@@ -79,10 +77,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-import { useHospitalStore } from '@/stores/hospital'
-
 import { type NewProductSpec } from '@/api/endpoints'
 
 import BaseInput from '@/components/ui/BaseInput.vue'
@@ -91,6 +85,9 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 
 withDefaults(
   defineProps<{
+    fields: string[]
+    manufacturers: string[]
+    categories: string[]
     submitLabel: string
     modelValue: NewProductSpec
   }>(),
@@ -101,9 +98,4 @@ defineEmits<{
   submit: []
   'update:modelValue': [value: NewProductSpec]
 }>()
-
-const hospitalStore = useHospitalStore()
-const fields = computed(() =>
-  hospitalStore.data ? hospitalStore.data.spec.tableColumns.map((col) => col[0]) : [],
-)
 </script>

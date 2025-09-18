@@ -14,6 +14,9 @@
 
         <!-- Header: Right side -->
         <div v-if="authStore.user" class="flex items-center space-x-3">
+          <!-- Theme Switcher -->
+          <ThemeSwitcher />
+          
           <!-- Divider -->
           <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
           <AppProfile
@@ -32,6 +35,7 @@
 
 <script setup lang="ts">
 import AppProfile from './AppProfile.vue'
+import ThemeSwitcher from './ThemeSwitcher.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useHospitalStore } from '@/stores/hospital'
 const hospitalStore = useHospitalStore()
