@@ -32,7 +32,7 @@
     >
       <div
         ref="modalContent"
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-auto max-w-lg w-full max-h-full"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-auto max-w-lg w-full max-h-full"
       >
         <!-- Modal header -->
         <div class="px-5 py-3 border-b border-gray-200 dark:border-gray-700/60">
@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import { useEventListener, onClickOutside } from '@vueuse/core'
 
 const props = defineProps<{
   id: string
@@ -70,13 +70,7 @@ const emits = defineEmits<{ close: [] }>()
 
 const modalContent = ref<HTMLElement | null>(null)
 
-useEventListener(document, 'click', (event: MouseEvent) => {
-  const target = event.target as Node
-  if (!props.modalOpen || !modalContent.value || modalContent.value.contains(target)) {
-    return
-  }
-  emits('close')
-})
+onClickOutside(modalContent, () => emits('close'))
 
 useEventListener(document, 'keydown', ({ code }: KeyboardEvent) => {
   if (!props.modalOpen || code !== 'Escape') return
