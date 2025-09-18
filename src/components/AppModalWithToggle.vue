@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <BaseButton
-      @click.stop="modalOpen = true"
-      :variant="toggleVariant"
-      :aria-controls="modalId"
-      :label="toggleTitle"
-    >
-      <slot name="button" />
+  <div class="flex">
+    <BaseButton @click.stop="modalOpen = true" :variant="toggleVariant" :aria-controls="modalId">
+      <slot name="button">{{ toggleTitle }}</slot>
     </BaseButton>
 
     <AppModal :id="modalId" :modal-open="modalOpen" :title="modalTitle" @close="modalOpen = false">

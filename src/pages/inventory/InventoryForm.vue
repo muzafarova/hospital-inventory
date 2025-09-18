@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="$emit('submit')">
     <div class="p-5">
-      <div class="space-y-3">
+      <div class="space-y-5">
         <BaseInput
           label="Product Name"
           id="name"

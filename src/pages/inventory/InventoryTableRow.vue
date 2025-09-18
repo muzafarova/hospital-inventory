@@ -21,7 +21,7 @@
       </span>
     </td>
     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-      <div class="space-x-3">
+      <div class="flex items-center justify-start space-x-3">
         <ProductEdit :product="product" @update="updating = true" />
 
         <BaseButton

@@ -1,8 +1,8 @@
 <template>
   <AppModalWithToggle
     v-if="hospitalStore.data"
-    modal-id="add-product"
-    modal-title="Edit product"
+    :modal-id="product.id"
+    :modal-title="`Update product ${product.code}`"
     toggle-title="Edit"
     toggle-variant="inline"
   >

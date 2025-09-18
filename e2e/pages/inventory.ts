@@ -5,7 +5,7 @@ export class InventoryPage {
   private readonly topNav: Locator
   private readonly buttonProfile: Locator
   readonly buttonAddItem: Locator
-  
+
   // Form field locators
   readonly inputProductName: Locator
   readonly selectManufacturer: Locator
@@ -17,9 +17,9 @@ export class InventoryPage {
 
   constructor(public readonly page: Page) {
     this.topNav = this.page.getByRole('banner')
-    this.buttonProfile = this.topNav.getByRole('button')
+    this.buttonProfile = this.topNav.getByRole('button', { name: 'Profile' })
     this.buttonAddItem = this.page.getByRole('button', { name: 'Add item' })
-    
+
     // Initialize form field locators
     this.inputProductName = this.page.getByLabel('Product Name')
     this.selectManufacturer = this.page.getByLabel('Manufacturer')
@@ -39,7 +39,11 @@ export class InventoryPage {
   }
 
   async expectModalVisible(title: string) {
-    await expect(this.page.getByText(title)).toBeVisible()
+    await expect(this.page.getByRole('dialog', { name: title })).toBeVisible()
+  }
+
+  get activeModal() {
+    return this.page.getByRole('dialog', { includeHidden: false })
   }
 
   async logout() {
