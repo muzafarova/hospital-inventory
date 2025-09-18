@@ -13,6 +13,7 @@
         v-show="modalOpen"
         class="fixed inset-0 bg-black/30 z-50 transition-opacity"
         aria-hidden="true"
+        data-testid="modal-backdrop"
       ></div>
     </transition>
     <!-- Modal dialog -->
