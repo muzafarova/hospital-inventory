@@ -51,13 +51,18 @@ export const useInventoryStore = defineStore('inventory', () => {
       onError: (err: unknown) => errorStore.report(err, 'Failed to load inventory'),
     },
   )
-  const productStats = computed(() =>
-    productsList.value
-      ? `${productsList.value.meta.limit * productsList.value.meta.offset + 1} -
+  const productStats = computed(() => {
+    if (!productsList.value) {
+      return ''
+    }
+    if (productsList.value.meta.total === 0) {
+      return '0'
+    }
+    return `${productsList.value.meta.limit * productsList.value.meta.offset + 1} -
           ${productsList.value.items.length} of
           ${productsList.value.meta.total.toLocaleString()}`
-      : '',
-  )
+  })
+
   const { isLoading: removing, executeImmediate: remove } = useAsyncState(
     async (ids: string[]) => {
       const hospitalId = authStore.hospitalId

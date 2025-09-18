@@ -58,7 +58,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
+
 const props = defineProps<{
   id: string
   modalOpen: boolean
@@ -68,28 +70,16 @@ const emits = defineEmits<{ close: [] }>()
 
 const modalContent = ref<HTMLElement | null>(null)
 
-// close on click outside
-const clickHandler = (event: MouseEvent) => {
+useEventListener(document, 'click', (event: MouseEvent) => {
   const target = event.target as Node
   if (!props.modalOpen || !modalContent.value || modalContent.value.contains(target)) {
     return
   }
   emits('close')
-}
-
-// close if the esc key is pressed
-const keyHandler = ({ code }: KeyboardEvent) => {
-  if (!props.modalOpen || code !== 'Escape') return
-  emits('close')
-}
-
-onMounted(() => {
-  document.addEventListener('click', clickHandler)
-  document.addEventListener('keydown', keyHandler)
 })
 
-onUnmounted(() => {
-  document.removeEventListener('click', clickHandler)
-  document.removeEventListener('keydown', keyHandler)
+useEventListener(document, 'keydown', ({ code }: KeyboardEvent) => {
+  if (!props.modalOpen || code !== 'Escape') return
+  emits('close')
 })
 </script>

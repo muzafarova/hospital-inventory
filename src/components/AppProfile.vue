@@ -45,7 +45,12 @@
             <button
               class="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3"
               to="/signin"
-              @click="handleLogout"
+              @click="
+                () => {
+                  dropdownOpen = false
+                  $emit('logout')
+                }
+              "
             >
               Sign Out
             </button>
@@ -57,17 +62,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
 
 defineProps<{ align: string; username: string; name: string; image: string; email: string }>()
-const emits = defineEmits<{ logout: [] }>()
+defineEmits<{ logout: [] }>()
 
 const dropdownOpen = ref(false)
 const trigger = ref<HTMLElement | null>(null)
 const dropdown = ref<HTMLElement | null>(null)
 
-// close on click outside
-const clickHandler = ({ target }: MouseEvent) => {
+useEventListener(document, 'click', ({ target }: MouseEvent) => {
   if (
     !dropdownOpen.value ||
     (dropdown.value && dropdown.value.contains(target as Node)) ||
@@ -75,26 +80,10 @@ const clickHandler = ({ target }: MouseEvent) => {
   )
     return
   dropdownOpen.value = false
-}
+})
 
-// close if the esc key is pressed
-const keyHandler = ({ code }: KeyboardEvent) => {
+useEventListener(document, 'keydown', ({ code }: KeyboardEvent) => {
   if (!dropdownOpen.value || code !== 'Escape') return
   dropdownOpen.value = false
-}
-
-onMounted(() => {
-  document.addEventListener('click', clickHandler)
-  document.addEventListener('keydown', keyHandler)
 })
-
-onUnmounted(() => {
-  document.removeEventListener('click', clickHandler)
-  document.removeEventListener('keydown', keyHandler)
-})
-
-function handleLogout() {
-  dropdownOpen.value = false
-  emits('logout')
-}
 </script>

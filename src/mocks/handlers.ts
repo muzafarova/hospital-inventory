@@ -5,7 +5,7 @@ import { users, userCredentials, products, hospitals } from './data'
 import type { UserJsonValue } from '@/entities/user'
 import type { HospitalJsonValue } from '@/entities/hospital'
 import type { ProductJsonValue } from '@/entities/product'
-import { generateUuid } from './data'
+import { generateUuid, generateProductCode } from './data'
 
 // https://mswjs.io/docs/api/http/
 
@@ -89,7 +89,7 @@ export const handlers = [
     }
 
     await delay(1000)
-    let results = [...currentHospitalProducts].sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+    let results = [...currentHospitalProducts].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
     if (name) {
       results = results.filter((p) => p.name.toLowerCase().includes(name.toLowerCase()))
     }
@@ -131,6 +131,7 @@ export const handlers = [
       const newProduct = {
         hospitalId,
         id: generateUuid(),
+        code: generateProductCode(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         ...product,
