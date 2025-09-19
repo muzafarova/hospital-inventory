@@ -2,7 +2,7 @@
   <AppDropdown label="Theme">
     <template #button="{ dropdownOpen }">
       <span
-        class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+        class="flex items-center space-x-2 px-3 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white rounded-lg transition-colors"
       >
         <!-- Theme Icon -->
         <SunIcon v-if="themeStore.theme === 'light'" />

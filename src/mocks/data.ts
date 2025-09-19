@@ -28,7 +28,7 @@ export const users: UserJsonValue[] = [
     hospitalId: 'hosp-001',
     email: faker.internet.email(admin),
     name: faker.person.fullName(admin),
-    image: faker.image.avatar(),
+    image: faker.image.avatarGitHub(),
   },
   {
     id: generateUuid(),
@@ -36,7 +36,7 @@ export const users: UserJsonValue[] = [
     hospitalId: 'hosp-002',
     email: faker.internet.email(username456),
     name: faker.person.fullName(username456),
-    image: faker.image.avatar(),
+    image: faker.image.avatarGitHub(),
   },
 ]
 

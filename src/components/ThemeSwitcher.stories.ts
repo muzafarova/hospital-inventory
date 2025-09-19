@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 
 const meta = {
-  tags: ['!autodocs'],
   component: ThemeSwitcher,
   parameters: {
     a11y: {

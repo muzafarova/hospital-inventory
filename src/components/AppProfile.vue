@@ -1,15 +1,16 @@
 <template>
   <AppDropdown label="Profile" class="flex">
     <template #button="{ dropdownOpen }">
-      <span class="size-6 rounded-full bg-gray-500">
-        <img :src="image" class="size-full rounded-full" />
-      </span>
-      <div class="flex items-center truncate">
-        <span
-          class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"
-          >{{ username }}</span
-        >
-        <DropdownArrow :isOpen="dropdownOpen" class="size-3 ml-2" />
+      <div
+        class="inline-flex justify-center items-center hover:text-gray-900 dark:hover:text-white"
+      >
+        <span class="size-6 rounded-full bg-gray-500">
+          <img :src="image" class="size-6 rounded-full" />
+        </span>
+        <div class="flex items-center truncate">
+          <span class="truncate ml-2 text-sm font-medium">{{ username }}</span>
+          <DropdownArrow :isOpen="dropdownOpen" class="size-3 ml-2" />
+        </div>
       </div>
     </template>
 

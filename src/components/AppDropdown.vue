@@ -4,16 +4,20 @@
       aria-haspopup="true"
       :aria-expanded="dropdownOpen"
       :aria-label="label"
-      class="inline-flex justify-center items-center group"
+      class="inline-flex"
       @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <slot name="button" :dropdownOpen>
-        <span>{{ label }}</span>
-        <DropdownArrow
-          :isOpen="dropdownOpen"
-          :toggle="() => (dropdownOpen = !dropdownOpen)"
-          class="size-3 ml-2"
-        />
+        <span
+          class="flex items-center space-x-2 p-2 font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+        >
+          <span>{{ label }}</span>
+          <DropdownArrow
+            :isOpen="dropdownOpen"
+            :toggle="() => (dropdownOpen = !dropdownOpen)"
+            class="size-3 ml-2"
+          />
+        </span>
       </slot>
     </button>
     <transition

@@ -13,7 +13,7 @@ const meta = {
   args: {
     default: 'Toggle',
   },
-  decorators: [() => ({ template: '<div class="min-h-40"><story /></div>' })],
+  decorators: [() => ({ template: '<div class="flex justify-center"><story /></div>' })],
   parameters: {
     a11y: {
       test: 'error',
