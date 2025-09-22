@@ -2,7 +2,6 @@ import { type Preview, setup } from '@storybook/vue3-vite'
 import { withTheme, setTheme } from './theme-decorator'
 import { App } from 'vue'
 import { createPinia } from 'pinia'
-
 import '@/css/style.css'
 
 const pinia = createPinia()
@@ -46,10 +45,7 @@ const preview: Preview = {
     },
   },
 
-  decorators: [
-    () => ({ template: '<div class="p-4 min-h-36 rounded"><story /></div>' }),
-    withTheme,
-  ],
+  decorators: [() => ({ template: '<div class="p-4 min-h-36"><story /></div>' }), withTheme],
 }
 
 setup((app: App) => {
