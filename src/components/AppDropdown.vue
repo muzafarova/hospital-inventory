@@ -47,10 +47,18 @@ import { ref } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
 import DropdownArrow from '@/components/icons/DropdownArrow.vue'
 
-withDefaults(defineProps<{ label: string; align?: 'right' | 'left' }>(), {
-  align: 'right',
-  label: 'Toggle',
-})
+withDefaults(
+  defineProps<{
+    /** label of the dropdown */
+    label: string
+    /** alignment of the dropdown */
+    align?: 'right' | 'left'
+  }>(),
+  {
+    align: 'right',
+    label: 'Toggle',
+  },
+)
 
 const dropdownOpen = ref(false)
 const dropdown = ref<HTMLElement | null>(null)

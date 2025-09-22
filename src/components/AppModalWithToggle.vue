@@ -20,9 +20,13 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 
 withDefaults(
   defineProps<{
+    /** unique identifier of the modal */
     modalId: string
+    /** title of the modal */
     modalTitle: string
+    /** label of the button */
     toggleTitle: string
+    /** variant of the button */
     toggleVariant?: 'accent' | 'default' | 'danger' | 'inline'
   }>(),
   {

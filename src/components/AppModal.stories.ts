@@ -16,11 +16,7 @@ const meta = {
   argTypes: {
     default: {
       control: 'text',
-      description: 'Slot content',
-    },
-    modalOpen: {
-      control: 'boolean',
-      description: 'Modal open',
+      description: "Modal's inner content",
     },
   },
   decorators: [() => ({ template: '<div class="min-h-40"><story /></div>' })],

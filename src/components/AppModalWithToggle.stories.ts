@@ -11,7 +11,7 @@ const meta = {
   argTypes: {
     default: {
       control: 'text',
-      description: 'Slot content',
+      description: "Modal's inner content",
     },
     toggleVariant: {
       control: 'select',

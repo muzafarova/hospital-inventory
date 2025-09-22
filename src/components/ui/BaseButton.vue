@@ -20,17 +20,11 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    /**
-     * button type attribute as in HTML
-     */
+    /** button type attribute as in HTML */
     type?: 'button' | 'submit' | 'reset'
-    /**
-     * The label of the button
-     */
+    /** label of the button */
     size?: 'small' | 'base'
-    /**
-     * semantic variant
-     */
+    /** semantic variant */
     variant?: 'accent' | 'default' | 'danger' | 'inline'
   }>(),
   {
