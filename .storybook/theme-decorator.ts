@@ -20,7 +20,7 @@ export const withTheme: Decorator = (story, context) => {
     components: { Story: story() },
     // .mdx pages have white background; here's one way to restore the themed background for each story preview:
     template: `<div
-        class="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400"
+        class="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 rounded"
       ><Story /></div>`,
   }
 }
