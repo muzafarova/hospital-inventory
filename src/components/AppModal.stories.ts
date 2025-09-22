@@ -5,6 +5,7 @@ import { expect, within } from 'storybook/test'
 import AppModal from './AppModal.vue'
 
 const meta = {
+  component: AppModal,
   render: (args) => ({
     components: { AppModal },
     setup: () => {

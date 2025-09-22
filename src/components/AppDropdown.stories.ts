@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AppDropdown from './AppDropdown.vue'
 
 const meta = {
+  component: AppDropdown,
   argTypes: {
     align: { control: 'select', options: ['right', 'left'] },
     default: {

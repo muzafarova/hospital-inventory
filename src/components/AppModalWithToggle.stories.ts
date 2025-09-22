@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AppModalWithToggle from './AppModalWithToggle.vue'
 
 const meta = {
+  component: AppModalWithToggle,
   render: (args) => ({
     components: { AppModalWithToggle },
     setup: () => ({ args }),
