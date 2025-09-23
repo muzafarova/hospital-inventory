@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "test": "run-p \"test:unit\" \"test:e2e\"",
     "test:unit": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
@@ -21,7 +22,8 @@
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
@@ -55,6 +57,7 @@
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-storybook": "^9.1.2",
     "eslint-plugin-vue": "~10.3.0",
+    "husky": "^9.1.7",
     "jiti": "^2.4.2",
     "jsdom": "^26.1.0",
     "msw": "^2.10.5",
