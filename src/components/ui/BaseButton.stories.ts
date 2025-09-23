@@ -50,6 +50,13 @@ export const Danger: Story = {
 }
 
 export const Table: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Frameless button with text or icon to be used in a table',
+      },
+    },
+  },
   render: (args) => ({
     components: { BaseButton, BaseIcon },
     setup: () => ({ args }),
