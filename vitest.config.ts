@@ -19,6 +19,19 @@ export default defineConfig({
     environment: 'jsdom',
     exclude: [...configDefaults.exclude, 'e2e/**'],
     root: fileURLToPath(new URL('./', import.meta.url)),
+    coverage: {
+      include: ['src/**/*.{vue,ts}'],
+      exclude: ['e2e/**', 'coverage/**', 'public/**', '**/*.d.ts', '**/*.test.*', '**/*.config.*'],
+      reporter: ['text', 'json', 'html'],
+      all: true,
+      thresholds: {
+        autoUpdate: true,
+        statements: 50,
+        branches: 57.14,
+        functions: 52.17,
+        lines: 50,
+      },
+    },
     // Enable browser mode
     browser: {
       enabled: true,
