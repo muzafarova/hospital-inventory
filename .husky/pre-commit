@@ -1,1 +1,1 @@
-npx vitest --changed
+npx lint-staged
