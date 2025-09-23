@@ -10,6 +10,9 @@ const preview: Preview = {
   tags: ['autodocs'],
 
   parameters: {
+    docs: {
+      toc: true,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
