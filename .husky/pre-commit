@@ -1,1 +1,1 @@
-npm run test:unit
+npx vitest --changed
