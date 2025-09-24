@@ -5,13 +5,11 @@ import User from '@/entities/user'
 import { userCredentials } from '@/mocks/data.ts'
 
 import { useErrorStore } from '@/stores/error'
-import { useHospitalStore } from './hospital'
 import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
   const errorStore = useErrorStore()
-  const hospitalStore = useHospitalStore()
 
   // State
   const credentials = ref({
@@ -63,7 +61,6 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     try {
       user.value = await checkSession()
-      await hospitalStore.loadData()
     } catch {
       console.warn('Session not found')
       user.value = null
