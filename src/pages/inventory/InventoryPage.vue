@@ -51,6 +51,7 @@ const inventoryStore = useInventoryStore()
 const hospitalStore = useHospitalStore()
 const route = useRoute()
 
+// TODO clear on logout
 onBeforeMount(async () => inventoryStore.clear())
 
 // URL search params serve as source of the initial state for loadProducts' query

@@ -12,10 +12,9 @@ import {
 import Product from '@/entities/product'
 
 import { useErrorStore } from '@/stores/error'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth } from '@/composables/auth'
 
 export const useInventoryStore = defineStore('inventory', () => {
-  const authStore = useAuthStore()
   const errorStore = useErrorStore()
 
   // State
@@ -31,14 +30,9 @@ export const useInventoryStore = defineStore('inventory', () => {
     executeImmediate: listProducts,
   } = useAsyncState(
     async () => {
-      const hospitalId = authStore.hospitalId
-      if (!hospitalId) {
-        return null
-      }
-
       errorStore.clear()
       console.log('🚚 fetching inventory', { ...productsQuery.value })
-      return await getProducts(hospitalId, {
+      return useAuth(getProducts, {
         offset: productsQuery.value.offset,
         limit: productsQuery.value.limit,
         name: productsQuery.value.name,
@@ -51,6 +45,37 @@ export const useInventoryStore = defineStore('inventory', () => {
       onError: (err: unknown) => errorStore.report(err, 'Failed to load inventory'),
     },
   )
+
+  const { isLoading: removing, executeImmediate: remove } = useAsyncState(
+    async (ids: string[]) => useAuth(deleteProducts, ids),
+    null,
+    {
+      immediate: false,
+      onError: (err: unknown) => errorStore.report(err, 'Failed to remove inventory'),
+      onSuccess: async () => await listProducts(),
+    },
+  )
+
+  const { isLoading: adding, executeImmediate: addProduct } = useAsyncState(
+    async (data: NewProductSpec) => useAuth(createProduct, data),
+    null,
+    {
+      immediate: false,
+      onError: (err: unknown) => errorStore.report(err, 'Failed to add inventory item'),
+      onSuccess: async () => await listProducts(),
+    },
+  )
+
+  const { isLoading: editing, executeImmediate: editProduct } = useAsyncState(
+    async (data: Product) => useAuth(updateProduct, data),
+    null,
+    {
+      immediate: false,
+      onError: (err: unknown) => errorStore.report(err, 'Failed to update inventory item'),
+      onSuccess: async () => await listProducts(),
+    },
+  )
+
   const productStats = computed(() => {
     if (!productsList.value) {
       return ''
@@ -62,52 +87,6 @@ export const useInventoryStore = defineStore('inventory', () => {
           ${productsList.value.items.length} of
           ${productsList.value.meta.total.toLocaleString()}`
   })
-
-  const { isLoading: removing, executeImmediate: remove } = useAsyncState(
-    async (ids: string[]) => {
-      const hospitalId = authStore.hospitalId
-      if (!hospitalId) {
-        return
-      }
-      await deleteProducts(hospitalId, ids)
-    },
-    null,
-    {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, 'Failed to remove inventory'),
-      onSuccess: async () => await listProducts(),
-    },
-  )
-  const { isLoading: adding, executeImmediate: addProduct } = useAsyncState(
-    async (data: NewProductSpec) => {
-      const hospitalId = authStore.hospitalId
-      if (!hospitalId) {
-        return
-      }
-      await createProduct(hospitalId, data)
-    },
-    null,
-    {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, 'Failed to add inventory item'),
-      onSuccess: async () => await listProducts(),
-    },
-  )
-  const { isLoading: editing, executeImmediate: editProduct } = useAsyncState(
-    async (data: Product) => {
-      const hospitalId = authStore.hospitalId
-      if (!hospitalId) {
-        return
-      }
-      await updateProduct(hospitalId, data)
-    },
-    null,
-    {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, 'Failed to update inventory item'),
-      onSuccess: async () => await listProducts(),
-    },
-  )
 
   // Actions
   async function loadProducts({

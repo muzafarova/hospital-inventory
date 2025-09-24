@@ -1,6 +1,6 @@
 <template>
-  <LayoutLogin title="Hospital Inventory" :hint="hint">
-    <form @submit.prevent="authStore.login">
+  <LayoutLogin title="Hospital Inventory" :hint="authStore.hint">
+    <form @submit.prevent="handleLogin">
       <div class="space-y-4">
         <BaseInput
           v-model="authStore.credentials.username"
@@ -8,18 +8,12 @@
           id="username"
           required
         />
-        <BaseInput
+        <InputPassword
           v-model="authStore.credentials.password"
           label="Password"
           id="password"
           required
-          :type="showPassword ? 'text' : 'password'"
-          class="pr-9 relative"
-        >
-          <div class="absolute z-10 inset-0 left-auto flex items-center">
-            <ShowPasswordToggle :show="showPassword" @click="showPassword = !showPassword" />
-          </div>
-        </BaseInput>
+        />
       </div>
       <div class="flex items-center justify-between mt-6">
         <router-link class="mr-1 text-sm underline hover:no-underline" to="/reset-password">
@@ -32,25 +26,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+import { useHospitalStore } from '@/stores/hospital'
 
 import LayoutLogin from '@/components/LayoutLogin.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
-import ShowPasswordToggle from './ShowPasswordToggle.vue'
+import InputPassword from './InputPassword.vue'
 
-import { userCredentials } from '@/mocks/data.ts'
-
+const router = useRouter()
 const authStore = useAuthStore()
+const hospitalStore = useHospitalStore()
 
-const hint = computed(() => {
-  const hints: string[] = []
-  for (const username in userCredentials) {
-    hints.push(`${username}:${userCredentials[username]}`)
-  }
-  return 'Credentials: ' + hints.join('; ')
-})
-
-const showPassword = ref(false)
+async function handleLogin() {
+  try {
+    await authStore.login()
+    await hospitalStore.loadData()
+    await router.push({ name: 'inventory' })
+  } catch {}
+}
 </script>

@@ -25,7 +25,7 @@
             :name="authStore.user.name"
             :email="authStore.user.email"
             :image="authStore.user.image"
-            @logout="authStore.logout"
+            @logout="handleLogout"
           />
         </div>
       </div>
@@ -34,10 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import AppProfile from './AppProfile.vue'
-import ThemeSwitcher from './ThemeSwitcher.vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useHospitalStore } from '@/stores/hospital'
+
+import AppProfile from './AppProfile.vue'
+import ThemeSwitcher from './ThemeSwitcher.vue'
+
 const hospitalStore = useHospitalStore()
 const authStore = useAuthStore()
+const router = useRouter()
+
+async function handleLogout() {
+  await authStore.logout()
+  await router.push({ name: 'login' })
+}
 </script>

@@ -1,7 +1,8 @@
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
+
 import User from '@/entities/user'
+import { userCredentials } from '@/mocks/data.ts'
 
 import { useErrorStore } from '@/stores/error'
 import { useHospitalStore } from './hospital'
@@ -9,7 +10,6 @@ import { loginUser, logoutUser, checkSession } from '@/api/endpoints'
 
 export const useAuthStore = defineStore('auth', () => {
   // Store dependencies
-  const router = useRouter()
   const errorStore = useErrorStore()
   const hospitalStore = useHospitalStore()
 
@@ -21,19 +21,26 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const loading = ref(false)
   const isAuthenticated = computed(() => user.value !== null)
-  const hospitalId = computed(() => user.value?.hospitalId)
+  const hint = computed(() => {
+    const hints: string[] = []
+    for (const username in userCredentials) {
+      hints.push(`${username}:${userCredentials[username]}`)
+    }
+    return 'Credentials: ' + hints.join('; ')
+  })
 
   // Actions
+  const getHospitalId = () => user.value?.hospitalId
+
   async function login() {
     console.info('🗃️ Login as', credentials.value.username)
     loading.value = true
     errorStore.clear()
     try {
       user.value = await loginUser(credentials.value)
-      await hospitalStore.loadData()
-      await router.push({ name: 'inventory' })
     } catch (err) {
       errorStore.report(err, 'Failed to login')
+      throw err
     } finally {
       loading.value = false
     }
@@ -44,15 +51,11 @@ export const useAuthStore = defineStore('auth', () => {
       return
     }
 
-    // loading.value = true
     try {
       await logoutUser()
       user.value = null
-      await router.push({ name: 'login' })
     } catch (err) {
       errorStore.report(err, 'Failed to logout')
-    } finally {
-      // loading.value = true
     }
   }
 
@@ -70,5 +73,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   // Interface
-  return { credentials, user, loading, isAuthenticated, hospitalId, login, logout, checkAuth }
+  return {
+    credentials,
+    user,
+    loading,
+    isAuthenticated,
+    getHospitalId,
+    login,
+    logout,
+    checkAuth,
+    hint,
+  }
 })

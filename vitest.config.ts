@@ -27,26 +27,15 @@ export default defineConfig({
       thresholds: {
         autoUpdate: true,
         statements: 50,
-        branches: 57.14,
+        branches: 71.92,
         functions: 52.17,
         lines: 50,
       },
     },
-    // Enable browser mode
-    browser: {
-      enabled: true,
-      headless: true,
-      provider: 'playwright',
-      instances: [
-        {
-          browser: 'chromium',
-          name: 'chromium-main',
-        },
-      ],
-    },
     projects: [
       {
         extends: true,
+        // Enable browser mode
         plugins: [
           // The plugin will run tests for the stories defined in your Storybook config
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
@@ -56,7 +45,25 @@ export default defineConfig({
         ],
         test: {
           name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: 'playwright',
+            instances: [
+              {
+                browser: 'chromium',
+                name: 'chromium-main',
+              },
+            ],
+          },
           setupFiles: ['.storybook/vitest.setup.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/**/*.spec.ts'],
         },
       },
     ],
