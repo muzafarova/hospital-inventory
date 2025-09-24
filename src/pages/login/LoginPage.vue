@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import { useHospitalStore } from '@/stores/hospital'
 
 import LayoutLogin from '@/components/LayoutLogin.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
@@ -37,12 +36,10 @@ import InputPassword from './InputPassword.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
-const hospitalStore = useHospitalStore()
 
 async function handleLogin() {
   try {
     await authStore.login()
-    await hospitalStore.loadData()
     await router.push({ name: 'inventory' })
   } catch {}
 }

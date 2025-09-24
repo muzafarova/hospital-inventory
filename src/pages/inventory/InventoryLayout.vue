@@ -11,11 +11,11 @@
           <div class="sm:flex sm:justify-between sm:items-center mb-5">
             <!-- Left: Title -->
             <div class="mb-4 sm:mb-0">
-              <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
-                Inventory
+              <h2 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
+                {{ title }}
                 <!-- Loading State -->
                 <BaseSpinner v-if="loading" class="mx-2" />
-              </h1>
+              </h2>
             </div>
 
             <!-- Right: Actions  -->
@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import AppTopbar from '@/components/AppTopbar.vue'
-import BaseSpinner from './ui/BaseSpinner.vue'
+import BaseSpinner from '@/components/ui/BaseSpinner.vue'
 
-defineProps<{ loading: boolean }>()
+defineProps<{ loading: boolean; title: string }>()
 </script>

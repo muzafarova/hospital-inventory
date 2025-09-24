@@ -1,12 +1,12 @@
 <template>
   <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
     <header class="px-5 py-4">
-      <h2 class="font-semibold text-gray-800 dark:text-gray-100">
+      <h3 class="font-semibold text-gray-800 dark:text-gray-100">
         Products
         <span class="text-gray-400 dark:text-gray-500 font-medium inline-block ml-1">
           <slot name="pagination" />
         </span>
-      </h2>
+      </h3>
     </header>
 
     <!-- <div class="overflow-x-auto"> -->

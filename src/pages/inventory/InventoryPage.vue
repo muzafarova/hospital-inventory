@@ -1,5 +1,5 @@
 <template>
-  <InventoryLayout :loading="inventoryStore.loading">
+  <InventoryLayout :loading="inventoryStore.loading" title="Inventory">
     <!-- Page level actions -->
     <template v-slot:actions>
       <!-- Bulk-delete button -->
@@ -37,12 +37,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
+
 import { useRoute } from 'vue-router'
 import { useInventoryStore } from '@/stores/inventory'
 import { useHospitalStore } from '@/stores/hospital'
 
-import InventoryLayout from '@/components/LayoutInventory.vue'
+import InventoryLayout from './InventoryLayout.vue'
 import ProductCreate from './ProductCreate.vue'
 import InventoryTable from './InventoryTable.vue'
 import ProductRemoveBulk from './ProductRemoveBulk.vue'
@@ -51,9 +52,11 @@ const inventoryStore = useInventoryStore()
 const hospitalStore = useHospitalStore()
 const route = useRoute()
 
-// TODO clear on logout
-onBeforeMount(async () => inventoryStore.clear())
+onMounted(async () => {
+  inventoryStore.clear()
+  await hospitalStore.loadData()
 
-// URL search params serve as source of the initial state for loadProducts' query
-onMounted(async () => await inventoryStore.loadProducts({ ...route.query }))
+  // URL search params serve as source of the initial state for loadProducts' query
+  await inventoryStore.loadProducts({ ...route.query })
+})
 </script>
