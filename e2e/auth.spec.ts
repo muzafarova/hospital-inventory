@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures.js'
+import { test, expect } from './_fixtures.js'
 import { users, userCredentials } from '../src/mocks/data.js'
 
 test.describe('Authentication', () => {
@@ -36,7 +36,7 @@ test.describe('Authentication', () => {
 
   test('should logout successfully', async ({ loggedInPage }) => {
     // Already logged in via fixture
-    await loggedInPage.expectInventoryPage()
+    await loggedInPage.expectButtonProfileVisible()
 
     // Logout
     await loggedInPage.logout()

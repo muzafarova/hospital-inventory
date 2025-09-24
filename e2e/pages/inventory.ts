@@ -1,9 +1,8 @@
 import type { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
+import { LoggedInPage } from './logged-in.js'
 
-export class InventoryPage {
-  private readonly topNav: Locator
-  private readonly buttonProfile: Locator
+export class InventoryPage extends LoggedInPage {
   readonly buttonAddItem: Locator
 
   // Form field locators
@@ -16,8 +15,7 @@ export class InventoryPage {
   readonly buttonSubmit: Locator
 
   constructor(public readonly page: Page) {
-    this.topNav = this.page.getByRole('banner')
-    this.buttonProfile = this.topNav.getByRole('button', { name: 'Profile' })
+    super(page)
     this.buttonAddItem = this.page.getByRole('button', { name: 'Add item' })
 
     // Initialize form field locators
@@ -31,11 +29,11 @@ export class InventoryPage {
   }
 
   async expectInventoryPage() {
-    await expect(this.page.getByRole('heading', { name: 'Inventory' })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: 'Inventory', level: 2 })).toBeVisible()
   }
 
   async expectInventoryTable() {
-    await expect(this.page.getByRole('heading', { name: 'Products' })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: 'Products', level: 3 })).toBeVisible()
   }
 
   async expectModalVisible(title: string) {
@@ -47,8 +45,6 @@ export class InventoryPage {
   }
 
   async logout() {
-    await this.buttonProfile.click()
-    await this.topNav.getByRole('button', { name: 'Sign Out' }).click()
-    await expect(this.page).toHaveURL('/login')
+    await super.logout()
   }
 }

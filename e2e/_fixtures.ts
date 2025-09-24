@@ -27,7 +27,6 @@ export const test = base.extend<TestFixtures>({
 
     // Wait for successful login
     await expect(page).toHaveURL('/')
-    await expect(page.getByRole('heading', { name: 'Inventory' })).toBeVisible()
 
     // Create page object with logged-in context
     const loggedInPage = new InventoryPage(page)

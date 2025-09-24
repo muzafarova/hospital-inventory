@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures.js'
+import { test, expect } from './_fixtures.js'
 
 test.describe('Inventory Operations', () => {
   test.describe('Product Create', () => {
@@ -38,7 +38,7 @@ test.describe('Inventory Operations', () => {
       await loggedInPage.buttonSubmit.click()
 
       // Wait for modal to close and verify product was created
-      await expect(loggedInPage.page.getByText('New product')).not.toBeVisible()
+      await expect(loggedInPage.page.getByText('New product')).toBeHidden()
 
       // Verify the new product appears in the table
       await expect(loggedInPage.page.getByText('Test Product')).toBeVisible()
