@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <BaseButton @click.stop="modalOpen = true" :variant="toggleVariant" :aria-controls="modalId">
+    <BaseButton @click.stop="modalOpen = true" :variant="toggleVariant">
       <slot name="button">{{ toggleTitle }}</slot>
     </BaseButton>
 
