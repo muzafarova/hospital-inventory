@@ -3,45 +3,39 @@ import { expect } from '@playwright/test'
 import { LoggedInPage } from './logged-in.js'
 
 export class InventoryPage extends LoggedInPage {
-  readonly buttonAddItem: Locator
+  // Create new record button
+  readonly buttonCreate: Locator
 
-  // Form field locators
-  readonly inputProductName: Locator
-  readonly selectManufacturer: Locator
-  readonly selectCategory: Locator
-  readonly inputQuantity: Locator
-  readonly inputPrice: Locator
-  readonly inputExpiryDate: Locator
-  readonly buttonSubmit: Locator
+  // Table elements
+  readonly tableHeading: Locator
+  readonly table: Locator
+  readonly theadCheckbox: Locator
+  readonly tbodyCheckboxes: Locator
 
   constructor(public readonly page: Page) {
     super(page)
-    this.buttonAddItem = this.page.getByRole('button', { name: 'Add item' })
-
-    // Initialize form field locators
-    this.inputProductName = this.page.getByLabel('Product Name')
-    this.selectManufacturer = this.page.getByLabel('Manufacturer')
-    this.selectCategory = this.page.getByLabel('Category')
-    this.inputQuantity = this.page.getByLabel('Quantity')
-    this.inputPrice = this.page.getByLabel('Price')
-    this.inputExpiryDate = this.page.getByLabel('Expiry date')
-    this.buttonSubmit = this.page.getByRole('button', { name: 'Submit' })
+    this.tableHeading = this.page.getByRole('heading', { name: 'Products', level: 3 })
+    this.table = this.page.getByRole('table')
+    this.theadCheckbox = this.table.getByRole('checkbox').first()
+    this.tbodyCheckboxes = this.table.locator('tbody').getByRole('checkbox')
+    this.buttonCreate = this.page.getByRole('button', { name: 'Add item' })
   }
 
-  async expectInventoryPage() {
-    await expect(this.page.getByRole('heading', { name: 'Inventory', level: 2 })).toBeVisible()
+  async expectHeading() {
+    await super.expectHeading('Inventory')
   }
 
   async expectInventoryTable() {
-    await expect(this.page.getByRole('heading', { name: 'Products', level: 3 })).toBeVisible()
+    await expect(this.tableHeading).toBeVisible()
+    await expect(this.table).toBeVisible()
   }
 
-  async expectModalVisible(title: string) {
-    await expect(this.page.getByRole('dialog', { name: title })).toBeVisible()
+  async expectButtonCreateVisible() {
+    await expect(this.buttonCreate).toBeVisible()
   }
 
-  get activeModal() {
-    return this.page.getByRole('dialog', { includeHidden: false })
+  async getModal(title: string) {
+    return this.page.getByRole('dialog', { includeHidden: true, name: title })
   }
 
   async logout() {

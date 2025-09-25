@@ -14,6 +14,10 @@ export class LoggedInPage {
     await expect(this.buttonProfile).toBeVisible()
   }
 
+  async expectHeading(heading: string) {
+    await expect(this.page.getByRole('heading', { name: heading, level: 2 })).toBeVisible()
+  }
+
   async logout() {
     await this.buttonProfile.click()
     await this.topNav.getByRole('button', { name: 'Sign Out' }).click()

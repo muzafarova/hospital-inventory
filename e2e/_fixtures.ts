@@ -5,8 +5,9 @@ import { users, userCredentials } from '../src/mocks/data.js'
 
 // Define custom fixtures
 type TestFixtures = {
-  loggedInPage: InventoryPage
   loginPage: LoginPage
+  loggedInPage: InventoryPage
+  inventoryPage: InventoryPage
 }
 
 export const test = base.extend<TestFixtures>({
@@ -31,6 +32,23 @@ export const test = base.extend<TestFixtures>({
     // Create page object with logged-in context
     const loggedInPage = new InventoryPage(page)
     await use(loggedInPage)
+  },
+
+  // Fixture for already logged in page
+  inventoryPage: async ({ page, loginPage }, use) => {
+    const { username } = users[0]
+    const password = userCredentials[username]
+
+    // Perform login
+    await loginPage.goto()
+    await loginPage.login(username, password)
+
+    // Wait for successful login
+    await expect(page).toHaveURL('/')
+
+    // Create page object with logged-in context
+    const inventoryPage = new InventoryPage(page)
+    await use(inventoryPage)
   },
 })
 
