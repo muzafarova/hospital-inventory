@@ -37,25 +37,27 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
-import { useRoute } from 'vue-router'
-import { useInventoryStore } from '@/stores/inventory'
-import { useHospitalStore } from '@/stores/hospital'
+import { onMounted, watchEffect } from 'vue'
 
 import InventoryLayout from './InventoryLayout.vue'
 import ProductCreate from './ProductCreate.vue'
 import InventoryTable from './InventoryTable.vue'
 import ProductRemoveBulk from './ProductRemoveBulk.vue'
 
-const inventoryStore = useInventoryStore()
-const hospitalStore = useHospitalStore()
+import { useRoute } from 'vue-router'
+import { useHospitalStore } from '@/stores/hospital'
+import { useInventoryStore } from '@/stores/inventory'
+
 const route = useRoute()
+const hospitalStore = useHospitalStore()
+const inventoryStore = useInventoryStore()
 
 onMounted(async () => {
   inventoryStore.clear()
   await hospitalStore.loadData()
+})
 
+watchEffect(async () => {
   // URL search params serve as source of the initial state for loadProducts' query
   await inventoryStore.loadProducts({ ...route.query })
 })
