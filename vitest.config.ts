@@ -52,7 +52,7 @@ export default defineConfig({
             instances: [
               {
                 browser: 'chromium',
-                name: 'chromium-main',
+                name: 'chromium-storybook',
               },
             ],
           },
@@ -64,6 +64,17 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['src/**/*.spec.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: 'playwright',
+            instances: [
+              {
+                browser: 'chromium',
+                name: 'chromium-unit',
+              },
+            ],
+          },
         },
       },
     ],

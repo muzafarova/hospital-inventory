@@ -12,6 +12,7 @@ const preview: Preview = {
   parameters: {
     docs: {
       toc: true,
+      codePanel: true,
     },
     controls: {
       matchers: {
