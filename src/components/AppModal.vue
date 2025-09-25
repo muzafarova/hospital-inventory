@@ -10,7 +10,7 @@
       leave-to-class="opacity-0"
     >
       <div
-        v-show="modalOpen"
+        v-if="modalOpen"
         class="fixed inset-0 bg-black/30 z-50 transition-opacity"
         aria-hidden="true"
         data-testid="modal-backdrop"
@@ -34,13 +34,14 @@
         :aria-label="title"
       >
         <div
+          v-if="modalOpen"
           ref="modalContent"
           class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-auto max-w-lg w-full max-h-full"
         >
           <!-- Modal header -->
           <div class="px-5 py-3 border-b border-gray-200 dark:border-gray-700/60">
             <div class="flex justify-between items-center">
-              <div class="font-semibold text-gray-800 dark:text-gray-100">{{ title }}</div>
+              <h3 class="font-semibold text-gray-800 dark:text-gray-100">{{ title }}</h3>
               <button
                 class="text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400"
                 @click.stop="$emit('close')"
