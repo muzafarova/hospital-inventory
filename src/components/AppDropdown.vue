@@ -35,6 +35,7 @@
         :class="align === 'right' ? 'right-0' : 'left-0'"
         @focusin="dropdownOpen = true"
         @focusout="dropdownOpen = false"
+        role="menu"
       >
         <slot :close="() => (dropdownOpen = false)" />
       </div>
