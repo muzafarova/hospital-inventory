@@ -28,9 +28,9 @@
   "lint-staged": {
     "src/**/*.{html,css,json}": "prettier --write",
     "src/**/*.{ts,vue}": [
+      "sh -c 'vue-tsc --noEmit'",
       "prettier --list-different",
-      "eslint --fix",
-      "sh -c 'vue-tsc --noEmit'"
+      "eslint --fix"
     ],
     "e2e/**/*.spec.{js,ts,jsx,tsx}": [
       "eslint --fix"
