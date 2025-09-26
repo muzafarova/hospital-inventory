@@ -29,8 +29,13 @@
       @remove="inventoryStore.removeProduct"
     >
       <template v-slot:pagination>
-        <span> {{ inventoryStore.productStats }} </span>
-        <!-- TODO implenment back/forward pagination  -->
+        <BasePagination
+          :count="inventoryStore.productsList.items.length"
+          :total="inventoryStore.productsList.meta.total"
+          :limit="inventoryStore.productsList.meta.limit"
+          :offset="inventoryStore.productsList.meta.offset"
+          @update:offset="(offset) => $router.replace({ query: { offset: offset } })"
+        />
       </template>
     </InventoryTable>
   </InventoryLayout>
@@ -43,6 +48,7 @@ import InventoryLayout from './InventoryLayout.vue'
 import ProductCreate from './ProductCreate.vue'
 import InventoryTable from './InventoryTable.vue'
 import ProductRemoveBulk from './ProductRemoveBulk.vue'
+import BasePagination from '@/components/ui/BasePagination.vue'
 
 import { useRoute } from 'vue-router'
 import { useHospitalStore } from '@/stores/hospital'

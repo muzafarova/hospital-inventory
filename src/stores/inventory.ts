@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useAsyncState } from '@vueuse/core'
 
@@ -76,18 +76,6 @@ export const useInventoryStore = defineStore('inventory', () => {
     },
   )
 
-  const productStats = computed(() => {
-    if (!productsList.value) {
-      return ''
-    }
-    if (productsList.value.meta.total === 0) {
-      return '0'
-    }
-    return `${productsList.value.meta.limit * productsList.value.meta.offset + 1} -
-          ${productsList.value.items.length} of
-          ${productsList.value.meta.total.toLocaleString()}`
-  })
-
   // Actions
   async function loadProducts({
     limit = 100,
@@ -133,7 +121,6 @@ export const useInventoryStore = defineStore('inventory', () => {
     adding,
     editing,
     productsList,
-    productStats,
     productsSelection,
     loadProducts,
     addProduct,
