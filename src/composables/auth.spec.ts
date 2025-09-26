@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { describe, beforeEach, it, vi } from 'vitest'
 import { useAuth } from './auth'
-import { useAuthStore } from '@/stores/auth'
+import { useSessionStore } from '@/stores/session'
 
 describe('auth', () => {
   beforeEach(() => {
@@ -9,21 +9,21 @@ describe('auth', () => {
   })
 
   it('should throw an error if hospitalId is not available', ({ expect }) => {
-    const authStore = useAuthStore()
+    const sessionStore = useSessionStore()
 
-    expect(authStore.getHospitalId()).toBeUndefined()
+    expect(sessionStore.getHospitalId()).toBeUndefined()
     expect(() => useAuth(() => Promise.resolve(null))).toThrow('Hospital ID is required')
   })
 
   it('should augument the callback with the hospitalId as first parameter', ({ expect }) => {
-    const authStore = useAuthStore()
+    const sessionStore = useSessionStore()
 
-    vi.spyOn(authStore, 'getHospitalId').mockReturnValue('hospitalId')
+    vi.spyOn(sessionStore, 'getHospitalId').mockReturnValue('hospitalId')
     const callback = vi.fn((...args: string[]) => Promise.resolve(args))
 
     useAuth(callback, '456')
 
-    expect(authStore.getHospitalId()).toBe('hospitalId')
+    expect(sessionStore.getHospitalId()).toBe('hospitalId')
     expect(callback).toHaveBeenCalledWith('hospitalId', '456')
   })
 })

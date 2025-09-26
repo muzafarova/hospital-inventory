@@ -13,7 +13,7 @@
         </div>
 
         <!-- Header: Right side -->
-        <div v-if="authStore.user" class="flex items-center space-x-3">
+        <div v-if="sessionStore.user" class="flex items-center space-x-3">
           <!-- Theme Switcher -->
           <ThemeSwitcher />
 
@@ -21,10 +21,10 @@
           <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
           <AppProfile
             align="right"
-            :username="authStore.user.username"
-            :name="authStore.user.name"
-            :email="authStore.user.email"
-            :image="authStore.user.image"
+            :username="sessionStore.user.username"
+            :name="sessionStore.user.name"
+            :email="sessionStore.user.email"
+            :image="sessionStore.user.image"
             @logout="handleLogout"
           />
         </div>
@@ -35,18 +35,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useSessionStore } from '@/stores/session'
 import { useHospitalStore } from '@/stores/hospital'
 
 import AppProfile from './AppProfile.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 
 const hospitalStore = useHospitalStore()
-const authStore = useAuthStore()
+const sessionStore = useSessionStore()
 const router = useRouter()
 
 async function handleLogout() {
-  await authStore.logout()
+  await sessionStore.logout()
   await router.push({ name: 'login' })
 }
 </script>

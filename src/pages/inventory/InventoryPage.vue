@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watchEffect } from 'vue'
+import { onMounted, watch } from 'vue'
 
 import InventoryLayout from './InventoryLayout.vue'
 import ProductCreate from './ProductCreate.vue'
@@ -57,8 +57,12 @@ onMounted(async () => {
   await hospitalStore.loadData()
 })
 
-watchEffect(async () => {
-  // URL search params serve as source of the initial state for loadProducts' query
-  await inventoryStore.loadProducts({ ...route.query })
-})
+watch(
+  route,
+  async ({ query }) => {
+    // URL search params serve as source of the initial state for loadProducts' query
+    await inventoryStore.loadProducts({ ...query })
+  },
+  { immediate: true },
+)
 </script>

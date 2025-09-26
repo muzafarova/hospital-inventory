@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useSessionStore } from '@/stores/session'
 import { routes } from './routes'
 
 const router = createRouter({
@@ -11,22 +11,20 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   // This will work because the router starts its navigation after
   // the router is installed and pinia will be installed too
-  const authStore = useAuthStore()
-
-  // Check session on first navigation
-  if (authStore.user === null && !authStore.loading) {
-    await authStore.checkAuth()
-  }
-
-  const isAuthenticated = authStore.isAuthenticated
+  const sessionStore = useSessionStore()
   const requiresAuth = to.meta.requiresAuth
   const requiresGuest = to.meta.requiresGuest
 
-  if (requiresAuth && !isAuthenticated) {
+  // Check session on first navigation
+  if (!(sessionStore.authenticated || sessionStore.loading)) {
+    await sessionStore.checkAuth()
+  }
+
+  if (requiresAuth && !sessionStore.authenticated) {
     return '/login'
   }
 
-  if (requiresGuest && isAuthenticated) {
+  if (requiresGuest && sessionStore.authenticated) {
     return '/'
   }
 })
