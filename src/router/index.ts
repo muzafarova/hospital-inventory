@@ -16,7 +16,7 @@ router.beforeEach(async (to) => {
   const requiresGuest = to.meta.requiresGuest
 
   // Check session on first navigation
-  if (!(sessionStore.authenticated || sessionStore.loading)) {
+  if (!(sessionStore.authenticated || sessionStore.checking)) {
     await sessionStore.checkAuth()
   }
 

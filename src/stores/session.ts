@@ -1,47 +1,55 @@
-import { ref, readonly, computed } from 'vue'
+import { readonly, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useAsyncState } from '@vueuse/core'
 
-import User from '@/entities/user'
-import { checkSession, loginUser, logoutUser } from '@/api/endpoints'
 import { useErrorStore } from './error'
+import { checkSession, loginUser, logoutUser } from '@/api/endpoints'
+import User from '@/entities/user'
 
 export const useSessionStore = defineStore('session', () => {
   const errorStore = useErrorStore()
 
   // State
-  const user = ref<User | null>(null)
-  const loading = ref(false)
   const authenticated = computed(() => user.value !== null)
 
   // Actions
   const setUser = (newUser: User | null) => (user.value = newUser)
   const getHospitalId = () => user.value?.hospitalId
 
-  async function login(credentials: { username: string; password: string }) {
-    console.info('🗃️ Login as', credentials.username)
-    loading.value = true
-    errorStore.clear()
-    try {
-      user.value = await loginUser(credentials)
-    } catch (err) {
-      errorStore.report(err, 'Failed to login')
-      throw err
-    } finally {
-      loading.value = false
-    }
-  }
+  const {
+    state: user,
+    isLoading: loading,
+    executeImmediate: login,
+  } = useAsyncState(
+    async (credentials: { username: string; password: string }) => {
+      console.info('🗃️ Login as', credentials.username)
+      errorStore.clear()
+      return await loginUser(credentials)
+    },
+    null,
+    {
+      immediate: false,
+      onError: (err: unknown) => errorStore.report(err, 'Failed to login'),
+    },
+  )
 
-  async function checkAuth() {
-    loading.value = true
-    try {
-      user.value = await checkSession()
-    } catch {
-      console.warn('Session not found')
-      user.value = null
-    } finally {
-      loading.value = false
-    }
-  }
+  const { isLoading: checking, executeImmediate: checkAuth } = useAsyncState(
+    async () => {
+      console.info('🗃️ Checking session')
+      return await checkSession()
+    },
+    null,
+    {
+      immediate: false,
+      onSuccess: (data: User | null) => {
+        user.value = data
+      },
+      onError: () => {
+        console.warn('Session not found')
+        user.value = null
+      },
+    },
+  )
 
   async function logout() {
     if (!user.value) {
@@ -59,11 +67,12 @@ export const useSessionStore = defineStore('session', () => {
   return {
     user: readonly(user),
     loading: readonly(loading),
+    checking: readonly(checking),
     authenticated: readonly(authenticated),
-    setUser,
     getHospitalId,
-    checkAuth,
+    setUser,
     login,
     logout,
+    checkAuth,
   }
 })
