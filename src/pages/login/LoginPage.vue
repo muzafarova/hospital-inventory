@@ -15,7 +15,7 @@
           required
         />
       </div>
-      <div class="flex items-center justify-between mt-6">
+      <div class="mt-6 flex items-center justify-between">
         <router-link class="mr-1 text-sm underline hover:no-underline" to="/reset-password">
           Forgot Password?
         </router-link>
@@ -26,21 +26,21 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
 
-import LoginLayout from '@/pages/login/LoginLayout.vue'
-import BaseInput from '@/components/ui/BaseInput.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
-import InputPassword from './InputPassword.vue'
+import LoginLayout from "@/pages/login/LoginLayout.vue";
+import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
+import InputPassword from "./InputPassword.vue";
 
-const router = useRouter()
-const authStore = useAuthStore()
+const router = useRouter();
+const authStore = useAuthStore();
 
 async function handleLogin() {
   try {
-    await authStore.login()
-    await router.push({ name: 'inventory' })
+    await authStore.login();
+    await router.push({ name: "inventory" });
   } catch {}
 }
 </script>

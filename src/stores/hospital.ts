@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia'
-import { useAsyncState } from '@vueuse/core'
+import { defineStore } from "pinia";
+import { useAsyncState } from "@vueuse/core";
 
-import { useErrorStore } from '@/stores/error'
-import { getHospital } from '@/api/endpoints'
-import { useAuth } from '@/composables/auth'
+import { useErrorStore } from "@/stores/error";
+import { getHospital } from "@/api/endpoints";
+import { useAuth } from "@/composables/auth";
 
-export const useHospitalStore = defineStore('hospital', () => {
-  const errorStore = useErrorStore()
+export const useHospitalStore = defineStore("hospital", () => {
+  const errorStore = useErrorStore();
 
   // State
   const {
@@ -15,17 +15,17 @@ export const useHospitalStore = defineStore('hospital', () => {
     executeImmediate: loadData,
   } = useAsyncState(
     async () => {
-      errorStore.clear()
-      console.log('🚚 fetching hospital info')
-      return useAuth(getHospital)
+      errorStore.clear();
+      console.log("🚚 fetching hospital info");
+      return useAuth(getHospital);
     },
     null,
     {
       immediate: false,
-      onError: (err: unknown) => errorStore.report(err, 'Failed to fetch hospital'),
+      onError: (err: unknown) => errorStore.report(err, "Failed to fetch hospital"),
     },
-  )
+  );
 
   // Interface
-  return { data, loading, loadData }
-})
+  return { data, loading, loadData };
+});

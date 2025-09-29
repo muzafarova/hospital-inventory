@@ -1,11 +1,11 @@
 <template>
   <div class="flex h-[100dvh] overflow-hidden">
-    <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+    <div class="relative flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
       <main class="grow">
-        <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-          <div class="max-w-2xl m-auto mt-16">
-            <div class="text-center px-4">
-              <div class="inline-flex mb-8">
+        <div class="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
+          <div class="m-auto mt-16 max-w-2xl">
+            <div class="px-4 text-center">
+              <div class="mb-8 inline-flex">
                 <img
                   class="block dark:hidden"
                   src="/images/404-illustration.svg"

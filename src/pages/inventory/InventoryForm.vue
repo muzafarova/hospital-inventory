@@ -29,7 +29,7 @@
             (category) => $emit('update:modelValue', { ...modelValue, category })
           "
         />
-        <div class="grid md:grid-cols-3 gap-2">
+        <div class="grid gap-2 md:grid-cols-3">
           <BaseInput
             label="Quantity"
             id="quantity"
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col px-6 py-5 border-t border-gray-200 dark:border-gray-700/60">
+    <div class="flex flex-col border-t border-gray-200 px-6 py-5 dark:border-gray-700/60">
       <div class="flex self-end">
         <BaseButton type="submit" variant="accent">{{ submitLabel }}</BaseButton>
       </div>
@@ -77,25 +77,25 @@
 </template>
 
 <script setup lang="ts">
-import { type NewProductSpec } from '@/api/endpoints'
+import { type NewProductSpec } from "@/api/endpoints";
 
-import BaseInput from '@/components/ui/BaseInput.vue'
-import BaseSelect from '@/components/ui/BaseSelect.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
+import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseSelect from "@/components/ui/BaseSelect.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 withDefaults(
   defineProps<{
-    fields: string[]
-    manufacturers: string[]
-    categories: string[]
-    submitLabel: string
-    modelValue: NewProductSpec
+    fields: string[];
+    manufacturers: string[];
+    categories: string[];
+    submitLabel: string;
+    modelValue: NewProductSpec;
   }>(),
-  { submitLabel: 'Submit' },
-)
+  { submitLabel: "Submit" },
+);
 
 defineEmits<{
-  submit: []
-  'update:modelValue': [value: NewProductSpec]
-}>()
+  submit: [];
+  "update:modelValue": [value: NewProductSpec];
+}>();
 </script>

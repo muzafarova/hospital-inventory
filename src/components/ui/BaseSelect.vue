@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="block text-sm font-medium mb-1" :for="id">
+    <label class="mb-1 block text-sm font-medium" :for="id">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
     </label>
     <select
@@ -19,20 +19,20 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel();
 
 withDefaults(
   defineProps<{
-    id: string
-    label: string
-    options: string[]
-    required?: boolean
-    placeholder?: string
+    id: string;
+    label: string;
+    options: string[];
+    required?: boolean;
+    placeholder?: string;
   }>(),
-  { placeholder: '- select -' },
-)
+  { placeholder: "- select -" },
+);
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 </script>

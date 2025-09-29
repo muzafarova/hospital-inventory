@@ -43,33 +43,33 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, watch } from "vue";
 
-import InventoryLayout from './InventoryLayout.vue'
-import ProductCreate from './ProductCreate.vue'
-import InventoryTable from './InventoryTable.vue'
-import ProductRemoveBulk from './ProductRemoveBulk.vue'
-import BasePagination from '@/components/ui/BasePagination.vue'
+import InventoryLayout from "./InventoryLayout.vue";
+import ProductCreate from "./ProductCreate.vue";
+import InventoryTable from "./InventoryTable.vue";
+import ProductRemoveBulk from "./ProductRemoveBulk.vue";
+import BasePagination from "@/components/ui/BasePagination.vue";
 
-import { useRoute } from 'vue-router'
-import { useHospitalStore } from '@/stores/hospital'
-import { useInventoryStore } from '@/stores/inventory'
+import { useRoute } from "vue-router";
+import { useHospitalStore } from "@/stores/hospital";
+import { useInventoryStore } from "@/stores/inventory";
 
-const route = useRoute()
-const hospitalStore = useHospitalStore()
-const inventoryStore = useInventoryStore()
+const route = useRoute();
+const hospitalStore = useHospitalStore();
+const inventoryStore = useInventoryStore();
 
 onMounted(async () => {
-  inventoryStore.clear()
-  await hospitalStore.loadData()
-})
+  inventoryStore.clear();
+  await hospitalStore.loadData();
+});
 
 watch(
   route,
   async ({ query }) => {
     // URL search params serve as source of the initial state for loadProducts' query
-    await inventoryStore.loadProducts({ ...query })
+    await inventoryStore.loadProducts({ ...query });
   },
   { immediate: true },
-)
+);
 </script>

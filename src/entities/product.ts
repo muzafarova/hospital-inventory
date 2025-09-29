@@ -1,18 +1,18 @@
-import * as z from 'zod'
+import * as z from "zod";
 
 export type ProductJsonValue = {
-  id: string
-  code: string
-  hospitalId: string
-  createdAt: string
-  updatedAt: string
-  name: string
-  manufacturer: string
-  category: string
-  quantity: number
-  price: string
-  expiresAt: string
-}
+  id: string;
+  code: string;
+  hospitalId: string;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+  manufacturer: string;
+  category: string;
+  quantity: number;
+  price: string;
+  expiresAt: string;
+};
 
 export default class Product {
   static readonly schema = z.object({
@@ -27,7 +27,7 @@ export default class Product {
     quantity: z.number(),
     price: z.string(),
     expiresAt: z.iso.date().nullish(),
-  })
+  });
 
   constructor(
     readonly id: string,
@@ -44,11 +44,11 @@ export default class Product {
   ) {}
 
   static validate(data: ProductJsonValue) {
-    this.schema.parse(data)
+    this.schema.parse(data);
   }
 
   static fromJson(data: ProductJsonValue) {
-    Product.validate(data)
+    Product.validate(data);
     return new Product(
       data.id,
       data.code,
@@ -61,6 +61,6 @@ export default class Product {
       data.quantity,
       data.price,
       data.expiresAt,
-    )
+    );
   }
 }

@@ -17,9 +17,9 @@
         :submit-label="inventoryStore.editing ? 'Submitting...' : 'Submit'"
         @submit="
           async () => {
-            await inventoryStore.editProduct(localValue)
-            slotProps.close()
-            emits('update')
+            await inventoryStore.editProduct(localValue);
+            slotProps.close();
+            emits('update');
           }
         "
       />
@@ -28,21 +28,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-import Product from '@/entities/product'
-import { useInventoryStore } from '@/stores/inventory'
-import { useHospitalStore } from '@/stores/hospital'
+import Product from "@/entities/product";
+import { useInventoryStore } from "@/stores/inventory";
+import { useHospitalStore } from "@/stores/hospital";
 
-import AppModalWithToggle from '@/components/AppModalWithToggle.vue'
-import InventoryForm from './InventoryForm.vue'
-import BaseIcon from '@/components/ui/BaseIcon.vue'
+import AppModalWithToggle from "@/components/AppModalWithToggle.vue";
+import InventoryForm from "./InventoryForm.vue";
+import BaseIcon from "@/components/ui/BaseIcon.vue";
 
-const props = defineProps<{ product: Product }>()
-const emits = defineEmits<{ update: [] }>()
+const props = defineProps<{ product: Product }>();
+const emits = defineEmits<{ update: [] }>();
 
-const hospitalStore = useHospitalStore()
-const inventoryStore = useInventoryStore()
+const hospitalStore = useHospitalStore();
+const inventoryStore = useInventoryStore();
 
-const localValue = ref(props.product)
+const localValue = ref(props.product);
 </script>

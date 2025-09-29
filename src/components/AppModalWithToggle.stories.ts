@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import AppModalWithToggle from './AppModalWithToggle.vue'
+import AppModalWithToggle from "./AppModalWithToggle.vue";
 
 const meta = {
   component: AppModalWithToggle,
@@ -11,31 +11,31 @@ const meta = {
   }),
   argTypes: {
     default: {
-      control: 'text',
+      control: "text",
       description: "Modal's inner content",
     },
     toggleVariant: {
-      control: 'select',
-      options: ['accent', 'default', 'danger', 'inline'],
+      control: "select",
+      options: ["accent", "default", "danger", "inline"],
     },
   },
   decorators: [() => ({ template: '<div class="min-h-40"><story /></div>' })],
   parameters: {
     a11y: {
-      test: 'error',
+      test: "error",
     },
   },
-} satisfies Meta<typeof AppModalWithToggle>
+} satisfies Meta<typeof AppModalWithToggle>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    modalId: 'modal_1',
-    modalTitle: 'Title',
-    toggleTitle: 'Toggle',
-    toggleVariant: 'default',
-    default: 'Slot content',
+    modalId: "modal_1",
+    modalTitle: "Title",
+    toggleTitle: "Toggle",
+    toggleVariant: "default",
+    default: "Slot content",
   },
-}
+};

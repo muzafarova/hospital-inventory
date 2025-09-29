@@ -1,71 +1,71 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import BaseButton from './BaseButton.vue'
-import BaseIcon from './BaseIcon.vue'
+import BaseButton from "./BaseButton.vue";
+import BaseIcon from "./BaseIcon.vue";
 
 const meta = {
   component: BaseButton,
   argTypes: {
-    size: { control: 'select', options: ['small', 'base'] },
-    variant: { control: 'select', options: ['accent', 'default', 'danger', 'inline'] },
-    type: { control: 'select', options: ['button', 'submit', 'reset'] },
+    size: { control: "select", options: ["small", "base"] },
+    variant: { control: "select", options: ["accent", "default", "danger", "inline"] },
+    type: { control: "select", options: ["button", "submit", "reset"] },
     default: {
-      control: 'text',
-      description: 'Slot content',
+      control: "text",
+      description: "Slot content",
     },
   },
   args: {
-    default: 'Submit',
+    default: "Submit",
   },
   parameters: {
     a11y: {
-      test: 'error',
+      test: "error",
     },
   },
-} satisfies Meta<typeof BaseButton>
+} satisfies Meta<typeof BaseButton>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
-}
+};
 
 export const SizeXs: Story = {
   args: {
-    size: 'xs',
+    size: "xs",
   },
-}
+};
 
 export const SizeSmall: Story = {
   args: {
-    size: 'small',
+    size: "small",
   },
-}
+};
 
 export const SizeLarge: Story = {
   args: {
-    size: 'large',
+    size: "large",
   },
-}
+};
 
 export const Accent: Story = {
   args: {
-    variant: 'accent',
+    variant: "accent",
   },
-}
+};
 
 export const Danger: Story = {
   args: {
-    variant: 'danger',
+    variant: "danger",
   },
-}
+};
 
 export const Inline: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Frameless button with text or icon to be used in a table',
+        story: "Frameless button with text or icon to be used in a table",
       },
     },
   },
@@ -75,7 +75,7 @@ export const Inline: Story = {
     template: `<BaseButton v-bind="args"><BaseIcon name="edit" /></BaseButton>`,
   }),
   args: {
-    variant: 'inline',
+    variant: "inline",
     default: '<BaseIcon name="edit" />',
   },
-}
+};

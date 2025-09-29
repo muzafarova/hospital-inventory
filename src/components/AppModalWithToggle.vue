@@ -13,29 +13,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-import AppModal from '@/components/AppModal.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
+import AppModal from "@/components/AppModal.vue";
+import BaseButton from "@/components/ui/BaseButton.vue";
 
 withDefaults(
   defineProps<{
     /** unique identifier of the modal */
-    modalId: string
+    modalId: string;
     /** title of the modal */
-    modalTitle: string
+    modalTitle: string;
     /** label of the button */
-    toggleTitle: string
+    toggleTitle: string;
     /** variant of the button */
-    toggleVariant?: 'accent' | 'default' | 'danger' | 'inline'
+    toggleVariant?: "accent" | "default" | "danger" | "inline";
     /** size of the button */
-    toggleSize?: 'xs' | 'small' | 'base' | 'large'
+    toggleSize?: "xs" | "small" | "base" | "large";
   }>(),
   {
-    toggleVariant: 'default',
-    toggleSize: 'base',
+    toggleVariant: "default",
+    toggleSize: "base",
   },
-)
+);
 
-const modalOpen = ref(false)
+const modalOpen = ref(false);
 </script>

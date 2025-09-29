@@ -1,13 +1,13 @@
 <template>
   <div v-if="open" role="alert">
     <div
-      class="inline-flex min-w-80 px-4 py-2 rounded-lg text-sm text-white"
+      class="inline-flex min-w-80 rounded-lg px-4 py-2 text-sm text-white"
       :class="typeColor(type)"
     >
-      <div class="flex w-full justify-between items-start">
+      <div class="flex w-full items-start justify-between">
         <div class="flex">
           <svg
-            class="shrink-0 fill-current opacity-80 mt-[3px] mr-3"
+            class="mt-[3px] mr-3 shrink-0 fill-current opacity-80"
             width="16"
             height="16"
             viewBox="0 0 16 16"
@@ -33,7 +33,7 @@
             <slot />
           </div>
         </div>
-        <button class="opacity-60 hover:opacity-70 ml-3 mt-[3px]" @click="$emit('close')">
+        <button class="mt-[3px] ml-3 opacity-60 hover:opacity-70" @click="$emit('close')">
           <div class="sr-only">Close</div>
           <svg class="fill-current" width="16" height="16" viewBox="0 0 16 16">
             <path
@@ -47,28 +47,28 @@
 </template>
 
 <script setup lang="ts">
-type NotificationType = 'warning' | 'error' | 'success' | 'info'
+type NotificationType = "warning" | "error" | "success" | "info";
 
 withDefaults(
   defineProps<{
-    type: NotificationType
-    open: boolean
+    type: NotificationType;
+    open: boolean;
   }>(),
-  { type: 'info' },
-)
+  { type: "info" },
+);
 
-defineEmits(['close'])
+defineEmits(["close"]);
 
 const typeColor = (type: NotificationType) => {
   switch (type) {
-    case 'warning':
-      return 'bg-yellow-500'
-    case 'error':
-      return 'bg-pink-500 dark:bg-pink-500/75'
-    case 'success':
-      return 'bg-green-500'
+    case "warning":
+      return "bg-yellow-500";
+    case "error":
+      return "bg-pink-500 dark:bg-pink-500/75";
+    case "success":
+      return "bg-green-500";
     default:
-      return 'bg-violet-500'
+      return "bg-violet-500";
   }
-}
+};
 </script>

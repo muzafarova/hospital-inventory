@@ -11,5 +11,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ isOpen: boolean }>()
+defineProps<{ isOpen: boolean }>();
 </script>

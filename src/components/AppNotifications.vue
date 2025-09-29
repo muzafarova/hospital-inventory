@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import BaseToast from '@/components/ui/BaseToast.vue'
-import { useErrorStore } from '@/stores/error'
-const errorStore = useErrorStore()
+import BaseToast from "@/components/ui/BaseToast.vue";
+import { useErrorStore } from "@/stores/error";
+const errorStore = useErrorStore();
 </script>
 
 <template>
-  <footer class="fixed bottom-0 right-0 m-2">
+  <footer class="fixed right-0 bottom-0 m-2">
     <BaseToast
       v-for="(notification, i) of errorStore.notifications"
       :key="notification + i"

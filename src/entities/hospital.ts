@@ -1,21 +1,21 @@
-import * as z from 'zod'
-import Product from './product'
+import * as z from "zod";
+import Product from "./product";
 
 export type HospitalJsonValue = {
-  id: string
-  name: string
-  spec: HospitalSpec
-}
+  id: string;
+  name: string;
+  spec: HospitalSpec;
+};
 
 type HospitalSpec = {
-  manufacturers: string[]
-  categories: string[]
-  tableColumns: [keyof Product, string][]
-}
+  manufacturers: string[];
+  categories: string[];
+  tableColumns: [keyof Product, string][];
+};
 
 export default class Hospital {
   static schema = z.object({
-    id: z.enum(['hosp-001', 'hosp-002']),
+    id: z.enum(["hosp-001", "hosp-002"]),
     name: z.string(),
     spec: z.object({
       manufacturers: z.array(z.string()),
@@ -23,20 +23,20 @@ export default class Hospital {
       tableColumns: z.array(
         z.tuple([
           z.enum([
-            'code',
-            'hospitalId',
-            'name',
-            'manufacturer',
-            'category',
-            'quantity',
-            'price',
-            'expiresAt',
+            "code",
+            "hospitalId",
+            "name",
+            "manufacturer",
+            "category",
+            "quantity",
+            "price",
+            "expiresAt",
           ]),
           z.string(),
         ]),
       ),
     }),
-  })
+  });
 
   constructor(
     readonly id: string,
@@ -45,11 +45,11 @@ export default class Hospital {
   ) {}
 
   static validate(data: HospitalJsonValue) {
-    Hospital.schema.parse(data)
+    Hospital.schema.parse(data);
   }
 
   static fromJson(data: HospitalJsonValue) {
-    Hospital.validate(data)
-    return new Hospital(data.id, data.name, data.spec)
+    Hospital.validate(data);
+    return new Hospital(data.id, data.name, data.spec);
   }
 }

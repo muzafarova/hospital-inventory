@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useTheme } from '@/composables/theme'
+import { onMounted } from "vue";
+import { useTheme } from "@/composables/theme";
 
-import AppNotifications from './components/AppNotifications.vue'
+import AppNotifications from "./components/AppNotifications.vue";
 
-const { applyTheme } = useTheme()
-onMounted(() => applyTheme())
+const { applyTheme } = useTheme();
+onMounted(() => applyTheme());
 </script>
 
 <template>

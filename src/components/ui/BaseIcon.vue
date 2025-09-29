@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import PencilIcon from '@/components/icons/PencilIcon.vue'
-import TrashIcon from '@/components/icons/TrashIcon.vue'
+import PencilIcon from "@/components/icons/PencilIcon.vue";
+import TrashIcon from "@/components/icons/TrashIcon.vue";
 defineProps<{
-  name: 'edit' | 'delete'
-}>()
+  name: "edit" | "delete";
+}>();
 </script>

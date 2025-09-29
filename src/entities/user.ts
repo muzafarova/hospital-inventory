@@ -1,13 +1,13 @@
-import * as z from 'zod'
+import * as z from "zod";
 
 export type UserJsonValue = {
-  id: string
-  hospitalId: string
-  username: string
-  name: string
-  email: string
-  image: string
-}
+  id: string;
+  hospitalId: string;
+  username: string;
+  name: string;
+  email: string;
+  image: string;
+};
 
 export default class User {
   static readonly schema = z.object({
@@ -16,7 +16,7 @@ export default class User {
     username: z.string(),
     email: z.email(),
     name: z.string(),
-  })
+  });
 
   constructor(
     readonly id: string,
@@ -28,11 +28,11 @@ export default class User {
   ) {}
 
   static validate(data: UserJsonValue) {
-    User.schema.parse(data)
+    User.schema.parse(data);
   }
 
   static fromJson(data: UserJsonValue) {
-    User.validate(data)
-    return new User(data.id, data.username, data.name, data.email, data.image, data.hospitalId)
+    User.validate(data);
+    return new User(data.id, data.username, data.name, data.email, data.image, data.hospitalId);
   }
 }

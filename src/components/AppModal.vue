@@ -11,7 +11,7 @@
     >
       <div
         v-if="modalOpen"
-        class="fixed inset-0 bg-black/30 z-50 transition-opacity"
+        class="fixed inset-0 z-50 bg-black/30 transition-opacity"
         aria-hidden="true"
         data-testid="modal-backdrop"
       ></div>
@@ -28,7 +28,7 @@
       <div
         v-show="modalOpen"
         :id="id"
-        class="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6"
+        class="fixed inset-0 z-50 my-4 flex items-center justify-center overflow-hidden px-4 sm:px-6"
         role="dialog"
         aria-modal="true"
         :aria-label="title"
@@ -36,14 +36,14 @@
         <div
           v-if="modalOpen"
           ref="modalContent"
-          class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-auto max-w-lg w-full max-h-full"
+          class="max-h-full w-full max-w-lg overflow-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
         >
           <!-- Modal header -->
-          <div class="px-5 py-3 border-b border-gray-200 dark:border-gray-700/60">
-            <div class="flex justify-between items-center">
+          <div class="border-b border-gray-200 px-5 py-3 dark:border-gray-700/60">
+            <div class="flex items-center justify-between">
               <h3 class="font-semibold text-gray-800 dark:text-gray-100">{{ title }}</h3>
               <button
-                class="text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400"
+                class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
                 @click.stop="$emit('close')"
               >
                 <div class="sr-only">Close</div>
@@ -63,28 +63,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useEventListener, onClickOutside } from '@vueuse/core'
+import { ref } from "vue";
+import { useEventListener, onClickOutside } from "@vueuse/core";
 
 const props = withDefaults(
   defineProps<{
     /** unique identifier of the modal */
-    id: string
+    id: string;
     /** title of the modal */
-    title: string
+    title: string;
     /** whether the modal is open */
-    modalOpen?: boolean
+    modalOpen?: boolean;
   }>(),
   { modalOpen: false },
-)
-const emits = defineEmits<{ close: [] }>()
+);
+const emits = defineEmits<{ close: [] }>();
 
-const modalContent = ref<HTMLElement | null>(null)
+const modalContent = ref<HTMLElement | null>(null);
 
-onClickOutside(modalContent, () => emits('close'))
+onClickOutside(modalContent, () => emits("close"));
 
-useEventListener(document, 'keydown', ({ code }: KeyboardEvent) => {
-  if (!props.modalOpen || code !== 'Escape') return
-  emits('close')
-})
+useEventListener(document, "keydown", ({ code }: KeyboardEvent) => {
+  if (!props.modalOpen || code !== "Escape") return;
+  emits("close");
+});
 </script>

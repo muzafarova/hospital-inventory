@@ -1,17 +1,17 @@
 <template>
   <div class="flex h-[100dvh] overflow-hidden">
     <!-- Content area -->
-    <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+    <div class="relative flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
       <!-- Site header -->
       <AppTopbar />
 
       <main class="grow">
-        <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+        <div class="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
           <!-- Page header -->
-          <div class="sm:flex sm:justify-between sm:items-center mb-5">
+          <div class="mb-5 sm:flex sm:items-center sm:justify-between">
             <!-- Left: Title -->
             <div class="mb-4 sm:mb-0">
-              <h2 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
+              <h2 class="text-2xl font-bold text-gray-800 md:text-3xl dark:text-gray-100">
                 {{ title }}
                 <!-- Loading State -->
                 <BaseSpinner v-if="loading" class="mx-2" />
@@ -20,7 +20,7 @@
 
             <!-- Right: Actions  -->
             <div
-              class="sm:flex-1 w-full grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2"
+              class="grid w-full grid-flow-col justify-start gap-2 sm:flex-1 sm:auto-cols-max sm:justify-end"
             >
               <slot name="actions" />
             </div>
@@ -35,8 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import AppTopbar from '@/components/AppTopbar.vue'
-import BaseSpinner from '@/components/ui/BaseSpinner.vue'
+import AppTopbar from "@/components/AppTopbar.vue";
+import BaseSpinner from "@/components/ui/BaseSpinner.vue";
 
-defineProps<{ loading: boolean; title: string }>()
+defineProps<{ loading: boolean; title: string }>();
 </script>

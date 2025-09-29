@@ -14,9 +14,9 @@
       :submit-label="inventoryStore.adding ? 'Submitting...' : 'Submit'"
       @submit="
         async () => {
-          await inventoryStore.addProduct(newProduct)
-          slotProps.close()
-          newProduct = DEFAULT
+          await inventoryStore.addProduct(newProduct);
+          slotProps.close();
+          newProduct = DEFAULT;
         }
       "
     />
@@ -24,27 +24,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-import { useInventoryStore } from '@/stores/inventory'
+import { useInventoryStore } from "@/stores/inventory";
 
-import AppModalWithToggle from '@/components/AppModalWithToggle.vue'
-import InventoryForm from './InventoryForm.vue'
+import AppModalWithToggle from "@/components/AppModalWithToggle.vue";
+import InventoryForm from "./InventoryForm.vue";
 
 defineProps<{
-  fields: string[]
-  manufacturers: string[]
-  categories: string[]
-}>()
+  fields: string[];
+  manufacturers: string[];
+  categories: string[];
+}>();
 
-const inventoryStore = useInventoryStore()
+const inventoryStore = useInventoryStore();
 const DEFAULT = {
-  name: '',
-  manufacturer: '',
-  category: '',
+  name: "",
+  manufacturer: "",
+  category: "",
   quantity: 10,
-  price: '',
+  price: "",
   expiresAt: null,
-}
-const newProduct = ref(DEFAULT)
+};
+const newProduct = ref(DEFAULT);
 </script>

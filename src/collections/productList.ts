@@ -1,17 +1,17 @@
-import * as z from 'zod'
+import * as z from "zod";
 
-import Product, { type ProductJsonValue } from '@/entities/product'
+import Product, { type ProductJsonValue } from "@/entities/product";
 
 type Meta = {
-  total: number
-  limit: number
-  offset: number
-}
+  total: number;
+  limit: number;
+  offset: number;
+};
 
 export type ProductListJsonValue = {
-  items: ProductJsonValue[]
-  meta: Meta
-}
+  items: ProductJsonValue[];
+  meta: Meta;
+};
 
 export default class ProductList {
   static schema = z.object({
@@ -21,7 +21,7 @@ export default class ProductList {
       offset: z.int().gte(0),
       limit: z.int().gt(0),
     }),
-  })
+  });
 
   constructor(
     readonly items: Product[],
@@ -29,11 +29,11 @@ export default class ProductList {
   ) {}
 
   static validate(list: ProductListJsonValue) {
-    ProductList.schema.parse(list)
+    ProductList.schema.parse(list);
   }
 
   static fromJson(list: ProductListJsonValue) {
-    ProductList.validate(list)
-    return new ProductList(list.items, list.meta)
+    ProductList.validate(list);
+    return new ProductList(list.items, list.meta);
   }
 }

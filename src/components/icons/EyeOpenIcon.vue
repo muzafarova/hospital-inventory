@@ -5,7 +5,7 @@
     width="16"
     height="16"
     fill="currentColor"
-    class="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3 ml-2"
+    class="mr-3 ml-2 shrink-0 fill-current text-gray-400 dark:text-gray-500"
   >
     <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
     <path

@@ -3,9 +3,9 @@
     <div class="relative flex">
       <!-- Content -->
       <div class="w-full md:w-1/2">
-        <div class="min-h-[100dvh] h-full flex flex-col after:flex-1">
+        <div class="flex h-full min-h-[100dvh] flex-col after:flex-1">
           <div class="flex-1">
-            <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
               <!-- Logo -->
               <router-link class="block" to="/">
                 <svg width="32" height="32" viewBox="0 0 32 32">
@@ -37,8 +37,8 @@
             </div>
           </div>
 
-          <div class="max-w-sm mx-auto w-full px-4 py-8">
-            <h1 class="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-8">
+          <div class="mx-auto w-full max-w-sm px-4 py-8">
+            <h1 class="mb-8 text-2xl font-bold text-gray-800 dark:text-gray-100">
               {{ title }}
             </h1>
 
@@ -46,18 +46,18 @@
             <slot />
 
             <!-- Footer -->
-            <div class="pt-5 mt-6 border-t border-gray-200 dark:border-gray-700">
+            <div class="mt-6 border-t border-gray-200 pt-5 dark:border-gray-700">
               <!-- Hint -->
               <div v-if="hint" class="mt-5">
                 <div
-                  class="bg-blue-500/20 dark:text-blue-200 dark:bg-blue-500/30 text-blue-700 px-3 py-2 rounded-lg"
+                  class="rounded-lg bg-blue-500/20 px-3 py-2 text-blue-700 dark:bg-blue-500/30 dark:text-blue-200"
                 >
-                  <svg class="inline size-3 shrink-0 fill-current mr-2" viewBox="0 0 12 12">
+                  <svg class="mr-2 inline size-3 shrink-0 fill-current" viewBox="0 0 12 12">
                     <path
                       d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
                     />
                   </svg>
-                  <span class="text-sm font-mono">{{ hint }}</span>
+                  <span class="font-mono text-sm">{{ hint }}</span>
                 </div>
               </div>
             </div>
@@ -66,16 +66,16 @@
       </div>
 
       <!-- Image -->
-      <div class="hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2" aria-hidden="true">
+      <div class="absolute top-0 right-0 bottom-0 hidden md:block md:w-1/2" aria-hidden="true">
         <img
-          class="object-cover object-center w-full h-full hidden dark:block"
+          class="hidden h-full w-full object-cover object-center dark:block"
           src="/images/auth-image-dark.jpg"
           width="760"
           height="1024"
           alt=""
         />
         <img
-          class="object-cover object-center w-full h-full block dark:hidden"
+          class="block h-full w-full object-cover object-center dark:hidden"
           src="/images/auth-image-light.jpg"
           width="760"
           height="1024"
@@ -88,7 +88,7 @@
 
 <script setup lang="ts">
 defineProps<{
-  hint?: string
-  title?: string
-}>()
+  hint?: string;
+  title?: string;
+}>();
 </script>
