@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label v-if="label" class="block text-sm font-medium mb-1" :for="id">
+    <label v-if="label" class="mb-1 block text-sm font-medium" :for="id">
       {{ label }} <span v-if="required" class="text-red-500">*</span>
     </label>
     <input
@@ -15,19 +15,20 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel()
-
 withDefaults(
   defineProps<{
-    id: string
-    label?: string
-    required?: boolean
-    type?: string
+    id: string;
+    label?: string;
+    required?: boolean;
+    type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url";
+    modelValue?: string | number;
   }>(),
-  { type: 'text' },
-)
+  { type: "text" },
+);
+
+const model = defineModel();
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 </script>

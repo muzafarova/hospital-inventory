@@ -1,15 +1,15 @@
-import { fn } from 'storybook/test'
-import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { fn } from "storybook/test";
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { ref } from "vue";
 
-import BasePagination from './BasePagination.vue'
+import BasePagination from "./BasePagination.vue";
 
 const meta: Meta<typeof BasePagination> = {
   component: BasePagination,
   render: (args) => ({
     setup() {
-      const offset = ref(0)
-      return { args, offset }
+      const offset = ref(0);
+      return { args, offset };
     },
     components: { BasePagination },
     template: `<form class="flex flex-col gap-4">
@@ -18,17 +18,17 @@ const meta: Meta<typeof BasePagination> = {
                 </ BasePagination>
             </form>`,
   }),
-  args: { 'onUpdate:offset': fn() },
-}
-export default meta
+  args: { "onUpdate:offset": fn() },
+};
+export default meta;
 
-type Story = StoryObj<typeof BasePagination>
+type Story = StoryObj<typeof BasePagination>;
 
 export const Endless: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Endless pagination to use when total-count is unknown.',
+        story: "Endless pagination to use when total-count is unknown.",
       },
     },
   },
@@ -48,13 +48,13 @@ export const Endless: Story = {
   //     });
   //     await expect(input).toHaveValue('');
   // },
-}
+};
 
 export const Finite: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Finite pagination to use when total-count is known.',
+        story: "Finite pagination to use when total-count is known.",
       },
     },
   },
@@ -63,4 +63,4 @@ export const Finite: Story = {
     limit: 100,
     total: 2001,
   },
-}
+};

@@ -49,87 +49,87 @@
 </style>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
-import BaseButton from './BaseButton.vue'
-import DoubleArrowLeftIcon from '@/components/icons/DoubleArrowLeftIcon.vue'
-import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon.vue'
-import ArrowRightIcon from '@/components/icons/ArrowRightIcon.vue'
-import DoubleArrowRightIcon from '@/components/icons/DoubleArrowRightIcon.vue'
+import BaseButton from "./BaseButton.vue";
+import DoubleArrowLeftIcon from "@/components/icons/DoubleArrowLeftIcon.vue";
+import ArrowLeftIcon from "@/components/icons/ArrowLeftIcon.vue";
+import ArrowRightIcon from "@/components/icons/ArrowRightIcon.vue";
+import DoubleArrowRightIcon from "@/components/icons/DoubleArrowRightIcon.vue";
 
 const props = withDefaults(
   defineProps<{
-    offset?: number
-    count?: number
-    limit?: number
-    total?: number
-    loading?: boolean
+    offset?: number;
+    count?: number;
+    limit?: number;
+    total?: number;
+    loading?: boolean;
   }>(),
   {
     offset: 0,
     count: 0,
     limit: 100,
   },
-)
+);
 
 const emit = defineEmits<{
-  'update:offset': [offset: number | undefined]
-}>()
+  "update:offset": [offset: number | undefined];
+}>();
 
 const page = computed(() => {
-  return Math.floor(props.offset / props.limit) + 1
-})
+  return Math.floor(props.offset / props.limit) + 1;
+});
 
 const tail = computed(() => {
   if (props.total) {
-    const min = Math.floor((page.value - 1) * props.limit)
-    const max = Math.floor(page.value * props.limit)
+    const min = Math.floor((page.value - 1) * props.limit);
+    const max = Math.floor(page.value * props.limit);
     if (max >= props.total) {
-      return props.total - min
+      return props.total - min;
     }
-    return max - min
+    return max - min;
   }
-  return props.count
-})
+  return props.count;
+});
 
 const range = computed(() => {
   if (!props.count) {
-    return '…'
+    return "…";
   }
 
-  return `${props.offset + 1}-${props.offset + tail.value}`
-})
+  return `${props.offset + 1}-${props.offset + tail.value}`;
+});
 
 const first = () => {
-  update(undefined)
-}
+  update(undefined);
+};
 
 const prev = () => {
   if (props.offset <= 0) {
-    return
+    return;
   }
-  update(props.offset - props.limit)
-}
+  update(props.offset - props.limit);
+};
 
 const next = () => {
-  update(props.offset + props.limit)
-}
+  update(props.offset + props.limit);
+};
 
 const lastPage = computed(() => {
   if (!props.total) {
-    return 0
+    return 0;
   }
-  return Math.ceil(props.total / props.limit)
-})
+  return Math.ceil(props.total / props.limit);
+});
 
 const last = () => {
   if (!props.total) {
-    return
+    return;
   }
-  update((lastPage.value - 1) * props.limit)
-}
+  update((lastPage.value - 1) * props.limit);
+};
 
 const update = (offset: number | undefined) => {
-  emit('update:offset', offset)
-}
+  emit("update:offset", offset);
+};
 </script>
