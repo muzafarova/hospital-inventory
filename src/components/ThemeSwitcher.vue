@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { useTheme } from '@/composables/theme'
 
 import AppDropdown from '@/components/AppDropdown.vue'
@@ -68,6 +67,5 @@ import SystemIcon from '@/components/icons/SystemIcon.vue'
 import DropdownArrow from '@/components/icons/DropdownArrow.vue'
 import CheckIcon from '@/components/icons/CheckIcon.vue'
 
-const { theme, setTheme, applyTheme } = useTheme()
-onMounted(() => applyTheme())
+const { theme, setTheme } = useTheme()
 </script>
