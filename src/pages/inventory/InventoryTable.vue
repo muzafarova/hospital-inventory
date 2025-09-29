@@ -2,7 +2,7 @@
   <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
     <header class="flex justify-between items-stretch px-5 py-4">
       <h3 class="font-semibold text-gray-800 dark:text-gray-100">Products</h3>
-      <span class="text-gray-400 dark:text-gray-500 font-medium inline-block ml-1">
+      <span class="text-gray-400 dark:text-gray-500 font-medium inline-flex ml-1">
         <slot name="pagination" />
       </span>
     </header>
@@ -51,7 +51,8 @@
           :columns="columns"
           class="hover:bg-gray-50 dark:hover:bg-gray-50/5"
           @remove="emits('remove', $event)"
-          ><template v-slot:select>
+        >
+          <template v-slot:select>
             <div class="flex items-center">
               <label class="inline-flex">
                 <span class="sr-only">Select</span>
