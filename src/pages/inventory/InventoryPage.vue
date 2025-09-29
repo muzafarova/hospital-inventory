@@ -34,6 +34,7 @@
           :total="inventoryStore.productsList.meta.total"
           :limit="inventoryStore.productsList.meta.limit"
           :offset="inventoryStore.productsList.meta.offset"
+          :loading="inventoryStore.removing || inventoryStore.adding || inventoryStore.loading"
           @update:offset="(offset) => $router.replace({ query: { offset: offset } })"
         />
       </template>

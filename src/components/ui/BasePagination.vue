@@ -1,6 +1,6 @@
 <template>
   <span class="inline-flex items-center gap-4 text-gray-600 dark:text-gray-400">
-    <span class="inline-flex gap-1.5 font-medium">
+    <span v-if="!loading" class="inline-flex gap-1.5 font-medium">
       <span class="font-mono">{{ range }}</span>
       <span v-if="total" class="inline-flex gap-2">
         <span class="font-normal italic">of</span>
@@ -8,15 +8,15 @@
       </span>
     </span>
 
-    <span class="inline-flex items-center gap-4">
+    <span class="pagination inline-flex items-center gap-4">
       <BaseButton :disabled="page === 1" variant="inline" title="First page" @click="first()">
-        <DoubleArrowLeftIcon class="size-3" />
+        <DoubleArrowLeftIcon class="size-4" />
       </BaseButton>
       <BaseButton :disabled="page === 1" variant="inline" title="Previous page" @click="prev()">
-        <ArrowLeftIcon class="size-3" />
+        <ArrowLeftIcon class="size-4" />
       </BaseButton>
       <BaseButton :disabled="page === lastPage" variant="inline" title="Next page" @click="next()">
-        <ArrowRightIcon class="size-3" />
+        <ArrowRightIcon class="size-4" />
       </BaseButton>
       <BaseButton
         v-if="total"
@@ -25,17 +25,25 @@
         title="Last page"
         @click="last()"
       >
-        <DoubleArrowRightIcon class="size-3" />
+        <DoubleArrowRightIcon class="size-4" />
       </BaseButton>
     </span>
   </span>
 </template>
 
-<style scoped>
-button {
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+<style>
+.pagination {
+  svg {
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  button {
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }
 </style>
@@ -55,6 +63,7 @@ const props = withDefaults(
     count?: number
     limit?: number
     total?: number
+    loading?: boolean
   }>(),
   {
     offset: 0,
