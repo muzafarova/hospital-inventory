@@ -1,12 +1,11 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 7.5 10"
-    transform="scale(-1,1)"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none" viewBox="0 0 24 24">
     <path
-      d="M5.4 0.9C5.4 1 5.4 1.1 5.3 1.1L1.8 4.7 5.3 8.2C5.4 8.2 5.4 8.3 5.4 8.4 5.4 8.4 5.4 8.5 5.3 8.6L4.9 9C4.8 9.1 4.7 9.1 4.7 9.1 4.6 9.1 4.5 9.1 4.5 9L0.3 4.9C0.2 4.8 0.2 4.7 0.2 4.7 0.2 4.6 0.2 4.5 0.3 4.5L4.5 0.3C4.5 0.2 4.6 0.2 4.7 0.2 4.7 0.2 4.8 0.2 4.9 0.3L5.3 0.7C5.4 0.8 5.4 0.9 5.4 0.9Z"
+      d="
+        M 12,5
+        l 7,7
+        l -7,7
+      "
     />
   </svg>
 </template>
