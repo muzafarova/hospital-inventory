@@ -29,6 +29,7 @@
         <BaseButton
           label="Delete"
           variant="inline"
+          size="xs"
           class="hover:text-red-500 dark:hover:text-red-500"
           @click="
             () => {

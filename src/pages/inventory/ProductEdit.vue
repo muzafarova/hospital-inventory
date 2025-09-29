@@ -5,6 +5,7 @@
     :modal-title="`Update product ${product.code}`"
     toggle-title="Edit"
     toggle-variant="inline"
+    toggle-size="xs"
   >
     <template v-slot:button><BaseIcon name="edit" /></template>
     <template v-slot:default="slotProps">

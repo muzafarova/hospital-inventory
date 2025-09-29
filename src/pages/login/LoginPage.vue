@@ -1,5 +1,5 @@
 <template>
-  <LayoutLogin title="Hospital Inventory" :hint="authStore.hint">
+  <LoginLayout title="Hospital Inventory" :hint="authStore.hint">
     <form @submit.prevent="handleLogin">
       <div class="space-y-4">
         <BaseInput
@@ -22,14 +22,14 @@
         <BaseButton type="submit" variant="accent">Sign In</BaseButton>
       </div>
     </form>
-  </LayoutLogin>
+  </LoginLayout>
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-import LayoutLogin from '@/components/LayoutLogin.vue'
+import LoginLayout from '@/pages/login/LoginLayout.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import InputPassword from './InputPassword.vue'

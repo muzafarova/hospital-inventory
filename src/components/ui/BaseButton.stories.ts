@@ -31,9 +31,21 @@ export const Default: Story = {
   args: {},
 }
 
-export const Small: Story = {
+export const SizeXs: Story = {
+  args: {
+    size: 'xs',
+  },
+}
+
+export const SizeSmall: Story = {
   args: {
     size: 'small',
+  },
+}
+
+export const SizeLarge: Story = {
+  args: {
+    size: 'large',
   },
 }
 
@@ -49,7 +61,7 @@ export const Danger: Story = {
   },
 }
 
-export const Table: Story = {
+export const Inline: Story = {
   parameters: {
     docs: {
       description: {

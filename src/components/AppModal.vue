@@ -66,13 +66,6 @@
 import { ref } from 'vue'
 import { useEventListener, onClickOutside } from '@vueuse/core'
 
-/**
- * Props of the component
- * @typedef {Object} Props
- * @property {string} id - unique identifier of the modal
- * @property {string} title - title of the modal
- * @property {boolean} modalOpen - whether the modal is open
- */
 const props = withDefaults(
   defineProps<{
     /** unique identifier of the modal */

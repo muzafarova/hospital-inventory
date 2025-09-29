@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <BaseButton @click.stop="modalOpen = true" :variant="toggleVariant">
+    <BaseButton @click.stop="modalOpen = true" :variant="toggleVariant" :size="toggleSize">
       <slot name="button">{{ toggleTitle }}</slot>
     </BaseButton>
 
@@ -28,9 +28,12 @@ withDefaults(
     toggleTitle: string
     /** variant of the button */
     toggleVariant?: 'accent' | 'default' | 'danger' | 'inline'
+    /** size of the button */
+    toggleSize?: 'xs' | 'small' | 'base' | 'large'
   }>(),
   {
     toggleVariant: 'default',
+    toggleSize: 'base',
   },
 )
 

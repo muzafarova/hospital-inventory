@@ -1,9 +1,6 @@
 <template>
   <div class="flex h-[100dvh] overflow-hidden">
-    <!-- Content area -->
-    <div
-      class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-white dark:bg-gray-900"
-    >
+    <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
       <main class="grow">
         <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
           <div class="max-w-2xl m-auto mt-16">
@@ -14,24 +11,17 @@
                   src="/images/404-illustration.svg"
                   width="176"
                   height="176"
-                  alt="404 illustration"
+                  alt=""
                 />
                 <img
                   class="hidden dark:block"
                   src="/images/404-illustration-dark.svg"
                   width="176"
                   height="176"
-                  alt="404 illustration dark"
+                  alt=""
                 />
               </div>
-              <div class="mb-6">
-                Hmm...this page doesn't exist. Try searching for something else!
-              </div>
-              <router-link
-                to="/"
-                class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white"
-                >Back To Dashboard</router-link
-              >
+              <slot />
             </div>
           </div>
         </div>
