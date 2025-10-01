@@ -24,6 +24,8 @@ export const handlers = [
     const { username, password } = (await request.json()) as { username: string; password: string };
     const user = users.find((u) => u.username === username);
 
+    await delay(1000);
+
     if (!user) {
       return HttpResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }

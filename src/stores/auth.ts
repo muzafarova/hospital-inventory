@@ -5,11 +5,14 @@ import { userCredentials } from "@/mocks/data.ts";
 import { useSessionStore } from "@/stores/session";
 
 export const useAuthStore = defineStore("auth", () => {
+  const sessionStore = useSessionStore();
+
   // State
   const credentials = ref({
     username: "",
     password: "",
   });
+  const authenticating = computed(() => sessionStore.authenticating);
   const hint = computed(() => {
     const hints: string[] = [];
     for (const username in userCredentials) {
@@ -20,7 +23,6 @@ export const useAuthStore = defineStore("auth", () => {
 
   // Actions
   async function login() {
-    const sessionStore = useSessionStore();
     await sessionStore.login(credentials.value);
   }
 
@@ -29,5 +31,6 @@ export const useAuthStore = defineStore("auth", () => {
     credentials,
     hint,
     login,
+    authenticating,
   };
 });

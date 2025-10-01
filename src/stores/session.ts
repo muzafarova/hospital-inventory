@@ -1,74 +1,52 @@
-import { readonly, computed } from "vue";
+import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import { useAsyncState } from "@vueuse/core";
 
-import { useErrorStore } from "./error";
 import { checkSession, loginUser, logoutUser } from "@/api/endpoints";
 import User from "@/entities/user";
+import { useApi } from "@/composables/api";
 
 export const useSessionStore = defineStore("session", () => {
-  const errorStore = useErrorStore();
-
-  // State
+  const user = ref<User | null>(null);
   const authenticated = computed(() => user.value !== null);
 
-  // Actions
   const setUser = (newUser: User | null) => (user.value = newUser);
   const getHospitalId = () => user.value?.hospitalId;
 
-  const {
-    state: user,
-    isLoading: loading,
-    executeImmediate: login,
-  } = useAsyncState(
+  // Login
+  const { isLoading: authenticating, executeImmediate: login } = useApi<
+    User,
+    [{ username: string; password: string }]
+  >(
     async (credentials: { username: string; password: string }) => {
       console.info("🗃️ Login as", credentials.username);
-      errorStore.clear();
       return await loginUser(credentials);
     },
-    null,
     {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, "Failed to login"),
+      errorMessage: "Failed to login",
+      onSuccess: (data: User) => (user.value = data),
     },
   );
 
-  const { isLoading: checking, executeImmediate: checkAuth } = useAsyncState(
-    async () => {
-      console.info("🗃️ Checking session");
-      return await checkSession();
-    },
-    null,
-    {
-      immediate: false,
-      onSuccess: (data: User | null) => {
-        user.value = data;
-      },
-      onError: () => {
-        console.warn("Session not found");
-        user.value = null;
-      },
-    },
-  );
-
-  async function logout() {
-    if (!user.value) {
-      return;
-    }
-
-    try {
-      await logoutUser();
+  // Check is session already exists
+  const { isLoading: checking, executeImmediate: checkAuth } = useApi<User | null>(checkSession, {
+    onSuccess: (data: User | null) => (user.value = data),
+    onError: () => {
+      console.warn("Session not found");
       user.value = null;
-    } catch (err) {
-      errorStore.report(err, "Failed to logout");
-    }
-  }
+    },
+  });
+
+  // Logout
+  const { executeImmediate: logout } = useApi<void>(logoutUser, {
+    onSuccess: () => (user.value = null),
+    errorMessage: "Failed to logout",
+  });
 
   return {
-    user: readonly(user),
-    loading: readonly(loading),
-    checking: readonly(checking),
-    authenticated: readonly(authenticated),
+    user,
+    checking,
+    authenticating,
+    authenticated,
     getHospitalId,
     setUser,
     login,

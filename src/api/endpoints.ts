@@ -14,7 +14,7 @@ export async function loginUser({ username, password }: { username: string; pass
 }
 
 export async function logoutUser() {
-  return await request(`/api/auth/logout`, () => null, { method: "POST" });
+  return await request(`/api/auth/logout`, () => undefined, { method: "POST" });
 }
 
 export async function checkSession() {

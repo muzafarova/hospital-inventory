@@ -19,7 +19,14 @@
         <router-link class="mr-1 text-sm underline hover:no-underline" to="/reset-password">
           Forgot Password?
         </router-link>
-        <BaseButton type="submit" variant="accent">Sign In</BaseButton>
+        <BaseButton
+          type="submit"
+          variant="accent"
+          :disabled="authStore.authenticating"
+          @click="handleLogin"
+        >
+          Sign In
+        </BaseButton>
       </div>
     </form>
   </LoginLayout>
