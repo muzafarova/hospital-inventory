@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { useAsyncState } from "@vueuse/core";
 
 import {
   getProducts,
@@ -11,72 +10,57 @@ import {
 } from "@/api/endpoints";
 import Product from "@/entities/product";
 
-import { useErrorStore } from "@/stores/error";
 import { useAuth } from "@/composables/auth";
+import { useApi } from "@/composables/api";
+import type ProductList from "@/collections/productList";
 
 export const useInventoryStore = defineStore("inventory", () => {
-  const errorStore = useErrorStore();
-
-  // State
+  const productsList = ref<ProductList | null>(null);
   const productsQuery = ref<{ limit: number; offset: number; name: string }>({
     limit: 100,
     offset: 0,
     name: "",
   });
   const productsSelection = ref<string[]>([]);
-  const {
-    state: productsList,
-    isLoading: loading,
-    executeImmediate: listProducts,
-  } = useAsyncState(
-    async () => {
-      errorStore.clear();
-      console.log("🚚 fetching inventory", { ...productsQuery.value });
-      return useAuth(getProducts, {
+
+  const { isLoading: loading, executeImmediate: listProducts } = useApi(
+    async () =>
+      useAuth(getProducts, {
         offset: productsQuery.value.offset,
         limit: productsQuery.value.limit,
         name: productsQuery.value.name,
-      });
-    },
-    null,
+      }),
     {
-      immediate: false,
       resetOnExecute: false,
-      onError: (err: unknown) => errorStore.report(err, "Failed to load inventory"),
+      errorMessage: "Failed to load inventory",
+      onSuccess: (data: ProductList) => (productsList.value = data),
     },
   );
 
-  const { isLoading: removing, executeImmediate: remove } = useAsyncState(
+  const { isLoading: removing, executeImmediate: remove } = useApi(
     async (ids: string[]) => useAuth(deleteProducts, ids),
-    null,
     {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, "Failed to remove inventory"),
-      onSuccess: async () => await listProducts(),
+      errorMessage: "Failed to remove inventory",
+      onSuccess: listProducts,
     },
   );
 
-  const { isLoading: adding, executeImmediate: addProduct } = useAsyncState(
+  const { isLoading: adding, executeImmediate: addProduct } = useApi(
     async (data: NewProductSpec) => useAuth(createProduct, data),
-    null,
     {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, "Failed to add inventory item"),
-      onSuccess: async () => await listProducts(),
+      errorMessage: "Failed to add inventory item",
+      onSuccess: listProducts,
     },
   );
 
-  const { isLoading: editing, executeImmediate: editProduct } = useAsyncState(
+  const { isLoading: editing, executeImmediate: editProduct } = useApi(
     async (data: Product) => useAuth(updateProduct, data),
-    null,
     {
-      immediate: false,
-      onError: (err: unknown) => errorStore.report(err, "Failed to update inventory item"),
-      onSuccess: async () => await listProducts(),
+      errorMessage: "Failed to update inventory item",
+      onSuccess: listProducts,
     },
   );
 
-  // Actions
   async function loadProducts({
     limit = 100,
     offset = 0,
@@ -106,7 +90,7 @@ export const useInventoryStore = defineStore("inventory", () => {
     await remove(ids);
   }
 
-  function clear() {
+  function clearProducts() {
     productsList.value = null;
   }
 
@@ -114,7 +98,6 @@ export const useInventoryStore = defineStore("inventory", () => {
     productsSelection.value = selected;
   }
 
-  // Interface
   return {
     loading,
     removing,
@@ -128,6 +111,6 @@ export const useInventoryStore = defineStore("inventory", () => {
     removeProduct,
     bulkRemoveProducts,
     updateSelection,
-    clear,
+    clearProducts,
   };
 });

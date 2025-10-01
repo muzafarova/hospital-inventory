@@ -60,7 +60,7 @@ const hospitalStore = useHospitalStore();
 const inventoryStore = useInventoryStore();
 
 onMounted(async () => {
-  inventoryStore.clear();
+  inventoryStore.clearProducts();
   await hospitalStore.loadData();
 });
 

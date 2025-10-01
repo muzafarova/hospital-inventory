@@ -6,11 +6,13 @@ export function useApi<T, Args extends unknown[] = []>(
   {
     defaultData = null,
     errorMessage = "Failed to load data",
+    resetOnExecute = true,
     onSuccess = (data: T) => data,
     onError,
   }: {
     defaultData?: T | null;
     errorMessage?: string;
+    resetOnExecute?: boolean;
     onSuccess?: (data: T) => void;
     onError?: (err: unknown) => void;
   },
@@ -19,6 +21,7 @@ export function useApi<T, Args extends unknown[] = []>(
 
   return useAsyncState(async (...args: Args) => promise(...args), defaultData as T, {
     immediate: false,
+    resetOnExecute,
     onSuccess: (data: T) => onSuccess(data),
     onError: (err: unknown) => (onError ? onError(err) : errorStore.report(err, errorMessage)),
   });
