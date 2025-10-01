@@ -8,30 +8,16 @@
         :class="'border-gray-200 lg:border-b dark:border-gray-700/60'"
       >
         <!-- Header: Left side -->
-        <div class="flex">
-          <h1 class="font-semibold">{{ hospitalStore.data?.name || "Hospital Inventory" }}</h1>
-        </div>
+        <AppAccount />
 
         <!-- Header: Right side -->
-        <div v-if="sessionStore.user" class="flex items-center space-x-3">
+        <div class="flex items-center space-x-3">
           <!-- Theme Switcher -->
           <ThemeSwitcher />
 
           <!-- Divider -->
           <hr class="h-6 w-px border-none bg-gray-200 dark:bg-gray-700/60" />
-          <AppProfile
-            align="right"
-            :username="sessionStore.user.username"
-            :name="sessionStore.user.name"
-            :email="sessionStore.user.email"
-            :image="sessionStore.user.image"
-            @logout="
-              async () => {
-                await sessionStore.logout();
-                await router.push({ name: 'login' });
-              }
-            "
-          />
+          <AppUser />
         </div>
       </div>
     </div>
@@ -39,14 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { useSessionStore } from "@/stores/session";
-import { useHospitalStore } from "@/stores/hospital";
-
-import AppProfile from "./AppProfile.vue";
+import AppUser from "./AppUser.vue";
+import AppAccount from "./AppAccount.vue";
 import ThemeSwitcher from "./ThemeSwitcher.vue";
-
-const hospitalStore = useHospitalStore();
-const sessionStore = useSessionStore();
-const router = useRouter();
 </script>
