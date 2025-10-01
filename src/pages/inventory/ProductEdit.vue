@@ -1,5 +1,5 @@
 <template>
-  <AppModalWithToggle
+  <ModalWithToggle
     v-if="hospitalStore.data"
     :modal-id="product.id"
     :modal-title="`Update product ${product.code}`"
@@ -24,7 +24,7 @@
         "
       />
     </template>
-  </AppModalWithToggle>
+  </ModalWithToggle>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +34,7 @@ import Product from "@/entities/product";
 import { useInventoryStore } from "@/stores/inventory";
 import { useHospitalStore } from "@/stores/hospital";
 
-import AppModalWithToggle from "@/components/AppModalWithToggle.vue";
+import ModalWithToggle from "@/components/ModalWithToggle.vue";
 import InventoryForm from "./InventoryForm.vue";
 import BaseIcon from "@/components/ui/BaseIcon.vue";
 

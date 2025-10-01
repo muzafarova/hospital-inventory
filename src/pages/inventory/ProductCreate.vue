@@ -1,5 +1,5 @@
 <template>
-  <AppModalWithToggle
+  <ModalWithToggle
     modal-id="add-product"
     modal-title="New product"
     toggle-title="Add item"
@@ -20,7 +20,7 @@
         }
       "
     />
-  </AppModalWithToggle>
+  </ModalWithToggle>
 </template>
 
 <script setup lang="ts">
@@ -28,7 +28,7 @@ import { ref } from "vue";
 
 import { useInventoryStore } from "@/stores/inventory";
 
-import AppModalWithToggle from "@/components/AppModalWithToggle.vue";
+import ModalWithToggle from "@/components/ModalWithToggle.vue";
 import InventoryForm from "./InventoryForm.vue";
 
 defineProps<{

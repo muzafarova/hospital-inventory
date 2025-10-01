@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import AppModalWithToggle from "./AppModalWithToggle.vue";
+import ModalWithToggle from "./ModalWithToggle.vue";
 
 const meta = {
-  component: AppModalWithToggle,
+  component: ModalWithToggle,
   render: (args) => ({
-    components: { AppModalWithToggle },
+    components: { ModalWithToggle },
     setup: () => ({ args }),
-    template: `<AppModalWithToggle v-bind="args">{{ args.default }}</AppModalWithToggle>`,
+    template: `<ModalWithToggle v-bind="args">{{ args.default }}</ModalWithToggle>`,
   }),
   argTypes: {
     default: {
@@ -25,7 +25,7 @@ const meta = {
       test: "error",
     },
   },
-} satisfies Meta<typeof AppModalWithToggle>;
+} satisfies Meta<typeof ModalWithToggle>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
