@@ -16,7 +16,7 @@
 }
 
 @utility form-radio {
-  @apply border border-gray-300 text-violet-500 checked:bg-violet-500 focus:border-violet-300 dark:border-gray-700/60 dark:checked:border-transparent dark:focus:border-violet-500/50;
+  @apply border border-gray-300 accent-sky-600 dark:border-gray-700/60 dark:checked:border-transparent;
 }
 
 @utility form-checkbox {

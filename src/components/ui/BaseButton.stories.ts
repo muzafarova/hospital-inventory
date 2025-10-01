@@ -79,3 +79,12 @@ export const Inline: Story = {
     default: '<BaseIcon name="edit" />',
   },
 };
+
+export const Disabled: Story = {
+  render: (args) => ({
+    components: { BaseButton },
+    setup: () => ({ args }),
+    template: `<BaseButton v-bind="args" disabled>Submit</BaseButton>`,
+  }),
+  args: {},
+};

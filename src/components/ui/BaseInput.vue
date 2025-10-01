@@ -20,7 +20,7 @@ withDefaults(
     id: string;
     label?: string;
     required?: boolean;
-    type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url";
+    type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url" | "date";
     modelValue?: string | number;
   }>(),
   { type: "text" },
