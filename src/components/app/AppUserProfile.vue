@@ -1,5 +1,5 @@
 <template>
-  <AppDropdown label="Profile" class="flex">
+  <BaseDropdown label="Profile" class="flex">
     <template #button="{ dropdownOpen }">
       <div
         class="inline-flex items-center justify-center hover:text-gray-900 dark:hover:text-white"
@@ -36,12 +36,12 @@
         </li>
       </ul>
     </template>
-  </AppDropdown>
+  </BaseDropdown>
 </template>
 
 <script setup lang="ts">
 import DropdownArrow from "@/components/icons/DropdownArrow.vue";
-import AppDropdown from "@/components/AppDropdown.vue";
+import BaseDropdown from "@/components/ui/BaseDropdown.vue";
 
 defineProps<{ username: string; name: string; image: string; email: string }>();
 defineEmits<{ logout: [] }>();

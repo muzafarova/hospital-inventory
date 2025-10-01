@@ -1,5 +1,5 @@
 <template>
-  <AppDropdown label="Theme">
+  <BaseDropdown label="Theme">
     <template #button="{ dropdownOpen }">
       <span
         class="flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white"
@@ -54,13 +54,13 @@
       System
       <CheckIcon v-if="theme === 'system'" class="ml-auto" />
     </button>
-  </AppDropdown>
+  </BaseDropdown>
 </template>
 
 <script setup lang="ts">
 import { useTheme } from "@/composables/theme";
 
-import AppDropdown from "@/components/AppDropdown.vue";
+import BaseDropdown from "@/components/ui/BaseDropdown.vue";
 import SunIcon from "@/components/icons/SunIcon.vue";
 import MoonIcon from "@/components/icons/MoonIcon.vue";
 import SystemIcon from "@/components/icons/SystemIcon.vue";

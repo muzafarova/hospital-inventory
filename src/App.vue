@@ -2,7 +2,7 @@
 import { onMounted } from "vue";
 import { useTheme } from "@/composables/theme";
 
-import AppNotifications from "./components/AppNotifications.vue";
+import AppNotifications from "./components/app/AppNotifications.vue";
 
 const { applyTheme } = useTheme();
 onMounted(() => applyTheme());

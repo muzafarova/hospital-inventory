@@ -1,5 +1,5 @@
 <template>
-  <AppProfile
+  <AppUserProfile
     v-if="sessionStore.user"
     align="right"
     :username="sessionStore.user.username"
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import AppProfile from "./AppProfile.vue";
+import AppUserProfile from "./AppUserProfile.vue";
 
 import { useSessionStore } from "@/stores/session";
 import { useRouter } from "vue-router";

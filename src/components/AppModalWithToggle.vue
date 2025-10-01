@@ -4,18 +4,18 @@
       <slot name="button">{{ toggleTitle }}</slot>
     </BaseButton>
 
-    <AppModal :id="modalId" :modal-open="modalOpen" :title="modalTitle" @close="modalOpen = false">
+    <BaseModal :id="modalId" :modal-open="modalOpen" :title="modalTitle" @close="modalOpen = false">
       <div class="p-5">
         <slot :close="() => (modalOpen = false)" />
       </div>
-    </AppModal>
+    </BaseModal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 
-import AppModal from "@/components/AppModal.vue";
+import BaseModal from "@/components/ui/BaseModal.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 
 withDefaults(

@@ -25,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
+import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+
 import AppUser from "./AppUser.vue";
 import AppAccount from "./AppAccount.vue";
-import ThemeSwitcher from "./ThemeSwitcher.vue";
 </script>

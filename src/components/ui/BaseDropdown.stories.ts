@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import AppDropdown from "./AppDropdown.vue";
+import BaseDropdown from "./BaseDropdown.vue";
 
 const meta = {
-  component: AppDropdown,
+  component: BaseDropdown,
   argTypes: {
     align: { control: "select", options: ["right", "left"] },
     default: {
@@ -20,16 +20,16 @@ const meta = {
       test: "error",
     },
   },
-} satisfies Meta<typeof AppDropdown>;
+} satisfies Meta<typeof BaseDropdown>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const AlignRight: Story = {
   render: (args) => ({
-    components: { AppDropdown },
+    components: { BaseDropdown },
     setup: () => ({ args }),
-    template: `<AppDropdown v-bind="args"><div class="px-5 py-1.5">{{ args.default }}</div></AppDropdown>`,
+    template: `<BaseDropdown v-bind="args"><div class="px-5 py-1.5">{{ args.default }}</div></BaseDropdown>`,
   }),
   args: {
     label: "Dropdown",
@@ -40,9 +40,9 @@ export const AlignRight: Story = {
 
 export const AlignLeft: Story = {
   render: (args) => ({
-    components: { AppDropdown },
+    components: { BaseDropdown },
     setup: () => ({ args }),
-    template: `<AppDropdown v-bind="args"><div class="px-5 py-1.5">{{ args.default }}</div></AppDropdown>`,
+    template: `<BaseDropdown v-bind="args"><div class="px-5 py-1.5">{{ args.default }}</div></BaseDropdown>`,
   }),
   args: {
     label: "Dropdown",

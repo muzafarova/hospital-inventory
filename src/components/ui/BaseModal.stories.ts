@@ -2,17 +2,17 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { ref } from "vue";
 import { expect, within } from "storybook/test";
 
-import AppModal from "./AppModal.vue";
+import BaseModal from "./BaseModal.vue";
 
 const meta = {
-  component: AppModal,
+  component: BaseModal,
   render: (args) => ({
-    components: { AppModal },
+    components: { BaseModal },
     setup: () => {
       const modalOpen = ref(false);
       return { args, modalOpen };
     },
-    template: `<AppModal v-bind="args" @close="args.modalOpen = false"><div class="p-5">{{ args.default }}</div></AppModal>`,
+    template: `<BaseModal v-bind="args" @close="args.modalOpen = false"><div class="p-5">{{ args.default }}</div></BaseModal>`,
   }),
   argTypes: {
     default: {
@@ -26,7 +26,7 @@ const meta = {
       test: "error",
     },
   },
-} satisfies Meta<typeof AppModal>;
+} satisfies Meta<typeof BaseModal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
