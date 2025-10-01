@@ -25,7 +25,12 @@
             :name="sessionStore.user.name"
             :email="sessionStore.user.email"
             :image="sessionStore.user.image"
-            @logout="handleLogout"
+            @logout="
+              async () => {
+                await sessionStore.logout();
+                await router.push({ name: 'login' });
+              }
+            "
           />
         </div>
       </div>
@@ -44,9 +49,4 @@ import ThemeSwitcher from "./ThemeSwitcher.vue";
 const hospitalStore = useHospitalStore();
 const sessionStore = useSessionStore();
 const router = useRouter();
-
-async function handleLogout() {
-  await sessionStore.logout();
-  await router.push({ name: "login" });
-}
 </script>
