@@ -23,7 +23,7 @@ export const Default: StoryObj<typeof InventoryForm> = {
       });
       return { args, product };
     },
-    template: `<InventoryForm v-bind="args" v-model="product" /><output>{{ product }}</output>`,
+    template: `<InventoryForm v-bind="args" v-model="product" class="max-w-md"/><output>{{ product }}</output>`,
   }),
   args: {
     fields: ["name", "manufacturer", "category", "quantity", "price"],

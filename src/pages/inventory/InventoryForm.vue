@@ -29,7 +29,7 @@
             (category) => $emit('update:modelValue', { ...modelValue, category })
           "
         />
-        <div class="grid gap-2 md:grid-cols-3">
+        <div class="grid gap-4 md:grid-cols-2">
           <BaseInput
             label="Quantity"
             id="quantity"
