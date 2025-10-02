@@ -14,7 +14,6 @@
           {{ product["code"] }}
         </span>
         <span v-else-if="column[0] === 'price'">£{{ product["price"] }}</span>
-        <span v-else-if="column[0] === 'expiresAt'">{{ product["expiresAt"] }}</span>
         <span v-else>
           {{ product[column[0]] }}
         </span>

@@ -63,42 +63,33 @@ export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, ind
   updatedAt: new Date().toISOString(),
   name: faker.commerce.productName(),
   price: faker.commerce.price(),
-  expiresAt: faker.date.future().toISOString().split("T")[0],
   manufacturer: manufacturers[index % 5],
   category: categories[index % 5],
   quantity: faker.number.int({ max: 150 }),
 }));
 
+const spec = {
+  manufacturers,
+  categories,
+  tableColumns: [
+    ["code", "Code"],
+    ["name", "Product Name"],
+    ["manufacturer", "Manufacturer"],
+    ["category", "Category"],
+    ["quantity", "Quantity"],
+    ["price", "Price"],
+  ] as [keyof ProductJsonValue, string][],
+};
+
 export const hospitals: HospitalJsonValue[] = [
   {
     id: "hosp-001",
     name: "St. Gabriel Medical Center",
-    spec: {
-      manufacturers,
-      categories,
-      tableColumns: [
-        ["code", "Code"],
-        ["name", "Product Name"],
-        ["manufacturer", "Manufacturer"],
-        ["category", "Category"],
-        ["quantity", "Quantity"],
-        ["price", "Price"],
-        ["expiresAt", "Expiry Date"],
-      ] as [keyof ProductJsonValue, string][],
-    },
+    spec,
   },
   {
     id: "hosp-002",
     name: "Riverside General Hospital",
-    spec: {
-      manufacturers,
-      categories,
-      tableColumns: [
-        ["name", "Product Name"],
-        ["manufacturer", "Manufacturer"],
-        ["category", "Category"],
-        ["quantity", "Quantity"],
-      ] as [keyof ProductJsonValue, string][],
-    },
+    spec,
   },
 ];

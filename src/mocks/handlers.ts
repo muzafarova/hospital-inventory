@@ -125,7 +125,6 @@ export const handlers = [
       category: z.string(),
       quantity: z.number(),
       price: z.string(),
-      expiresAt: z.iso.date().nullish(),
     });
 
     const validate = schema.safeParse(product);
@@ -164,7 +163,6 @@ export const handlers = [
       category: z.string(),
       quantity: z.number(),
       price: z.string(),
-      expiresAt: z.iso.date().nullish(),
     });
 
     const validate = schema.safeParse(product);

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="$emit('submit')">
+  <form @submit.prevent="$emit('submit')" v-if="modelValue">
     <div class="p-5">
       <div class="space-y-5">
         <BaseInput
@@ -49,20 +49,6 @@
             required
             :model-value="modelValue.price"
             @update:model-value="(price) => $emit('update:modelValue', { ...modelValue, price })"
-          />
-          <BaseInput
-            v-if="fields.includes('expiresAt')"
-            label="Expiry date"
-            id="expiresAt"
-            type="date"
-            required
-            :model-value="modelValue.expiresAt"
-            @update:model-value="
-              (expiresAt) =>
-                !expiresAt
-                  ? $emit('update:modelValue', { ...modelValue, expiresAt: null })
-                  : $emit('update:modelValue', { ...modelValue, expiresAt })
-            "
           />
         </div>
       </div>

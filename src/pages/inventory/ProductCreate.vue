@@ -44,7 +44,6 @@ const DEFAULT = {
   category: "",
   quantity: 10,
   price: "",
-  expiresAt: null,
 };
 const newProduct = ref(DEFAULT);
 </script>

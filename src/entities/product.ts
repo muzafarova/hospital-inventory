@@ -11,7 +11,6 @@ export type ProductJsonValue = {
   category: string;
   quantity: number;
   price: string;
-  expiresAt: string;
 };
 
 export default class Product {
@@ -26,7 +25,6 @@ export default class Product {
     category: z.string(),
     quantity: z.number(),
     price: z.string(),
-    expiresAt: z.iso.date().nullish(),
   });
 
   constructor(
@@ -40,7 +38,6 @@ export default class Product {
     readonly category: string,
     readonly quantity: number,
     readonly price: string,
-    readonly expiresAt: string | null,
   ) {}
 
   static validate(data: ProductJsonValue) {
@@ -60,7 +57,6 @@ export default class Product {
       data.category,
       data.quantity,
       data.price,
-      data.expiresAt,
     );
   }
 }

@@ -22,16 +22,7 @@ export default class Hospital {
       categories: z.array(z.string()),
       tableColumns: z.array(
         z.tuple([
-          z.enum([
-            "code",
-            "hospitalId",
-            "name",
-            "manufacturer",
-            "category",
-            "quantity",
-            "price",
-            "expiresAt",
-          ]),
+          z.enum(["code", "hospitalId", "name", "manufacturer", "category", "quantity", "price"]),
           z.string(),
         ]),
       ),
