@@ -15,7 +15,7 @@ const meta: Meta<typeof BaseInput> = {
     docs: {
       description: {
         component:
-          "A flexible input wrapper component that provides consistent styling and behavior for form inputs.\n\n**Features:**\n- ✅ supports initial value \n- ✅ accessibility compliant \n- ✅ supports `required` attribute\n- 🚧 supports common [HTML input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types) \n- 🚧 HTML5 input validation",
+          "A flexible input wrapper component that provides consistent styling and behavior for form inputs.\n\n**Features:**\n- ✅ supports initial value \n- ✅ accessibility compliant \n- ✅ supports `required` attribute \n- ✅ HTML5 input validation \n- 🚧 supports common [HTML input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types)",
       },
     },
     a11y: {
