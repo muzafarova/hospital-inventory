@@ -7,16 +7,13 @@
     v-slot="slotProps"
   >
     <InventoryForm
-      v-model="newProduct"
-      :fields="fields"
       :manufacturers="manufacturers"
       :categories="categories"
       :submit-label="inventoryStore.adding ? 'Submitting...' : 'Submit'"
       @submit="
-        async () => {
+        async (newProduct) => {
           await inventoryStore.addProduct(newProduct);
           slotProps.close();
-          newProduct = DEFAULT;
         }
       "
     />
@@ -24,26 +21,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 import { useInventoryStore } from "@/stores/inventory";
 
 import ModalWithToggle from "@/components/ModalWithToggle.vue";
 import InventoryForm from "./InventoryForm.vue";
 
 defineProps<{
-  fields: string[];
   manufacturers: string[];
   categories: string[];
 }>();
 
 const inventoryStore = useInventoryStore();
-const DEFAULT = {
-  name: "",
-  manufacturer: "",
-  category: "",
-  quantity: 10,
-  price: "",
-};
-const newProduct = ref(DEFAULT);
 </script>

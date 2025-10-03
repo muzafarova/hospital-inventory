@@ -8,15 +8,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @utility form-input {
-  @apply rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm leading-5 text-gray-800 placeholder-gray-400 shadow-sm hover:border-gray-300 focus:border-gray-300 focus:ring-0 focus:ring-offset-0 dark:border-gray-700/60 dark:bg-gray-900/30 dark:text-gray-100 dark:placeholder-gray-500 dark:hover:border-gray-600 dark:focus:border-gray-600 dark:disabled:border-gray-700 dark:disabled:bg-gray-700/30 dark:disabled:hover:border-gray-700;
+  @apply appearance-none rounded border border-slate-200 bg-white px-3 py-2 text-sm leading-5 text-slate-800 placeholder-slate-400 inset-shadow-xs user-invalid:border-pink-300 user-valid:hover:border-slate-300 user-invalid:hover:outline-2 user-invalid:hover:outline-pink-100 focus-visible:border-sky-300 focus-visible:outline-2 focus-visible:outline-sky-100 dark:border-slate-700/60 dark:bg-slate-900/75 dark:text-slate-100 dark:placeholder-slate-500 dark:hover:border-slate-600 dark:disabled:border-slate-700 dark:disabled:bg-slate-700/30 dark:disabled:hover:border-slate-700;
 }
 
 @utility form-select {
-  @apply form-input pr-10;
+  @apply form-input bg-[url(/icons/SelectArrow.svg)] bg-size-[1.5rem_1.5rem] bg-position-[right_0.5rem_center] bg-no-repeat pr-10;
 }
 
 @utility form-radio {
-  @apply border border-gray-300 accent-sky-600 dark:border-gray-700/60 dark:checked:border-transparent;
+  @apply border border-slate-300 accent-sky-600 dark:border-slate-700/60 dark:checked:border-transparent;
 }
 
 @utility form-checkbox {

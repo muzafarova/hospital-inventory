@@ -13,7 +13,6 @@
       <!-- Add button & modal -->
       <ProductCreate
         v-if="hospitalStore.data"
-        :fields="hospitalStore.data.spec.tableColumns.map((col) => col[0])"
         :manufacturers="hospitalStore.data.spec.manufacturers"
         :categories="hospitalStore.data.spec.categories"
       />
@@ -24,7 +23,6 @@
       v-if="inventoryStore.productsList"
       :products="inventoryStore.productsList.items"
       :total="inventoryStore.productsList.meta.total"
-      :columns="hospitalStore.data?.spec.tableColumns || []"
       @selection="inventoryStore.updateSelection"
       @remove="inventoryStore.removeProduct"
     >

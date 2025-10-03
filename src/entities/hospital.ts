@@ -1,5 +1,4 @@
 import * as z from "zod";
-import Product from "./product";
 
 export type HospitalJsonValue = {
   id: string;
@@ -10,7 +9,6 @@ export type HospitalJsonValue = {
 type HospitalSpec = {
   manufacturers: string[];
   categories: string[];
-  tableColumns: [keyof Product, string][];
 };
 
 export default class Hospital {
@@ -20,12 +18,6 @@ export default class Hospital {
     spec: z.object({
       manufacturers: z.array(z.string()),
       categories: z.array(z.string()),
-      tableColumns: z.array(
-        z.tuple([
-          z.enum(["code", "hospitalId", "name", "manufacturer", "category", "quantity", "price"]),
-          z.string(),
-        ]),
-      ),
     }),
   });
 

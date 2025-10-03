@@ -4,6 +4,11 @@ import BaseSelect from "./BaseSelect.vue";
 
 const meta = {
   component: BaseSelect,
+  parameters: {
+    a11y: {
+      test: "error",
+    },
+  },
 } satisfies Meta<typeof BaseSelect>;
 
 export default meta;

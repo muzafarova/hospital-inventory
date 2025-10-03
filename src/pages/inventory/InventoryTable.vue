@@ -39,7 +39,7 @@
             </div>
           </th>
           <th class="px-2 py-3 whitespace-nowrap first:pl-5 last:pr-5">
-            <div class="text-left font-semibold">Actions</div>
+            <div class="text-right font-semibold"></div>
           </th>
         </tr>
       </thead>
@@ -83,10 +83,17 @@ const porps = defineProps<{
   limit?: number;
   offset?: number;
   products: Product[];
-  columns: [keyof Product, string][];
 }>();
 
 const emits = defineEmits<{ selection: [value: string[]]; remove: [value: string] }>();
+const columns: [keyof Product, string][] = [
+  ["code", "Code"],
+  ["name", "Product Name"],
+  ["manufacturer", "Manufacturer"],
+  ["category", "Category"],
+  ["quantity", "Quantity"],
+  ["price", "Price, £"],
+];
 
 const localSelected = ref<string[]>([]);
 const localSelectAll = ref(false);

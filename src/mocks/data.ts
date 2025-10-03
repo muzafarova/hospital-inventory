@@ -71,14 +71,6 @@ export const products: ProductJsonValue[] = Array.from({ length: 5000 }, (_, ind
 const spec = {
   manufacturers,
   categories,
-  tableColumns: [
-    ["code", "Code"],
-    ["name", "Product Name"],
-    ["manufacturer", "Manufacturer"],
-    ["category", "Category"],
-    ["quantity", "Quantity"],
-    ["price", "Price"],
-  ] as [keyof ProductJsonValue, string][],
 };
 
 export const hospitals: HospitalJsonValue[] = [

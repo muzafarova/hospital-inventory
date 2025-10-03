@@ -1,36 +1,36 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import InventoryForm from "./InventoryForm.vue";
-import type { NewProductSpec } from "@/api/endpoints";
-import { ref } from "vue";
 import { fn } from "storybook/test";
 
 const meta = {
   component: InventoryForm,
+  decorators: [
+    () => ({
+      template: `<div class="flex flex-wrap gap-8">
+        <div class="max-w-md"><story /></div>
+      </div>`,
+    }),
+  ],
+  args: {
+    manufacturers: ["Manufacturer 1", "Manufacturer 2", "Manufacturer 3"],
+    categories: ["Category 1", "Category 2", "Category 3"],
+    submitLabel: "Submit",
+    onSubmit: fn(),
+  },
 } satisfies Meta<typeof InventoryForm>;
 
 export default meta;
 
 export const Default: StoryObj<typeof InventoryForm> = {
-  render: (args) => ({
-    components: { InventoryForm },
-    setup() {
-      const product = ref<NewProductSpec>({
-        name: "",
-        manufacturer: "",
-        category: "",
-        quantity: 1,
-        price: "",
-      });
-      return { args, product };
-    },
-    template: `<InventoryForm v-bind="args" v-model="product" class="max-w-md"/><output>{{ product }}</output>`,
-  }),
+  args: {},
+};
+
+export const Prefilled: StoryObj<typeof InventoryForm> = {
   args: {
-    fields: ["name", "manufacturer", "category", "quantity", "price"],
-    manufacturers: ["Manufacturer 1", "Manufacturer 2", "Manufacturer 3"],
-    categories: ["Category 1", "Category 2", "Category 3"],
-    submitLabel: "Submit",
-    "onUpdate:modelValue": fn(),
-    onSubmit: fn(),
+    name: "Product 1",
+    manufacturer: "Manufacturer 1",
+    category: "Category 1",
+    quantity: 1,
+    price: "100",
   },
 };

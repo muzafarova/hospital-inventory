@@ -15,7 +15,6 @@ const meta: Meta<typeof BasePagination> = {
     template: `<form class="flex flex-col gap-4">
                 <BasePagination v-bind="args" :offset="offset" @update:offset="val => offset = val" />
                 <output :value="'offset: ' + offset" class="block px-2 font-mono" />
-                </ BasePagination>
             </form>`,
   }),
   args: { "onUpdate:offset": fn() },
@@ -36,18 +35,6 @@ export const Endless: Story = {
     count: 100,
     limit: 100,
   },
-  // play: async context => {
-  //     const canvas = within(context.canvasElement);
-  //     const input = canvas.getByLabelText(context.args.label);
-
-  //     await userEvent.type(input, 'some-id', { delay: 50 });
-  //     await expect(input).toHaveValue('some-id');
-
-  //     await userEvent.click(await canvas.findByRole('button'), {
-  //         delay: 300,
-  //     });
-  //     await expect(input).toHaveValue('');
-  // },
 };
 
 export const Finite: Story = {

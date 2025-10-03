@@ -1,33 +1,21 @@
 <template>
-  <form @submit.prevent="$emit('submit')" v-if="modelValue">
+  <form @submit.prevent="handleSubmit">
     <div class="p-5">
       <div class="space-y-5">
-        <BaseInput
-          label="Product Name"
-          id="name"
-          required
-          :model-value="modelValue.name"
-          @update:model-value="(name) => $emit('update:modelValue', { ...modelValue, name })"
-        />
+        <BaseInput label="Product Name" id="name" required autocomplete="off" v-model="nameModel" />
         <BaseSelect
           label="Manufacturer"
           id="manufacturer"
           required
           :options="manufacturers"
-          :model-value="modelValue.manufacturer"
-          @update:model-value="
-            (manufacturer) => $emit('update:modelValue', { ...modelValue, manufacturer })
-          "
+          v-model="manufacturerModel"
         />
         <BaseSelect
           label="Category"
           id="category"
           required
           :options="categories"
-          :model-value="modelValue.category"
-          @update:model-value="
-            (category) => $emit('update:modelValue', { ...modelValue, category })
-          "
+          v-model="categoryModel"
         />
         <div class="grid gap-4 md:grid-cols-2">
           <BaseInput
@@ -35,27 +23,24 @@
             id="quantity"
             required
             type="number"
-            min="0"
-            :model-value="modelValue.quantity"
-            @update:model-value="
-              (quantity) => $emit('update:modelValue', { ...modelValue, quantity })
-            "
+            min="1"
+            autocomplete="off"
+            v-model.number="quantityModel"
           />
           <BaseInput
-            v-if="fields.includes('price')"
-            label="Price"
+            label="Price, £"
             id="price"
             min="0"
             required
-            :model-value="modelValue.price"
-            @update:model-value="(price) => $emit('update:modelValue', { ...modelValue, price })"
+            autocomplete="off"
+            v-model="priceModel"
           />
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col border-t border-gray-200 px-6 py-5 dark:border-gray-700/60">
-      <div class="flex self-end">
+    <div class="mt-5 flex flex-col border-t border-gray-200 px-6 py-5 dark:border-gray-700/60">
+      <div class="flex justify-end">
         <BaseButton type="submit" variant="accent">{{ submitLabel }}</BaseButton>
       </div>
     </div>
@@ -63,25 +48,44 @@
 </template>
 
 <script setup lang="ts">
-import { type NewProductSpec } from "@/api/endpoints";
-
 import BaseInput from "@/components/ui/BaseInput.vue";
 import BaseSelect from "@/components/ui/BaseSelect.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 
 withDefaults(
   defineProps<{
-    fields: string[];
     manufacturers: string[];
     categories: string[];
     submitLabel: string;
-    modelValue: NewProductSpec;
+    name?: string;
+    manufacturer?: string;
+    category?: string;
+    quantity?: number;
+    price?: string;
   }>(),
   { submitLabel: "Submit" },
 );
 
-defineEmits<{
-  submit: [];
-  "update:modelValue": [value: NewProductSpec];
+const emits = defineEmits<{
+  submit: [
+    data: { name: string; manufacturer: string; category: string; quantity: number; price: string },
+  ];
 }>();
+
+const nameModel = defineModel<string>("name");
+const manufacturerModel = defineModel<string>("manufacturer");
+const categoryModel = defineModel<string>("category");
+const quantityModel = defineModel<number>("quantity");
+const priceModel = defineModel<string>("price");
+
+function handleSubmit(e: Event) {
+  const formData = new FormData(e.target as HTMLFormElement);
+  emits("submit", {
+    name: formData.get("name") as string,
+    manufacturer: formData.get("manufacturer") as string,
+    category: formData.get("category") as string,
+    quantity: Number(formData.get("quantity") as string),
+    price: formData.get("price") as string,
+  });
+}
 </script>
