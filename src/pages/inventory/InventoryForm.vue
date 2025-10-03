@@ -48,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseInput from "@/components/ui/BaseInput.vue";
-import BaseSelect from "@/components/ui/BaseSelect.vue";
+import BaseInput from "@/components/ui/form/BaseInput.vue";
+import BaseSelect from "@/components/ui/form/BaseSelect.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 
 withDefaults(

@@ -20,7 +20,7 @@
 import { ref } from "vue";
 import EyeOpenIcon from "@/components/icons/EyeOpenIcon.vue";
 import EyeClosedIcon from "@/components/icons/EyeClosedIcon.vue";
-import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseInput from "@/components/ui/form/BaseInput.vue";
 
 const showPassword = ref(false);
 
