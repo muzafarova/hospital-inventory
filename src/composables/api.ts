@@ -1,5 +1,5 @@
-import { useErrorStore } from "@/stores/error";
 import { useAsyncState } from "@vueuse/core";
+import { useNotification } from "@/composables/notification";
 
 export function useApi<T, Args extends unknown[] = []>(
   promise: (...args: Args) => Promise<T>,
@@ -17,11 +17,11 @@ export function useApi<T, Args extends unknown[] = []>(
     onError?: (err: unknown) => void;
   },
 ) {
-  const errorStore = useErrorStore();
+  const { reportError, clearErrors } = useNotification();
 
   return useAsyncState(
     async (...args: Args) => {
-      setTimeout(() => errorStore.clear(), 10000);
+      setTimeout(() => clearErrors(), 10000);
       return promise(...args);
     },
     defaultData as T,
@@ -29,7 +29,7 @@ export function useApi<T, Args extends unknown[] = []>(
       immediate: false,
       resetOnExecute,
       onSuccess: (data: T) => onSuccess(data),
-      onError: (err: unknown) => (onError ? onError(err) : errorStore.report(err, errorMessage)),
+      onError: (err: unknown) => (onError ? onError(err) : reportError(err, errorMessage)),
     },
   );
 }
