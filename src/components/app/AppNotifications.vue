@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseToast from "@/components/ui/BaseToast.vue";
-import { useNotification } from "@/composables/notification";
-const { notifications, clearErrors } = useNotification();
+import { useNotifier } from "@/composables/notifier";
+const { notifications, clearErrors } = useNotifier();
 </script>
 
 <template>

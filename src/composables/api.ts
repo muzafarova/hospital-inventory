@@ -1,5 +1,5 @@
 import { useAsyncState } from "@vueuse/core";
-import { useNotification } from "@/composables/notification";
+import { useNotifier } from "@/composables/notifier";
 
 export function useApi<T, Args extends unknown[] = []>(
   promise: (...args: Args) => Promise<T>,
@@ -19,7 +19,7 @@ export function useApi<T, Args extends unknown[] = []>(
     errorReporter?: (err: unknown) => void;
   },
 ) {
-  const { reportError, clearErrors } = useNotification(errorReporter);
+  const { reportError, clearErrors } = useNotifier(errorReporter);
 
   return useAsyncState(
     async (...args: Args) => {
