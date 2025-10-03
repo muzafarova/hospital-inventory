@@ -5,7 +5,7 @@ const errorStore = useErrorStore();
 </script>
 
 <template>
-  <footer class="fixed right-0 bottom-0 m-2">
+  <footer class="fixed right-0 bottom-0 m-2 space-y-1">
     <BaseToast
       v-for="(notification, i) of errorStore.notifications"
       :key="notification + i"
