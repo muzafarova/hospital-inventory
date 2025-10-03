@@ -120,11 +120,11 @@ export const handlers = [
     }
 
     const schema = z.object({
-      name: z.string(),
-      manufacturer: z.string(),
-      category: z.string(),
-      quantity: z.number(),
-      price: z.string(),
+      name: z.string().min(1),
+      manufacturer: z.string().min(1),
+      category: z.string().min(1),
+      quantity: z.number().min(1),
+      price: z.string().min(1),
     });
 
     const validate = schema.safeParse(product);
