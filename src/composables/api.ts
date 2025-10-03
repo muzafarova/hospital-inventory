@@ -19,10 +19,17 @@ export function useApi<T, Args extends unknown[] = []>(
 ) {
   const errorStore = useErrorStore();
 
-  return useAsyncState(async (...args: Args) => promise(...args), defaultData as T, {
-    immediate: false,
-    resetOnExecute,
-    onSuccess: (data: T) => onSuccess(data),
-    onError: (err: unknown) => (onError ? onError(err) : errorStore.report(err, errorMessage)),
-  });
+  return useAsyncState(
+    async (...args: Args) => {
+      setTimeout(() => errorStore.clear(), 10000);
+      return promise(...args);
+    },
+    defaultData as T,
+    {
+      immediate: false,
+      resetOnExecute,
+      onSuccess: (data: T) => onSuccess(data),
+      onError: (err: unknown) => (onError ? onError(err) : errorStore.report(err, errorMessage)),
+    },
+  );
 }
