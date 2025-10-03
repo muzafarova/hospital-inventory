@@ -2,9 +2,9 @@ import { ref } from "vue";
 
 const notifications = ref<string[]>([]);
 
-export function useNotification() {
+export function useNotification(errorReporter: (err: unknown) => void = console.error) {
   function reportError(err: unknown, displayMessage: string) {
-    console.error(err);
+    errorReporter(err);
     notifications.value.push(displayMessage);
   }
 

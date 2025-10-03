@@ -9,15 +9,17 @@ export function useApi<T, Args extends unknown[] = []>(
     resetOnExecute = true,
     onSuccess = (data: T) => data,
     onError,
+    errorReporter,
   }: {
     defaultData?: T | null;
     errorMessage?: string;
     resetOnExecute?: boolean;
     onSuccess?: (data: T) => void;
     onError?: (err: unknown) => void;
+    errorReporter?: (err: unknown) => void;
   },
 ) {
-  const { reportError, clearErrors } = useNotification();
+  const { reportError, clearErrors } = useNotification(errorReporter);
 
   return useAsyncState(
     async (...args: Args) => {
