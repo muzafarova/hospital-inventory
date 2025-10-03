@@ -6,6 +6,7 @@ import BaseInput from "./BaseInput.vue";
 // Type for component props including HTML input attributes
 type BaseInputProps = InstanceType<typeof BaseInput>["$props"] & {
   placeholder?: string;
+  disabled?: boolean;
   [key: string]: string | boolean | number | undefined;
 };
 
@@ -15,7 +16,7 @@ const meta: Meta<typeof BaseInput> = {
     docs: {
       description: {
         component:
-          "A flexible input wrapper component that provides consistent styling and behavior for form inputs.\n\n**Features:**\n- ✅ supports initial value \n- ✅ accessibility compliant \n- ✅ supports `required` attribute \n- ✅ HTML5 input validation \n- 🚧 supports common [HTML input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types)",
+          "A flexible input wrapper component that provides consistent styling and behavior for form inputs.\n\n**Features:**\n- ✅ supports initial value \n- ✅ accessibility compliant \n- ✅ supports `required` attribute\n- ✅ supports `disabled` attribute \n- ✅ HTML validation \n- 🚧 JS validation \n- 🚧 supports common [HTML input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types)",
       },
     },
     a11y: {
@@ -44,10 +45,6 @@ const meta: Meta<typeof BaseInput> = {
       control: "boolean",
       defaultValue: false,
     },
-    // Event handlers for Storybook actions
-    "onUpdate:modelValue": {
-      action: "update:modelValue",
-    },
   },
   args: {
     "onUpdate:modelValue": fn(),
@@ -71,6 +68,13 @@ export const Required: Story = {
     id: "input-required",
     required: true,
     placeholder: "This field is required",
+  },
+};
+export const Disabled: Story = {
+  args: {
+    id: "input-disabled",
+    disabled: true,
+    placeholder: "This field is disabled",
   },
 };
 

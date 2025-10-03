@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" ref="formRef">
     <div class="p-5">
       <div class="space-y-5">
         <BaseInput label="Product Name" id="name" required autocomplete="off" v-model="nameModel" />
@@ -48,6 +48,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
 import BaseInput from "@/components/ui/form/BaseInput.vue";
 import BaseSelect from "@/components/ui/form/BaseSelect.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
@@ -78,8 +80,10 @@ const categoryModel = defineModel<string>("category");
 const quantityModel = defineModel<number>("quantity");
 const priceModel = defineModel<string>("price");
 
+const formRef = ref<HTMLFormElement | null>(null);
 function handleSubmit(e: Event) {
   const formData = new FormData(e.target as HTMLFormElement);
+  formRef.value?.reportValidity();
   emits("submit", {
     name: formData.get("name") as string,
     manufacturer: formData.get("manufacturer") as string,

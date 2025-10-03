@@ -8,11 +8,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @utility form-input {
-  @apply appearance-none rounded border border-slate-200 bg-white px-3 py-2 text-sm leading-5 text-slate-800 placeholder-slate-400 inset-shadow-xs user-invalid:border-pink-300 user-valid:hover:border-slate-300 user-invalid:hover:outline-2 user-invalid:hover:outline-pink-100 focus-visible:border-sky-300 focus-visible:outline-2 focus-visible:outline-sky-100 dark:border-slate-700/60 dark:bg-slate-900/75 dark:text-slate-100 dark:placeholder-slate-500 dark:hover:border-slate-600 dark:disabled:border-slate-700 dark:disabled:bg-slate-700/30 dark:disabled:hover:border-slate-700;
+  @apply appearance-none rounded border border-slate-200 bg-white px-3 py-2 text-sm leading-5 text-slate-800 placeholder-slate-400 inset-shadow-xs user-invalid:border-pink-300 user-valid:hover:border-slate-300 user-invalid:hover:outline-2 user-invalid:hover:outline-pink-100 focus-visible:border-sky-300 focus-visible:outline-2 focus-visible:outline-sky-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:hover:outline-none dark:border-slate-700/60 dark:bg-slate-900/75 dark:text-slate-100 dark:placeholder-slate-500 dark:hover:border-slate-600 dark:focus-visible:border-sky-800 dark:focus-visible:outline-sky-950 dark:disabled:border-slate-700 dark:disabled:bg-slate-700/30 dark:disabled:hover:border-slate-700;
 }
 
 @utility form-select {
-  @apply form-input bg-[url(/icons/SelectArrow.svg)] bg-size-[1.5rem_1.5rem] bg-position-[right_0.5rem_center] bg-no-repeat pr-10;
+  @apply form-input bg-[url(/icons/SelectArrow.svg)] bg-size-[1.5rem_1.5rem] bg-position-[right_0.5rem_center] bg-no-repeat pr-10 disabled:text-slate-500;
 }
 
 @utility form-radio {

@@ -11,7 +11,7 @@
       :required="required"
       v-model="model"
     >
-      <option value="">{{ placeholder }}</option>
+      <option :disabled="options.length === 0" value="">Select one...</option>
       <option v-for="option of options" :key="option" :value="option">
         {{ option }}
       </option>
@@ -20,17 +20,29 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel();
+const model = defineModel("modelValue", {
+  get(value) {
+    if (value === undefined) {
+      return "";
+    }
+    return value;
+  },
+  set(value) {
+    if (value === "") {
+      return undefined;
+    }
+    return value;
+  },
+});
 
 withDefaults(
   defineProps<{
     id: string;
     label: string;
-    options: string[];
+    options?: string[];
     required?: boolean;
-    placeholder?: string;
   }>(),
-  { placeholder: "- select -" },
+  { options: () => [] },
 );
 
 defineOptions({
