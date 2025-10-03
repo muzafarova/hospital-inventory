@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
-import { userCredentials } from "../../mocks/data";
+import { userCredentials } from "@mocks/data";
 import { useSessionStore } from "@/stores/session";
 
 export const useAuthStore = defineStore("auth", () => {

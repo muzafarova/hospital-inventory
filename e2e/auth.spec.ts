@@ -1,5 +1,5 @@
 import { test, expect } from "./_fixtures.js";
-import { users, userCredentials } from "../src/mocks/data.js";
+import { users, userCredentials } from "@mocks/data.js";
 
 test.describe("Authentication", () => {
   test("should show login page for unauthenticated users", async ({ page }) => {

@@ -1,7 +1,7 @@
 import { test as base, expect } from "@playwright/test";
 import { LoginPage } from "./pages/login.js";
 import { InventoryPage } from "./pages/inventory.js";
-import { users, userCredentials } from "../src/mocks/data.js";
+import { users, userCredentials } from "@mocks/data";
 
 // Define custom fixtures
 type TestFixtures = {

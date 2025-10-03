@@ -7,7 +7,7 @@ import "@/css/style.css";
 
 // Start MSW in development
 if (import.meta.env.DEV) {
-  const { worker } = await import("../mocks/browser");
+  const { worker } = await import("@mocks/browser");
   await worker.start({
     onUnhandledRequest(request: Request) {
       // Only warn for API requests
