@@ -6,6 +6,7 @@
     <input
       v-bind="$attrs"
       :id="id"
+      :name="id"
       class="form-input w-full"
       :type="type"
       :required="required"

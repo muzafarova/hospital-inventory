@@ -7,6 +7,7 @@
       v-bind="$attrs"
       class="form-select w-full"
       :id="id"
+      :name="id"
       :required="required"
       v-model="model"
     >
