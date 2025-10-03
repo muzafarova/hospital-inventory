@@ -10,7 +10,7 @@
       'rounded-xs px-2 py-0.5 text-xs shadow-xs': size === 'xs' && variant !== 'inline',
       'bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white':
         variant === 'accent',
-      'border-gray-200 bg-white text-gray-800 hover:outline-gray-400 dark:bg-gray-900 dark:text-gray-300 dark:outline-gray-700/60 dark:hover:outline-gray-600':
+      'bg-white text-gray-800 outline outline-gray-200 hover:outline-gray-300 dark:bg-gray-900 dark:text-gray-300 dark:outline-gray-700/60 dark:hover:outline-gray-600':
         ['default', 'danger'].includes(variant),
       'text-red-600 dark:text-red-300': variant === 'danger',
     }"
