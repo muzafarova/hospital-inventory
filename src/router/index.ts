@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useSessionStore } from "@/stores/session";
 import { routes } from "./routes";
+import { routes as autoRoutes } from "vue-router/auto-routes";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: [...routes, ...autoRoutes],
 });
 
 // Navigation guard for authentication

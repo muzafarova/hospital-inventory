@@ -1,11 +1,5 @@
 export const routes = [
   {
-    path: "/login",
-    name: "login",
-    component: async () => await import("@/views/login/LoginPage.vue"),
-    meta: { requiresGuest: true },
-  },
-  {
     path: "/",
     name: "inventory",
     component: async () => await import("@/views/inventory/InventoryPage.vue"),
