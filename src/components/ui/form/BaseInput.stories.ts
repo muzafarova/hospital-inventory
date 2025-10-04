@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { fn } from "storybook/test";
+import { fn, within, expect, userEvent } from "storybook/test";
 
 import BaseInput from "./BaseInput.vue";
 
@@ -61,6 +61,19 @@ export const Default: Story = {
     id: "input-default",
     placeholder: "Enter text...",
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toBeVisible();
+    await expect(input).toBeEnabled();
+    await expect(input).toHaveAttribute("id", args.id);
+    await expect(input).toHaveAttribute("name", args.id);
+    await expect(input).toHaveAttribute("type", args.type);
+    await expect(input).toHaveAttribute("placeholder", args.placeholder);
+    await expect(input).toHaveValue("");
+    await expect(input).not.toBeRequired();
+    await expect(input).not.toBeDisabled();
+  },
 };
 
 export const Required: Story = {
@@ -69,12 +82,22 @@ export const Required: Story = {
     required: true,
     placeholder: "This field is required",
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByLabelText(args.label)).toBeRequired();
+  },
 };
+
 export const Disabled: Story = {
   args: {
     id: "input-disabled",
     disabled: true,
     placeholder: "This field is disabled",
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toBeDisabled();
   },
 };
 
@@ -84,6 +107,11 @@ export const Prefilled: Story = {
     label: "Label",
     required: true,
     modelValue: "initial value",
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toHaveValue("initial value");
   },
 };
 
@@ -95,6 +123,17 @@ export const Email: Story = {
     label: "Email",
     placeholder: "Enter your email",
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toHaveValue("test@example.com");
+    await expect(input).toHaveAttribute("type", "email");
+
+    await userEvent.clear(input);
+    await userEvent.type(input, "invalid[enter][tab]", { delay: 100 });
+
+    await expect(input).toBeInvalid();
+  },
 };
 
 export const Number: Story = {
@@ -105,15 +144,27 @@ export const Number: Story = {
     label: "Number",
     placeholder: "Enter a number",
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toHaveValue(123);
+    await expect(input).toHaveAttribute("type", "number");
+  },
 };
 
 export const Password: Story = {
   args: {
     id: "input-type-password",
     type: "password",
-    modelValue: "password",
+    modelValue: "password123",
     label: "Password",
     placeholder: "Enter your password",
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toHaveValue("password123");
+    await expect(input).toHaveAttribute("type", "password");
   },
 };
 
@@ -124,5 +175,17 @@ export const Url: Story = {
     modelValue: "https://example.com",
     label: "URL",
     placeholder: "Enter a URL",
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByLabelText(args.label);
+    await expect(input).toHaveValue("https://example.com");
+    await expect(input).toHaveAttribute("type", "url");
+    await expect(input).toBeValid();
+
+    await userEvent.clear(input);
+    await userEvent.type(input, "invalid[enter][tab]", { delay: 100 });
+
+    await expect(input).toBeInvalid();
   },
 };

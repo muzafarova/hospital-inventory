@@ -36,6 +36,12 @@ withDefaults(
 
 const [model, modifiers] = defineModel("modelValue", {
   // https://vuejs.org/guide/components/v-model#handling-v-model-modifiers
+  get(value) {
+    if (value === undefined) {
+      return "";
+    }
+    return value;
+  },
   set(value) {
     if (modifiers.number) {
       return Number(value);

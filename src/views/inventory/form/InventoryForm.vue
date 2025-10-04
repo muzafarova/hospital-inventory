@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit" ref="formRef">
+  <form @submit.prevent="handleSubmit" ref="formRef" role="form">
     <div class="p-5">
       <div class="space-y-5">
         <BaseInput label="Product Name" id="name" required autocomplete="off" v-model="nameModel" />
