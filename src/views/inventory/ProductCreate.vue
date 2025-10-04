@@ -6,17 +6,21 @@
     toggle-variant="accent"
     v-slot="slotProps"
   >
-    <InventoryForm
-      :manufacturers="manufacturers"
-      :categories="categories"
-      :submit-label="inventoryStore.adding ? 'Submitting...' : 'Submit'"
-      @submit="
-        async (newProduct) => {
-          await inventoryStore.addProduct(newProduct);
-          slotProps.close();
-        }
-      "
-    />
+    <InventoryFormWrapper>
+      <template v-slot="{ manufacturers, categories }">
+        <InventoryForm
+          :manufacturers="manufacturers"
+          :categories="categories"
+          :submit-label="inventoryStore.adding ? 'Submitting...' : 'Submit'"
+          @submit="
+            async (newProduct) => {
+              await inventoryStore.addProduct(newProduct);
+              slotProps.close();
+            }
+          "
+        />
+      </template>
+    </InventoryFormWrapper>
   </ModalWithToggle>
 </template>
 
@@ -25,11 +29,7 @@ import { useInventoryStore } from "@/stores/inventory";
 
 import ModalWithToggle from "@/components/ModalWithToggle.vue";
 import InventoryForm from "./InventoryForm.vue";
-
-defineProps<{
-  manufacturers: string[];
-  categories: string[];
-}>();
+import InventoryFormWrapper from "./InventoryFormWrapper.vue";
 
 const inventoryStore = useInventoryStore();
 </script>
