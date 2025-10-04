@@ -11,11 +11,7 @@
       />
 
       <!-- Add button & modal -->
-      <ProductCreate
-        v-if="hospitalStore.data"
-        :manufacturers="hospitalStore.data.spec.manufacturers"
-        :categories="hospitalStore.data.spec.categories"
-      />
+      <ProductCreate />
     </template>
 
     <!-- List view -->
@@ -24,7 +20,6 @@
       :products="inventoryStore.productsList.items"
       :total="inventoryStore.productsList.meta.total"
       @selection="inventoryStore.updateSelection"
-      @remove="inventoryStore.removeProduct"
     >
       <template v-slot:pagination>
         <BasePagination

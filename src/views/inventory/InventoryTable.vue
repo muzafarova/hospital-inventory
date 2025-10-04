@@ -50,7 +50,6 @@
           :product="product"
           :columns="columns"
           class="hover:bg-gray-50 dark:hover:bg-gray-50/5"
-          @remove="emits('remove', $event)"
         >
           <template v-slot:select>
             <div class="flex items-center">
@@ -85,7 +84,7 @@ const porps = defineProps<{
   products: Product[];
 }>();
 
-const emits = defineEmits<{ selection: [value: string[]]; remove: [value: string] }>();
+const emits = defineEmits<{ selection: [value: string[]] }>();
 const columns: [keyof Product, string][] = [
   ["code", "Code"],
   ["name", "Product Name"],

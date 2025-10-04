@@ -28,8 +28,8 @@
 import { useInventoryStore } from "@/stores/inventory";
 
 import ModalWithToggle from "@/components/ModalWithToggle.vue";
-import InventoryForm from "./InventoryForm.vue";
-import InventoryFormWrapper from "./InventoryFormWrapper.vue";
+import InventoryForm from "./form/InventoryForm.vue";
+import InventoryFormWrapper from "./form/InventoryFormWrapper.vue";
 
 const inventoryStore = useInventoryStore();
 </script>

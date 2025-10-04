@@ -24,21 +24,7 @@
         class="flex items-center justify-end space-x-3 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
       >
         <ProductEdit :product="product" @update="updating = true" />
-
-        <BaseButton
-          label="Delete"
-          variant="inline"
-          size="xs"
-          class="hover:text-red-500 dark:hover:text-red-500"
-          @click="
-            () => {
-              updating = true;
-              $emit('remove', product.id);
-            }
-          "
-        >
-          <BaseIcon name="delete" />
-        </BaseButton>
+        <ProductRemove :product-id="product.id" @update="updating = true" />
       </div>
     </td>
   </tr>
@@ -48,12 +34,9 @@
 import { ref, watchEffect } from "vue";
 import Product from "@/entities/product";
 import ProductEdit from "./ProductEdit.vue";
-import BaseButton from "@/components/ui/BaseButton.vue";
-import BaseIcon from "@/components/ui/BaseIcon.vue";
+import ProductRemove from "./ProductRemove.vue";
 
-defineEmits<{ remove: [value: string] }>();
-
-const porps = defineProps<{
+const props = defineProps<{
   product: Product;
   columns: [keyof Product, string][];
 }>();
@@ -61,7 +44,7 @@ const porps = defineProps<{
 const updating = ref(false);
 
 watchEffect(() => {
-  if (porps.product.updatedAt) {
+  if (props.product.updatedAt) {
     updating.value = false;
   }
 });
