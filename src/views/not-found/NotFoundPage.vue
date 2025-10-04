@@ -10,5 +10,5 @@
 </template>
 
 <script setup lang="ts">
-import NotFoundLayout from "@/pages/not-found/NotFoundLayout.vue";
+import NotFoundLayout from "./NotFoundLayout.vue";
 </script>

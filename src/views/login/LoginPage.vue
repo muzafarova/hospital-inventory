@@ -36,9 +36,9 @@
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
 
-import LoginLayout from "@/pages/login/LoginLayout.vue";
 import BaseInput from "@/components/ui/form/BaseInput.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
+import LoginLayout from "./LoginLayout.vue";
 import InputPassword from "./InputPassword.vue";
 
 const router = useRouter();
