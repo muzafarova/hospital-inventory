@@ -2,7 +2,7 @@
   <button
     :type="type"
     :class="{
-      'inline-flex cursor-pointer items-center justify-center focus-visible:outline-2 focus-visible:outline-sky-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:outline-none': true,
+      'inline-flex cursor-pointer items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-sky-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:outline-none': true,
       'font-medium transition': variant !== 'inline',
       'rounded-md px-3 py-2 text-sm shadow-sm': size === 'base' && variant !== 'inline',
       'rounded-lg px-4 py-3 text-lg shadow-md': size === 'large' && variant !== 'inline',

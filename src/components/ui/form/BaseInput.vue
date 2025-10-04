@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <label class="mb-1 block text-sm font-medium" :for="id">
-      {{ label }} <span v-if="required" class="text-red-500">*</span>
+  <div class="group">
+    <label
+      class="mb-1 block text-sm font-medium after:ml-1 after:text-red-500 group-has-[input:required]:after:content-['*']"
+      :for="id"
+    >
+      {{ label }}
     </label>
     <input
       v-bind="$attrs"
