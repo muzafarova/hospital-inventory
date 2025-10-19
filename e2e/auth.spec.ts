@@ -12,6 +12,7 @@ test.describe("Authentication", () => {
   test("should show login form elements", async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.expectToBeVisible();
+     
   });
 
   test("should login successfully with correct credentials", async ({ loginPage }) => {
@@ -32,6 +33,7 @@ test.describe("Authentication", () => {
 
     // Should show error and stay on login page
     await loginPage.expectLoginError("Failed to login");
+     
   });
 
   test("should logout successfully", async ({ loggedInPage }) => {
@@ -40,5 +42,6 @@ test.describe("Authentication", () => {
 
     // Logout
     await loggedInPage.logout();
+     
   });
 });

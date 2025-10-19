@@ -3,11 +3,13 @@ import { test, expect } from "./_fixtures.js";
 test.describe("Inventory", () => {
   test("should have a page-level heading", async ({ inventoryPage }) => {
     await inventoryPage.expectHeading();
+     
   });
 
   test.describe("List items", () => {
     test("should display inventory table", async ({ inventoryPage }) => {
       await inventoryPage.expectInventoryTable();
+       
     });
 
     test("should select correct number of products", async ({ inventoryPage }) => {
